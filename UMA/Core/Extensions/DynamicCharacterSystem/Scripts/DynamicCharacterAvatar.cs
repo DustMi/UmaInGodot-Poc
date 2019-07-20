@@ -1,17 +1,10 @@
-using UnityEngine;
-//For loading a recipe directly from the web @2465
-using UnityEngine.Networking;
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEditor.SceneManagement;//for marking converted colors as needing saving
-#endif
-using UnityEngine.Serialization;//for converting old characterColors.Colors to new colors
-
 using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using UMA.PoseTools;//so we can set the expression set based on the race
+using MockUnityScripts;
+
+using Godot;
+//using UMA.PoseTools;//so we can set the expression set based on the race
 
 namespace UMA.CharacterSystem
 {
@@ -67,14 +60,14 @@ namespace UMA.CharacterSystem
 
         //because the character might be loaded from an asset bundle, we may want everything required to create it to happen
         //but for it to still not be shown immediately or you may want to hide it anyway
-        [Tooltip("If checked will turn off the SkinnedMeshRenderer after the character has been created to hide it. If not checked will turn it on again.")]
+        //[Tooltip("If checked will turn off the SkinnedMeshRenderer after the character has been created to hide it. If not checked will turn it on again.")]
         public bool hide = false;
 
-        [Tooltip("If true, then the meshcombiner will merge blendshapes found on slots that are part of this umaData")]
+        //[Tooltip("If true, then the meshcombiner will merge blendshapes found on slots that are part of this umaData")]
         public bool loadBlendShapes = false;
 
         //This will generate itself from a list available Races and set itself to the current value of activeRace.name
-        [Tooltip("Selects the race to used. When initialized, the Avatar will use the base recipe from the RaceData selected.")]
+        //[Tooltip("Selects the race to used. When initialized, the Avatar will use the base recipe from the RaceData selected.")]
         public RaceSetter activeRace = new RaceSetter();
 
         //To determine what recipes from a previous race can be applied to a the new race (on race change) sometimes we need to know what the previous race was
@@ -82,11 +75,11 @@ namespace UMA.CharacterSystem
         //if it was we know we need to look at that wardrobe collection and see if it has settings for the current race (rather than just saying the current slot is not compatible with the current race)
         private RaceData previousRace = null;
 
-        [EnumFlags]
+        //[EnumFlags]
         public ChangeRaceOptions defaultChangeRaceOptions = ChangeRaceOptions.keepBodyColors;
-        [Tooltip("When changing the race of the Avatar, cache the current state?")]
+        //[Tooltip("When changing the race of the Avatar, cache the current state?")]
         public bool cacheCurrentState = true;
-        [Tooltip("If true the existing skeleton is cleared and then rebuilt when the race is changed. Turn this off if you experience animation issues.")]
+        //[Tooltip("If true the existing skeleton is cleared and then rebuilt when the race is changed. Turn this off if you experience animation issues.")]
         public bool rebuildSkeleton = false;
 
         //the dictionary of active recipes this character is using to create itself
@@ -95,15 +88,15 @@ namespace UMA.CharacterSystem
         private Dictionary<string, UMAWardrobeCollection> _wardrobeCollections = new Dictionary<string, UMAWardrobeCollection>();
 
         //a list of wardrobe recipes the avatar will fall back to if no other recipes are loaded in to 'WardrobeRecipes'
-        [Tooltip("You can add wardrobe recipes for many races in here and only the ones that apply to the active race will be applied to the Avatar")]
+        //[Tooltip("You can add wardrobe recipes for many races in here and only the ones that apply to the active race will be applied to the Avatar")]
         public WardrobeRecipeList preloadWardrobeRecipes = new WardrobeRecipeList();
 
         //a list of animation controllers that the avatar will use if it ends up being the race associated with that animation controller
-        [Tooltip("Add animation controllers here for specific races. If no Controller is found for the active race, the Default Animation Controller is used")]
+        //[Tooltip("Add animation controllers here for specific races. If no Controller is found for the active race, the Default Animation Controller is used")]
         public RaceAnimatorList raceAnimationControllers = new RaceAnimatorList();
 
         //a list of colors that the avatar will assign to matching 'shared colors' in the resulting recipe
-        [Tooltip("Any colors here are set when the Avatar is first generated and updated as the values are changed using the color sliders")]
+        //[Tooltip("Any colors here are set when the Avatar is first generated and updated as the values are changed using the color sliders")]
         public ColorValueList characterColors = new ColorValueList();
 
         public UMAPredefinedDNA predefinedDNA;
@@ -114,25 +107,25 @@ namespace UMA.CharacterSystem
         public string loadFilename;
         public string loadString;
         public bool loadFileOnStart;
-        [Tooltip("If true the avatar will not build until all the assets it requires have been downloaded. Otherwise a placeholder avatar will be built while assets are downloading and be updated when everything is available.")]
+        //[Tooltip("If true the avatar will not build until all the assets it requires have been downloaded. Otherwise a placeholder avatar will be built while assets are downloading and be updated when everything is available.")]
         public bool waitForBundles = true;
-        [EnumFlags]
+        //[EnumFlags]
         public LoadOptions defaultLoadOptions = LoadOptions.loadRace | LoadOptions.loadDNA | LoadOptions.loadWardrobe | LoadOptions.loadBodyColors | LoadOptions.loadWardrobeColors;
 
         //save
         public savePathTypes savePathType;
         public string savePath;
         public string saveFilename;
-        [Tooltip("If true a GUID is generated and appended to the filename of the saved file")]
+        //[Tooltip("If true a GUID is generated and appended to the filename of the saved file")]
         public bool makeUniqueFilename = false;
-        [Tooltip("If true ALL the colors in the 'characterColors' section of the component are added to the recipe on save. Otherwise only the colors used by the recipe are saved (UMA default)")]
+        //[Tooltip("If true ALL the colors in the 'characterColors' section of the component are added to the recipe on save. Otherwise only the colors used by the recipe are saved (UMA default)")]
         public bool ensureSharedColors = false;
-        [EnumFlags]
+        //[EnumFlags]
         public SaveOptions defaultSaveOptions = SaveOptions.saveDNA | SaveOptions.saveWardrobe | SaveOptions.saveColors | SaveOptions.saveAnimator;
         //
         public Vector3 BoundsOffset;
         //
-        [HideInInspector]
+        //[HideInInspector]
         [System.NonSerialized]
         public List<string> assetBundlesUsedbyCharacter = new List<string>();
 
@@ -154,8 +147,8 @@ namespace UMA.CharacterSystem
         #region PRIVATE FIELDS 
         //Is building the character enabled? Disable this to make multiple changes to the avatar that will be built
         //without creating multiple build calls. when you are finished set it to true and the character will build
-        [SerializeField]
-        [Tooltip("Builds the character on recipe load or race changed. If you want to load multiple recipes into a character you can disable this and enable it when you are done. By default this should be true.")]
+        //[SerializeField]
+        //[Tooltip("Builds the character on recipe load or race changed. If you want to load multiple recipes into a character you can disable this and enable it when you are done. By default this should be true.")]
         private bool _buildCharacterEnabled = true;
         //everytime an avatar changes race a cache state can (optionally) be created so that when the user 
         //switches between races they do not loose their previous changes to the avatar when it was set to be that race
@@ -288,7 +281,7 @@ namespace UMA.CharacterSystem
                             if (BuildUsingComponentSettings)
                             {
                                 _isFirstSettingsBuild = false;
-                                StartCoroutine(BuildFromComponentSettingsCO());
+                                //StartCoroutine(BuildFromComponentSettingsCO()); Commented out by Dustin
                             }
                             else //we have an umaRecipe set or a text string set or a file defined to load
                             {
@@ -302,7 +295,7 @@ namespace UMA.CharacterSystem
                             //so just build
                             SetAnimatorController(true);//may cause downloads to happen- So call BuildCharacterWhenReady() instead
                             SetExpressionSet();
-                            StartCoroutine(BuildCharacterWhenReady());
+                            //StartCoroutine(BuildCharacterWhenReady()); Commented out by Dustin
                         }
                     }
                 }
@@ -363,7 +356,7 @@ namespace UMA.CharacterSystem
                 if (BuildUsingComponentSettings)
                 {
                     _isFirstSettingsBuild = false;
-                    StartCoroutine(BuildFromComponentSettingsCO());
+                    //StartCoroutine(BuildFromComponentSettingsCO()); Commented  oyDstin
                 }
                 else //we have an umaRecipe set or a text string set or a file defined to load
                 {
@@ -395,8 +388,7 @@ namespace UMA.CharacterSystem
             {
                 if (DynamicAssetLoader.Instance.downloadingAssetsContains(requiredAssetsToCheck) == false)
                 {
-                    if (Debug.isDebugBuild)
-                        Debug.Log("Update did build");
+                    GD.Print("Update did build");
                     UpdateAfterDownload();
                     //actually we dont know in this case if we are restoring DNA or not
                     //but a placeholder race should only have been used if defaultLoadOptions.waitForBundles is false
@@ -574,8 +566,7 @@ namespace UMA.CharacterSystem
             if (activeRace.name == "" || activeRace.name == "None Set")
             {
                 activeRace.data = null;
-                if (Debug.isDebugBuild)
-                    Debug.LogWarning("No activeRace set. Aborting build");
+                GD.Print("No activeRace set. Aborting build");
                 return;
             }
             //calling activeRace.data causes RaceLibrary to gather all racedatas from resources an returns all those along with any temporary assetbundle racedatas that are downloading
@@ -600,8 +591,7 @@ namespace UMA.CharacterSystem
             //if we are loading an old UMARecipe from the recipe field and the old race is not in resources the race will be null but the recipe wont be 
             if (umaRecipe == null)
             {
-                if (Debug.isDebugBuild)
-                    Debug.LogWarning("[SetActiveRace] could not find baseRaceRecipe for the race " + activeRace.name + ". Have you set one in the raceData?");
+                GD.Print("[SetActiveRace] could not find baseRaceRecipe for the race " + activeRace.name + ". Have you set one in the raceData?");
             }
             if (DynamicAssetLoader.Instance.downloadingAssetsContains(activeRace.name))
             {
@@ -1715,48 +1705,55 @@ namespace UMA.CharacterSystem
         /// 
         public void SetExpressionSet(bool addExressionPlayer = false)
         {
-            var thisExpressionPlayer = gameObject.GetComponent<UMAExpressionPlayer>();
-            if (thisExpressionPlayer == null && addExressionPlayer)
-                thisExpressionPlayer = gameObject.AddComponent<UMAExpressionPlayer>();
+            //Removed by Dustin because adding expressions is a step for later
+            //var thisExpressionPlayer = gameObject.GetComponent<UMAExpressionPlayer>();
+            //if (thisExpressionPlayer == null && addExressionPlayer)
+            //    thisExpressionPlayer = gameObject.AddComponent<UMAExpressionPlayer>();
 
-            if (thisExpressionPlayer != null)
-            {
-                UMAExpressionSet expressionSetToUse = null;
-                if (activeRace.racedata != null)
-                {
-                    expressionSetToUse = activeRace.racedata.expressionSet;//this wont be in the placeholder race
-                }
-                if (expressionSetToUse != null)
-                {
-                    //set the expression set and reset all the values
-                    thisExpressionPlayer.expressionSet = expressionSetToUse;
-                    thisExpressionPlayer.Values = new float[thisExpressionPlayer.Values.Length];
-                }
-            }
+            //if (thisExpressionPlayer != null)
+            //{
+            //    UMAExpressionSet expressionSetToUse = null;
+            //    if (activeRace.racedata != null)
+            //    {
+            //        expressionSetToUse = activeRace.racedata.expressionSet;//this wont be in the placeholder race
+            //    }
+            //    if (expressionSetToUse != null)
+            //    {
+            //        //set the expression set and reset all the values
+            //        thisExpressionPlayer.expressionSet = expressionSetToUse;
+            //        thisExpressionPlayer.Values = new float[thisExpressionPlayer.Values.Length];
+            //    }
+            //}
         }
         private void InitializeExpressionPlayer(UMAData umaData)
         {
-            this.CharacterUpdated.RemoveListener(InitializeExpressionPlayer);
+            //Removed By Dustin will implement different event system
+            //this.CharacterUpdated.RemoveListener(InitializeExpressionPlayer);
             InitializeExpressionPlayer();
         }
 
         private void InitializeExpressionPlayer(bool enable = true)
         {
-            var thisExpressionPlayer = gameObject.GetComponent<UMAExpressionPlayer>();
-            if (thisExpressionPlayer == null)
+            if(this.activeRace == null)
+            {
                 return;
-            //turn this off if we are not Humanoid cos it wont work
-            if (umaData.umaRecipe.raceData.umaTarget == RaceData.UMATarget.Humanoid)
-            {
-                if (thisExpressionPlayer.expressionSet == null)
-                    return;
-                thisExpressionPlayer.enabled = true;
-                thisExpressionPlayer.Initialize();
             }
-            else
-            {
-                thisExpressionPlayer.enabled = false;
-            }
+            //Removed by Dustin because I don't care about expressions, yet
+            //var thisExpressionPlayer = gameObject.GetComponent<UMAExpressionPlayer>();
+            //if (thisExpressionPlayer == null)
+            //    return;
+            ////turn this off if we are not Humanoid cos it wont work
+            //if (umaData.umaRecipe.raceData.umaTarget == RaceData.UMATarget.Humanoid)
+            //{
+            //    if (thisExpressionPlayer.expressionSet == null)
+            //        return;
+            //    thisExpressionPlayer.enabled = true;
+            //    thisExpressionPlayer.Initialize();
+            //}
+            //else
+            //{
+            //    thisExpressionPlayer.enabled = false;
+            //}
         }
 
         /// <summary>
@@ -1766,36 +1763,38 @@ namespace UMA.CharacterSystem
         {
             RuntimeAnimatorController controllerToUse = raceAnimationControllers.GetAnimatorForRace(activeRace.name);
 
+            //removed by Dustin because I dont' care about animation yet
+
             //changing the animationController in 5.6 resets the rotation of this game object
             //so store the rotation and set it back
-            var originalRot = Quaternion.identity;
-            if (umaData != null)
-                originalRot = umaData.transform.localRotation;
+            //var originalRot = Quaternion.identity;
+            //if (umaData != null)
+            //    originalRot = umaData.transform.localRotation;
 
-            animationController = controllerToUse;
-            var thisAnimator = gameObject.GetComponent<Animator>();
-            if (controllerToUse != null)
-            {
-                if (thisAnimator == null && addAnimator)
-                    thisAnimator = gameObject.AddComponent<Animator>();
-                if (thisAnimator != null)
-                {
-                    thisAnimator.runtimeAnimatorController = controllerToUse;
-                    if (!requiredAssetsToCheck.Contains(controllerToUse.name) && DynamicAssetLoader.Instance.downloadingAssetsContains(controllerToUse.name))
-                    {
-                        requiredAssetsToCheck.Add(controllerToUse.name);
-                    }
-                }
-            }
-            else
-            {
-                if (thisAnimator != null)
-                {
-                    thisAnimator.runtimeAnimatorController = null;
-                }
-            }
-            if (umaData != null)
-                umaData.transform.localRotation = originalRot;
+            //animationController = controllerToUse;
+            //var thisAnimator = gameObject.GetComponent<Animator>();
+            //if (controllerToUse != null)
+            //{
+            //    if (thisAnimator == null && addAnimator)
+            //        thisAnimator = gameObject.AddComponent<Animator>();
+            //    if (thisAnimator != null)
+            //    {
+            //        thisAnimator.runtimeAnimatorController = controllerToUse;
+            //        if (!requiredAssetsToCheck.Contains(controllerToUse.name) && DynamicAssetLoader.Instance.downloadingAssetsContains(controllerToUse.name))
+            //        {
+            //            requiredAssetsToCheck.Add(controllerToUse.name);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    if (thisAnimator != null)
+            //    {
+            //        thisAnimator.runtimeAnimatorController = null;
+            //    }
+            //}
+            //if (umaData != null)
+            //    umaData.transform.localRotation = originalRot;
         }
 
         #endregion
@@ -1940,29 +1939,18 @@ namespace UMA.CharacterSystem
                 var asset = ScriptableObject.CreateInstance<UMADynamicCharacterAvatarRecipe>();
                 var recipeName = saveFilename != "" ? saveFilename : gameObject.name + "_DCSRecipe";
                 asset.SaveDCS(this, recipeName, saveOptionsToUse);
-#if UNITY_EDITOR
-                if (!saveAsAsset)
-                    FileUtils.WriteAllText(filePath, asset.recipeString);
-                else
-                {
-                    asset.recipeType = "DynamicCharacterAvatar";
 
-                    AssetDatabase.CreateAsset(asset, filePath);
-                    AssetDatabase.SaveAssets();
-                }
-#else
                 FileUtils.WriteAllText(filePath, asset.recipeString);
-#endif
+
                 if (Debug.isDebugBuild)
                     Debug.Log("Recipe saved to " + filePath);
                 if (savePathType == savePathTypes.Resources)
                 {
-#if UNITY_EDITOR
-                    AssetDatabase.Refresh();
-#endif
+
                 }
-                if (!saveAsAsset)
-                    UMAUtils.DestroySceneObject(asset);
+                //Removed by Dustin : Don't care about destory yet
+                //if (!saveAsAsset)
+                    //UMAUtils.DestroySceneObject(asset);
             }
             if (ensureSharedColors)
             {
@@ -2021,9 +2009,9 @@ namespace UMA.CharacterSystem
             {
                 if (savePathType != savePathTypes.FileSystem)
                 {
-                    if (!Directory.Exists(path))
+                    if (!System.IO.Directory.Exists(path))
                     {
-                        Directory.CreateDirectory(path);
+                        System.IO.Directory.CreateDirectory(path);
                     }
                 }
                 if (makeUniqueFilename || (saveFilename == "" && savePathType != savePathTypes.FileSystem))
@@ -2492,20 +2480,18 @@ namespace UMA.CharacterSystem
                     }
                     else
                     {
+                        //Remove by Dustin - Don't care about URL downloading
                         if (path.Contains("://"))
-                        {
-                            UnityWebRequest www = UnityWebRequest.Get(path + loadFilename);
-#if UNITY_2017_2_OR_NEWER
-                            yield return www.SendWebRequest();
-#else
-                            yield return www.Send();
-#endif
-                            recipeString = www.downloadHandler.text;
-                        }
-                        else
-                        {
+                        //{
+                        //    UnityWebRequest www = UnityWebRequest.Get(path + loadFilename);
+
+                        //    yield return www.Send();
+                        //    recipeString = www.downloadHandler.text;
+                        //}
+                        //else
+                        //{
                             recipeString = FileUtils.ReadAllText(System.IO.Path.Combine(path, loadFilename));
-                        }
+                        //}
                     }
                 }
             }
@@ -2705,10 +2691,11 @@ namespace UMA.CharacterSystem
             }
 
             //But the ExpressionPlayer needs to be Initialized AFTER Load
-            if (activeRace.racedata != null && !RestoreDNA)
-            {
-                this.CharacterUpdated.AddListener(InitializeExpressionPlayer);
-            }
+            //Removed by Dustin because not worrying about Expressions and will do events differently anyway.
+            //if (activeRace.racedata != null && !RestoreDNA)
+            //{
+                //this.CharacterUpdated.AddListener(InitializeExpressionPlayer);
+            //}
 
             // Add saved DNA
             if (RestoreDNA)
@@ -2769,10 +2756,11 @@ namespace UMA.CharacterSystem
                 Initialize();
             }
             //set the umaData.animator if we have an animator already
-            if (this.gameObject.GetComponent<Animator>())
-            {
-                umaData.animator = this.gameObject.GetComponent<Animator>();
-            }
+            //Remove by Dustin: TODO: Add an animation system
+            //if (this.gameObject.GetComponent<Animator>())
+            //{
+            //    umaData.animator = this.gameObject.GetComponent<Animator>();
+            //}
 
             this.umaRecipe = umaRecipe;
 
@@ -2848,9 +2836,10 @@ namespace UMA.CharacterSystem
             {
                 if (rebuildSkeleton)
                 {
-                    foreach (Transform child in gameObject.transform)
+                    foreach (MockUnityScripts.Transform child in gameObject.transform)
                     {
-                        UMAUtils.DestroySceneObject(child.gameObject);
+                        //TODO: Destroy the object from scene
+                        //UMAUtils.DestroySceneObject(child.gameObject);
                     }
                 }
                 UpdateNewRace();
@@ -2907,9 +2896,10 @@ namespace UMA.CharacterSystem
             if (!Application.isPlaying)
                 return;
 
-            foreach (Transform child in gameObject.transform)
+            foreach (MockUnityScripts.Transform child in gameObject.transform)
             {
-                UMAUtils.DestroySceneObject(child.gameObject);
+                //TODO: Removing objects from scene
+                //UMAUtils.DestroySceneObject(child.gameObject);
             }
             ClearSlots();
             umaRecipe = null;
@@ -2925,8 +2915,9 @@ namespace UMA.CharacterSystem
                 gameObject.GetComponent<Animator>().runtimeAnimatorController = null;
             }
             */
-            if (gameObject.GetComponent<UMAExpressionPlayer>())
-                gameObject.GetComponent<UMAExpressionPlayer>().enabled = false;
+            //removed by Dustin because I don't yet care about expressions
+            //if (gameObject.GetComponent<UMAExpressionPlayer>())
+                //gameObject.GetComponent<UMAExpressionPlayer>().enabled = false;
         }
 
         public void AddAdditionalSerializedRecipes(UMARecipeBase[] umaAdditionalSerializedRecipes)
@@ -3066,17 +3057,6 @@ namespace UMA.CharacterSystem
         public void ForceUpdate(bool DnaDirty, bool TextureDirty = false, bool MeshDirty = false)
         {
             umaData.Dirty(DnaDirty, TextureDirty, MeshDirty);
-        }
-
-        //@jaimi not sure what calls this. Generator maybe?
-        public void AvatarCreated()
-        {
-            ApplyBounds();
-        }
-        public void ApplyBounds()
-        {
-            SkinnedMeshRenderer smr = this.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
-            smr.localBounds = new Bounds(smr.localBounds.center + BoundsOffset, smr.localBounds.size);
         }
 
         /// <summary>
@@ -3439,8 +3419,7 @@ namespace UMA.CharacterSystem
                 var thisContext = UMAContext.FindInstance();
                 if (thisContext == null)
                 {
-                    if (Debug.isDebugBuild)
-                        Debug.LogWarning("UMAContext was missing this is required in scenes that use UMA. Please add the UMA_DCS prefab to the scene");
+                        GD.Print("UMAContext was missing this is required in scenes that use UMA. Please add the UMA_DCS prefab to the scene");
                     return;
                 }
                 var thisDynamicRaceLibrary = (DynamicRaceLibrary)thisContext.raceLibrary as DynamicRaceLibrary;
@@ -3483,7 +3462,7 @@ namespace UMA.CharacterSystem
         [Serializable]
         public class WardrobeRecipeList
         {
-            [Tooltip("If this is checked and the Avatar is NOT creating itself from a previously saved recipe, recipes in here will be added to the Avatar when it loads")]
+            //[Tooltip("If this is checked and the Avatar is NOT creating itself from a previously saved recipe, recipes in here will be added to the Avatar when it loads")]
             public bool loadDefaultRecipes = true;
             public List<WardrobeRecipeListItem> recipes = new List<WardrobeRecipeListItem>();
 
@@ -3578,24 +3557,28 @@ namespace UMA.CharacterSystem
             }
             public void FindAnimatorByName(string animatorName)
             {
-                bool dalDebugSetting = DynamicAssetLoader.Instance.debugOnFail;
-                DynamicAssetLoader.Instance.debugOnFail = false;
-                DynamicAssetLoader.Instance.AddAssets<RuntimeAnimatorController>(ref assetBundlesUsedDict, dynamicallyAddFromResources, dynamicallyAddFromAssetBundles, true, assetBundleNames, resourcesFolderPath, null, animatorName, SetFoundAnimators);
-                DynamicAssetLoader.Instance.debugOnFail = dalDebugSetting;
+                return;
+                //pretty sure this is Unity specific stuff. Removing by Dustin
+                //bool dalDebugSetting = DynamicAssetLoader.Instance.debugOnFail;
+                //DynamicAssetLoader.Instance.debugOnFail = false;
+                //DynamicAssetLoader.Instance.AddAssets<RuntimeAnimatorController>(ref assetBundlesUsedDict, dynamicallyAddFromResources, dynamicallyAddFromAssetBundles, true, assetBundleNames, resourcesFolderPath, null, animatorName, SetFoundAnimators);
+                //DynamicAssetLoader.Instance.debugOnFail = dalDebugSetting;
             }
 
             private void SetFoundAnimators(RuntimeAnimatorController[] foundControllers)
             {
-                for (int fi = 0; fi < foundControllers.Length; fi++)
-                {
-                    for (int i = 0; i < animators.Count; i++)
-                    {
-                        if (animators[i].animatorControllerName == foundControllers[fi].name)
-                        {
-                            animators[i].animatorController = foundControllers[fi];
-                        }
-                    }
-                }
+                //pretty sure this is Unity specific stuff. Removing by Dustin
+                //for (int fi = 0; fi < foundControllers.Length; fi++)
+                //{
+                //    for (int i = 0; i < animators.Count; i++)
+                //    {
+                //        if (animators[i].animatorControllerName == foundControllers[fi].name)
+                //        {
+                //            animators[i].animatorController = foundControllers[fi];
+                //       }
+                //   }
+                //}
+                return;
             }
         }
 
@@ -3603,14 +3586,14 @@ namespace UMA.CharacterSystem
         [Serializable]
         public class ColorValue : OverlayColorData
         {
-            [FormerlySerializedAs("Name")]
-            [SerializeField]
+            //[FormerlySerializedAs("Name")]
+            //[SerializeField]
             private string _name;
-            [FormerlySerializedAs("Color")]
-            [SerializeField]
-            private Color _color = Color.white;
-            [FormerlySerializedAs("MetallicGloss")]
-            [SerializeField]
+            //[FormerlySerializedAs("Color")]
+            //[SerializeField]
+            private Color _color = Color.ColorN("#ffffff");
+            //[FormerlySerializedAs("MetallicGloss")]
+            //[SerializeField]
             private Color _metallicGloss = new Color(0, 0, 0, 0);
 
             public bool valuesConverted = false;
@@ -3660,7 +3643,7 @@ namespace UMA.CharacterSystem
                 channelAdditiveMask = new Color[3];
                 for (int i = 0; i < 3; i++)
                 {
-                    channelMask[i] = Color.white;
+                    channelMask[i] = Color.ColorN("ffffff");
                     channelAdditiveMask[i] = new Color(0, 0, 0, 0);
                 }
             }
@@ -3676,7 +3659,7 @@ namespace UMA.CharacterSystem
                 channelAdditiveMask = new Color[3];
                 for (int i = 0; i < 3; i++)
                 {
-                    channelMask[i] = Color.white;
+                    channelMask[i] = Color.ColorN("ffffff");
                     channelAdditiveMask[i] = new Color(0, 0, 0, 0);
                 }
                 name = nameVal;
@@ -3718,10 +3701,10 @@ namespace UMA.CharacterSystem
 
         //This is now a list of ColorValues which are themselves OvelayColorDatas. I made "Colors" 'FormerlySerializedAs' so anything people had previously set will automatcally convert
         [Serializable]
-        [ExecuteInEditMode]
+        //[ExecuteInEditMode]
         public class ColorValueList
         {
-            [FormerlySerializedAs("Colors")]
+            //[FormerlySerializedAs("Colors")]
             public List<ColorValue> _colors = new List<ColorValue>();
 
             public List<ColorValue> Colors
@@ -3784,7 +3767,7 @@ namespace UMA.CharacterSystem
                     c = cv.Color;
                     return true;
                 }
-                c = Color.white;
+                c = Color.ColorN("#ffffff");
                 return false;
             }
 
@@ -3843,50 +3826,6 @@ namespace UMA.CharacterSystem
                 Colors = newColors;
             }
         }
-
-#if UNITY_EDITOR           
-        [ContextMenu("Copy From Current Wardrobe")]
-        void CopyDefaultWardrobe()
-        {
-            string recipeString = JsonUtility.ToJson(new UMATextRecipe.DCSPackRecipe(this, "", "DynamicCharacterAvatar", defaultSaveOptions));
-            EditorGUIUtility.systemCopyBuffer = recipeString;
-            Debug.Log("Copied: " + EditorGUIUtility.systemCopyBuffer);
-        }
-
-        [ContextMenu("Paste To Default Wardrobe")]
-        void PasteDefaultWardrobe()
-        {
-            string buffer = EditorGUIUtility.systemCopyBuffer;
-            Debug.Log("Pasting: " + buffer);
-
-            UMATextRecipe.DCSPackRecipe copiedList = JsonUtility.FromJson<UMATextRecipe.DCSPackRecipe>(buffer);
-
-            ChangeRace(copiedList.race);
-
-            if (copiedList.wardrobeSet.Count > 0)
-                preloadWardrobeRecipes.recipes.Clear();
-
-            foreach (WardrobeSettings wardrobe in copiedList.wardrobeSet)
-            {
-                UMATextRecipe recipe = UMAAssetIndexer.Instance.GetAsset<UMATextRecipe>(wardrobe.recipe);
-                if (recipe != null)
-                {
-                    WardrobeRecipeListItem item = new WardrobeRecipeListItem(recipe);
-                    preloadWardrobeRecipes.recipes.Add(item);
-                }
-            }
-
-            if (copiedList.characterColors.Count > 0)
-                characterColors._colors.Clear();
-
-            foreach (UMAPackedRecipeBase.PackedOverlayColorDataV3 color in copiedList.characterColors)
-            {
-                OverlayColorData colorData = new OverlayColorData();
-                color.SetOverlayColorData(colorData);
-                characterColors.SetColor(color.name, colorData);
-            }
-        }
-#endif
     }
 
     #endregion
