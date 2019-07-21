@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 
-namespace MockUnityScripts
+namespace UnityEngine
 {
     public class UnityEvent<T>
     {

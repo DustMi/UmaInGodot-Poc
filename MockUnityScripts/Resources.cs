@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MockUnityScripts
+namespace UnityEngine
 {
     public class Resources
     {
@@ -13,6 +13,12 @@ namespace MockUnityScripts
             Type type = typeof(T);
             var myReturn = (T[]) Activator.CreateInstance(type, new object[] { 1 });
             return myReturn;
+        }
+
+        public static T Load<T>(string path) where T : Object
+        {
+            Type type = typeof(T);
+            return (T) Activator.CreateInstance(type);
         }
     }
 }

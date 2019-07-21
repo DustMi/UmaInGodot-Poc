@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class SkinnedMeshRenderer
+    public static class Time
     {
-        public bool enabled
+        static DateTime startTime;
+        static Time()
         {
-            get; set;
+            startTime = DateTime.Now;
         }
+
     }
 }

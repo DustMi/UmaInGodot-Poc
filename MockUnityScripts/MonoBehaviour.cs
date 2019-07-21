@@ -5,14 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Godot;
 
-namespace MockUnityScripts
+namespace UnityEngine
 {
-    public class MonoBehaviour
+    public class MonoBehaviour : Object
     {
-        public string name
-        {
-            get; set;
-        }
 
         public GameObject gameObject
         {

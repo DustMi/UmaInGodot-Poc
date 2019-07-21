@@ -1,4 +1,4 @@
-﻿namespace MockUnityScripts
+﻿namespace UnityEngine
 {
     public class UnityAction<T>
     {

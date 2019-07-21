@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UnityEngine
+namespace UnityEngine.UI
 {
-    public class SkinnedMeshRenderer
+    public class Text
     {
-        public bool enabled
-        {
-            get; set;
-        }
     }
 }

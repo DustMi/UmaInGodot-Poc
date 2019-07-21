@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using MockUnityScripts;
+using UnityEngine;
 
 using Godot;
 //using UMA.PoseTools;//so we can set the expression set based on the race
@@ -2836,7 +2836,7 @@ namespace UMA.CharacterSystem
             {
                 if (rebuildSkeleton)
                 {
-                    foreach (MockUnityScripts.Transform child in gameObject.transform)
+                    foreach (UnityEngine.Transform child in gameObject.transform)
                     {
                         //TODO: Destroy the object from scene
                         //UMAUtils.DestroySceneObject(child.gameObject);
@@ -2896,7 +2896,7 @@ namespace UMA.CharacterSystem
             if (!Application.isPlaying)
                 return;
 
-            foreach (MockUnityScripts.Transform child in gameObject.transform)
+            foreach (UnityEngine.Transform child in gameObject.transform)
             {
                 //TODO: Removing objects from scene
                 //UMAUtils.DestroySceneObject(child.gameObject);

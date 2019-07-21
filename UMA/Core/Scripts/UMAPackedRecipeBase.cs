@@ -1,7 +1,9 @@
 using UnityEngine;
+using Godot;
 using System.Collections.Generic;
 using System;
 
+//Note by Dustin Changed Rect to GD Rect2 in this file. I have no idea how badly that is going to 
 namespace UMA
 {
 	/// <summary>
@@ -686,6 +688,7 @@ namespace UMA
 
 		public static bool UnpackRecipeVersion1(UMA.UMAData.UMARecipe umaRecipe, UMAPackRecipe umaPackRecipe, UMAContext context)
 		{
+           
 			if (!UMAPackRecipe.ArrayHasData(umaPackRecipe.packedSlotDataList))
 				return false;
 

@@ -1,11 +1,8 @@
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UMA.AssetBundles;
 
 namespace UMA.CharacterSystem
@@ -15,50 +12,44 @@ namespace UMA.CharacterSystem
         static DynamicAssetLoader _instance;
 
         public bool makePersistent;
-        [Space]
-        [Tooltip("Set the server URL that assetbundles can be loaded from. Used in a live build and when the LocalAssetServer is turned off. Requires trailing slash but NO platform name")]
+        
         public string remoteServerURL = "";
-        [Tooltip("Use the JSON version of the assetBundleIndex rather than the assetBundleVersion.")]
+        
         public bool useJsonIndex = false;
-        [Tooltip("Set the server URL for the AssetBundleIndex json data. You can use this to make a server request that could generate an index on the fly for example. Used in a live build and when the LocalAssetServer is turned off. TIP use [PLATFORM] to use the current platform name in the URL")]
+        
         public string remoteServerIndexURL = "";
-        [Space]
+        
         //EncryptedAssetBundles
         public bool useEncryptedBundles = false;
         public string bundleEncryptionPassword = "";
-        [Space]
-        [Tooltip("A list of assetbundles to preload when the game starts. After these have completed loading any GameObject in the gameObjectsToActivate field will be activated.")]
+        
         public List<string> assetBundlesToPreLoad = new List<string>();
-        [Tooltip("GameObjects that will be activated after the list of assetBundlesToPreLoad has finished downloading.")]
+        
         public List<GameObject> gameObjectsToActivate = new List<GameObject>();
-        [Tooltip("GameObjects that will be activated after Initialization completes.")]
+        
         public List<GameObject> gameObjectsToActivateOnInit = new List<GameObject>();
-        [Space]
+        
         public GameObject loadingMessageObject;
         public Text loadingMessageText;
         public string loadingMessage = "";
-        [HideInInspector]
-        [System.NonSerialized]
+        
+        
         public float percentDone = 0f;
-        [HideInInspector]
-        [System.NonSerialized]
+        
         public bool assetBundlesDownloading;
-        [HideInInspector]
-        [System.NonSerialized]
+        
+        
         public bool canCheckDownloadingBundles;
         bool isInitializing = false;
-        [HideInInspector]
+        
         public bool isInitialized = false;
-        [Space]
-        [System.NonSerialized]
-        [ReadOnly]
+        
+        
+        
         public DownloadingAssetsList downloadingAssets = new DownloadingAssetsList();
 
         //For SimulationMode in the editor - equivalent of AssetBundleManager.m_downloadedBundles
         //should persist betweem scene loads but not between plays
-#if UNITY_EDITOR
-        List<string> simulatedDownloadedBundles = new List<string>();
-#endif
 
         public static DynamicAssetLoader Instance
         {
@@ -256,29 +247,23 @@ namespace UMA.CharacterSystem
         void InitializeSourceURL()
         {
             string URLToUse = "";
-            if (SimpleWebServer.ServerURL != "")
-            {
-#if UNITY_EDITOR
-                if (SimpleWebServer.serverStarted)//this is not true in builds no matter what- but we in the editor we need to know
-#endif
-                    URLToUse = remoteServerURL = SimpleWebServer.ServerURL;
-                if (Debug.isDebugBuild)
-                    Debug.Log("[DynamicAssetLoader] SimpleWebServer.ServerURL = " + URLToUse);
-            }
-            else
-            {
-                URLToUse = remoteServerURL;
-            }
+            //Commented out by Dustin. I don't think I need this to start and it's not compiling
+            //if (SimpleWebServer.ServerURL != "")
+            //{
+            //        URLToUse = remoteServerURL = SimpleWebServer.ServerURL;
+            //    if (Debug.isDebugBuild)
+            //        Debug.Log("[DynamicAssetLoader] SimpleWebServer.ServerURL = " + URLToUse);
+            //}
+            //else
+            //{
+            //    URLToUse = remoteServerURL;
+            //}
             if (URLToUse != "")
                 AssetBundleManager.SetSourceAssetBundleURL(URLToUse);
             else
             {
                 string errorString = "LocalAssetBundleServer was off and no remoteServerURL was specified. One of these must be set in order to use any AssetBundles!";
                 var warningType = "warning";
-#if UNITY_EDITOR
-                errorString = "Switched to Simulation Mode because LocalAssetBundleServer was off and no remoteServerURL was specified in the Scenes' DynamicAssetLoader. One of these must be set in order to actually use your AssetBundles.";
-                warningType = "info";
-#endif
                 AssetBundleManager.SimulateOverride = true;
                 var context = UMAContext.FindInstance();
                 if (context != null)
@@ -567,7 +552,7 @@ namespace UMA.CharacterSystem
 #pragma warning disable 0219 //remove the warning that we are not using loadedBundle- since we want the error
         protected IEnumerator LoadAssetBundleAsync(string bundle)
         {
-            float startTime = Time.realtimeSinceStartup;
+            DateTime startTime = DateTime.Now;
             AssetBundleManager.LoadAssetBundle(bundle, false);
             string error = null;
             while (AssetBundleManager.GetLoadedAssetBundle(bundle, out error) == null)
@@ -575,7 +560,7 @@ namespace UMA.CharacterSystem
                 yield return null;
             }
             LoadedAssetBundle loadedBundle = AssetBundleManager.GetLoadedAssetBundle(bundle, out error);
-            float elapsedTime = Time.realtimeSinceStartup - startTime;
+            TimeSpan elapsedTime = DateTime.Now - startTime;
             if (Debug.isDebugBuild)
                 Debug.Log(bundle + (!String.IsNullOrEmpty(error) ? " was not" : " was") + " loaded successfully in " + elapsedTime + " seconds");
 			if (!String.IsNullOrEmpty(error))
@@ -632,7 +617,7 @@ namespace UMA.CharacterSystem
         #endregion
 
         #region LOAD ASSETS METHODS
-        [HideInInspector]
+        
         public bool debugOnFail = true;
         public bool AddAssets<T>(ref Dictionary<string, List<string>> assetBundlesUsedDict, bool searchResources, bool searchBundles, bool downloadAssetsEnabled, string bundlesToSearch = "", string resourcesFolderPath = "", int? assetNameHash = null, string assetName = "", Action<T[]> callback = null, bool forceDownloadAll = false) where T : UnityEngine.Object
         {
@@ -734,7 +719,7 @@ namespace UMA.CharacterSystem
         }
 
 		public T GetPlaceholderAsset<T>(string placeholderName) where T : UnityEngine.Object
-		{
+        {
 			if (placeholderName.IndexOf("Placeholder") == -1)
 				return null;
 			return (T)Resources.Load<T>("PlaceholderAssets/" + placeholderName) as T;

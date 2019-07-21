@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace MockUnityScripts
+namespace UnityEngine
 {
     public class RuntimeAnimatorController : MonoBehaviour
 

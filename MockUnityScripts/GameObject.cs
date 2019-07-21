@@ -4,13 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MockUnityScripts
+namespace UnityEngine
 {
-    public class GameObject
+    public class GameObject : Object
     {
-        public string name
+        private bool active;
+        public bool activeSelf
         {
-            get; set;
+            get;
+            private set;
+        }
+
+        public void SetActive(bool a)
+        {
+            this.active = a;
         }
 
         public List<Transform> transform

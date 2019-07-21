@@ -1,15 +1,9 @@
 ﻿using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace UMA
 {
     [System.Serializable]
     public class AssetItem
-#if UNITY_EDITOR
-        : System.IEquatable<AssetItem>, System.IComparable<AssetItem>
-#endif
     {
         #region Fields
         private System.Type _TheType;
@@ -50,13 +44,7 @@ namespace UMA
         {
             get
             {
-#if UNITY_EDITOR
-                if (_SerializedItem != null) return _SerializedItem;
-				CachSerializedItem();
                 return _SerializedItem;
-#else
-                return _SerializedItem;
-#endif
             }
         }
 
@@ -70,36 +58,7 @@ namespace UMA
 
 		public void CachSerializedItem()
 		{
-			#if UNITY_EDITOR		
-			if (_SerializedItem != null) return;
-			_SerializedItem = AssetDatabase.LoadAssetAtPath(_Path, _Type);	
-			if (_SerializedItem == null) 
-			{
-				// uhoh. It's gone.
-				if (!string.IsNullOrEmpty(_Guid))
-				{
-					// at least we have a guid. Let's try to find it from that...
-					_Path = AssetDatabase.GUIDToAssetPath(_Guid);
-					if (!string.IsNullOrEmpty(_Path))
-					{
-						_SerializedItem = AssetDatabase.LoadAssetAtPath(_Path,_Type);
-					}
-				}
-				// No guid, or couldn't even find by GUID.
-				// Let's search for it?
-				if (_SerializedItem == null)
-				{
-					string s = _Type.Name;
-					string[] guids = AssetDatabase.FindAssets(_Name+ " t:" + s);
-					if (guids.Length > 0)
-					{
-						_Guid = guids[0];
-						_Path = AssetDatabase.GUIDToAssetPath(_Guid);
-						_SerializedItem = AssetDatabase.LoadAssetAtPath(_Path, _Type);
-					}
-				}
-			}
-			#endif
+			
 		}
 
         public string EvilName

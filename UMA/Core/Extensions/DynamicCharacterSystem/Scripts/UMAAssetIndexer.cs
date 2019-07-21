@@ -322,7 +322,7 @@ namespace UMA
 
 
 
-        public List<T> GetAllAssets<T>(string[] foldersToSearch = null) where T : UnityEngine.Object
+        public List<T> GetAllAssets<T>(string[] foldersToSearch = null) where T : Object
         {
             var st = StartTimer();
 

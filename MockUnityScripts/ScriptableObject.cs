@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MockUnityScripts
+namespace UnityEngine
 {
-    public class ScriptableObject
+    public class ScriptableObject : Object
     {
-        public string name
-        {
-            get; set;
-        }
 
         public static T CreateInstance<T>()
         {
@@ -19,9 +15,5 @@ namespace MockUnityScripts
             return (T)Activator.CreateInstance(type);
         }
 
-        public static implicit operator bool(ScriptableObject exists)
-        {
-            return !object.ReferenceEquals(exists, null);
-        }
     }
 }

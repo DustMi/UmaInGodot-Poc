@@ -6,3 +6,6 @@ export_presets.cfg
 
 # Mono-specific ignores
 .mono/
+
+#If Using full Visual Studio (i.e. not Code)
+.vs/

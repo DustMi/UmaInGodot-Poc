@@ -1,4 +1,4 @@
-using MockUnityScripts;
+using UnityEngine;
 using System;
 using System.Collections;
 
@@ -201,7 +201,7 @@ namespace UMA
                   System.Array.Copy(channelMask, newMask, channelMask.Length);
                   for (int i = channelMask.Length; i < channels; i++)
                   {
-                     newMask[i] = Color.white;
+                     newMask[i] = Color.ColorN("white");
                   }
                   channelMask = newMask;
                }
