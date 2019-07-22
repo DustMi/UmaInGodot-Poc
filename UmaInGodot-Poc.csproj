@@ -49,11 +49,17 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MockUnityScripts\AnimatorOverrideController.cs" />
+    <Compile Include="MockUnityScripts\AssetBundle.cs" />
     <Compile Include="MockUnityScripts\Color32.cs" />
+    <Compile Include="MockUnityScripts\ISerializationCallbackReceiver.cs" />
     <Compile Include="MockUnityScripts\Object.cs" />
     <Compile Include="MockUnityScripts\Rect.cs" />
+    <Compile Include="MockUnityScripts\Sprite.cs" />
     <Compile Include="MockUnityScripts\Text.cs" />
     <Compile Include="MockUnityScripts\Time.cs" />
+    <Compile Include="MockUnityScripts\UI\Slider.cs" />
+    <Compile Include="MockUnityScripts\WaitForSeconds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test01.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\Scripts\AssetItem.cs" />
@@ -62,6 +68,7 @@
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\Scripts\DynamicAssetLoader.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\Scripts\DynamicCharacterAvatar.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\Scripts\DynamicCharacterSystem.cs" />
+    <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\Scripts\DynamicCharacterSystemBase.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\Scripts\DynamicOverlayLibrary.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\Scripts\DynamicRaceLibrary.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\Scripts\DynamicSlotLibrary.cs" />
@@ -79,6 +86,9 @@
     <Compile Include="UMA\Core\HumanShared\DNA\Legacy\UMADnaTutorial.cs" />
     <Compile Include="UMA\Core\HumanShared\DNA\Legacy\UMADnaTutorial_Generated.cs" />
     <Compile Include="UMA\Core\HumanShared\DNA\Legacy\UMADna_Generated.cs" />
+    <Compile Include="UMA\Core\Scripts\OverlayLibrary.cs" />
+    <Compile Include="UMA\Core\Scripts\RaceLibrary.cs" />
+    <Compile Include="UMA\Core\Scripts\SlotLibrary.cs" />
     <Compile Include="UMA\Core\Scripts\UMAPackedRecipeBase.cs" />
     <Compile Include="UMA\Core\Scripts\UMATextRecipe.cs" />
     <Compile Include="UMA\Core\StandardAssets\Extensions\DynamicCharacterSystem\Scripts\DCSStandardTypes.cs" />
@@ -86,6 +96,7 @@
     <Compile Include="UMA\Core\StandardAssets\Extensions\DynamicCharacterSystem\Scripts\pRaceData.cs" />
     <Compile Include="UMA\Core\StandardAssets\Extensions\DynamicCharacterSystem\Scripts\pUMAContext.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\DynamicUMADna.cs" />
+    <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\DynamicUMADnaAsset.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\DynamicUMADnaBase.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\FileUtils.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\IDNAConverter.cs" />
@@ -106,12 +117,13 @@
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMAGeneratorBuiltin.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMAMaterial.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMARecipeBase.cs" />
+    <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMAResourceNotFoundException.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMAUtils.cs" />
     <Compile Include="MockUnityScripts\Application.cs" />
     <Compile Include="MockUnityScripts\Debug.cs" />
     <Compile Include="MockUnityScripts\GameObject.cs" />
     <Compile Include="MockUnityScripts\JsonUtility.cs" />
-    <Compile Include="MockUnityScripts\MathfU.cs" />
+    <Compile Include="MockUnityScripts\Mathf.cs" />
     <Compile Include="MockUnityScripts\MonoBehaviour.cs" />
     <Compile Include="MockUnityScripts\Resources.cs" />
     <Compile Include="MockUnityScripts\RuntimeAnimatorController.cs" />
