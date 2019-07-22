@@ -30,5 +30,10 @@ namespace UnityEngine
             return null;
         }
 
+        public void StopCoroutine(string methodName)
+        {
+            //do nothing
+        }
+
     }
 }

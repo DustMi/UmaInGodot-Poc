@@ -14,29 +14,27 @@ namespace UMA.CharacterSystem
 
 		public bool initializeOnAwake = true;
 
-		[HideInInspector]
 		[System.NonSerialized]
 		public bool initialized = false;
 		private bool isInitializing = false;
 
 		public bool dynamicallyAddFromResources;
-		[Tooltip("Limit the Global Library search to the following folders (no starting slash and seperate multiple entries with a comma)")]
+
 		public string resourcesCharactersFolder = "";
-		[Tooltip("Limit the Global Library search to the following folders (no starting slash and seperate multiple entries with a comma)")]
+
 		public string resourcesRecipesFolder = "";
 		public bool dynamicallyAddFromAssetBundles;
-		[Tooltip("Limit the AssetBundles search to the following bundles (no starting slash and seperate multiple entries with a comma)")]
+
 		public string assetBundlesForCharactersToSearch;
-		[Tooltip("Limit the AssetBundles search to the following bundles (no starting slash and seperate multiple entries with a comma)")]
+
 		public string assetBundlesForRecipesToSearch;
-		[Tooltip("If true will automatically scan and add all UMATextRecipes from any downloaded bundles.")]
+
 		public bool addAllRecipesFromDownloadedBundles = true;
-		[HideInInspector]
+
 		public UMAContext context;
 		//This is a ditionary of asset bundles that were loaded into the library. This can be queried to store a list of active assetBundles that might be useful to preload etc
 		public Dictionary<string, List<string>> assetBundlesUsedDict = new Dictionary<string, List<string>>();
-		[System.NonSerialized]
-		[HideInInspector]
+
 		public bool downloadAssetsEnabled = true;
 
 		public override void Awake()

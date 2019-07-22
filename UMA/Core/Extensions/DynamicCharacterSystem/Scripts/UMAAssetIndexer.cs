@@ -10,7 +10,7 @@ using UnityEditor.Animations;
 
 namespace UMA
 {
-    [PreferBinarySerialization]
+
     public class UMAAssetIndexer : ScriptableObject, ISerializationCallbackReceiver
 	{
 

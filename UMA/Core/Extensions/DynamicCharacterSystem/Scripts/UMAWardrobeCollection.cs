@@ -10,10 +10,10 @@ namespace UMA.CharacterSystem
 	//Because this is a class for user generated content it is marked as partial so it can be extended without modifying the underlying code
 	public partial class UMAWardrobeCollection : UMATextRecipe
 	{
-		[Tooltip("Cover images for the collection as a whole. Use these for a promotional images for this collection, presenting the goodies inside.")]
+		//[Tooltip("Cover images for the collection as a whole. Use these for a promotional images for this collection, presenting the goodies inside.")]
 		public List<Sprite> coverImages = new List<Sprite>();
 		public WardrobeCollectionList wardrobeCollection = new WardrobeCollectionList();
-		[Tooltip("WardrobeCollections can also contain an arbitrary list of wardrobeRecipes, not associated with any particular race.You can use this to make a 'hairStyles' pack or a 'tattoos' pack for example")]
+		//[Tooltip("WardrobeCollections can also contain an arbitrary list of wardrobeRecipes, not associated with any particular race.You can use this to make a 'hairStyles' pack or a 'tattoos' pack for example")]
 		public List<string> arbitraryRecipes = new List<string>();
 
 		#region CONSTRUCTOR

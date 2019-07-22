@@ -11,10 +11,10 @@ namespace UMA.CharacterSystem
 
 		//extra fields for Dynamic Version
 		public bool dynamicallyAddFromResources = true;
-		[Tooltip("Limit the Global Library search to the following folders (no starting slash and seperate multiple entries with a comma)")]
+		
 		public string resourcesFolderPath = "";
 		public bool dynamicallyAddFromAssetBundles;
-		[Tooltip("Limit the AssetBundles search to the following bundles (no starting slash and seperate multiple entries with a comma)")]
+		
 		public string assetBundleNamesToSearch = "";
 		//This is a ditionary of asset bundles that were loaded into the library at runtime. 
 		//CharacterAvatar can query this this to find out what asset bundles were required to create itself 
@@ -29,7 +29,7 @@ namespace UMA.CharacterSystem
 		bool allStartingAssetsAdded = false;
 
 		[System.NonSerialized]
-		[HideInInspector]
+
 		public bool downloadAssetsEnabled = true;
 
 	#if UNITY_EDITOR

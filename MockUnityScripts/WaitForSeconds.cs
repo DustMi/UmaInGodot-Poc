@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class TextAsset : Object
+    public class WaitForSeconds
     {
-        public string text
+        public WaitForSeconds(float seconds)
         {
-            get;
+            //why is it a float!?
         }
     }
 }

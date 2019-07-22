@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UnityEngine
+namespace UnityEngine.UI
 {
-    public class TextAsset : Object
+    public class Slider
     {
-        public string text
-        {
-            get;
-        }
+        public virtual float value { get; set; }
     }
 }

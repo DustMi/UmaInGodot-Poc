@@ -15,5 +15,16 @@ namespace UnityEngine
             return (T)Activator.CreateInstance(type);
         }
 
+        public static Object CreateInstance(Type T)
+        {
+            return (Object) Activator.CreateInstance(T);
+        }
+
+        public static T Instantiate<T>(T original) where T : Object
+        {
+            Type type = typeof(T);
+            return (T)Activator.CreateInstance(type);
+        }
+
     }
 }

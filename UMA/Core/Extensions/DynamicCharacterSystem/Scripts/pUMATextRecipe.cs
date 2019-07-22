@@ -11,27 +11,27 @@ namespace UMA
 		//TODO use the recipeTypeOpts enum for this everywhere
 		public string recipeType = "Standard";
 
-		[SerializeField]
+
 		public string DisplayValue; // some sort of text value.
 
-		[SerializeField]
+
 		public List<string> compatibleRaces = new List<string>();
 
-		[SerializeField]
+
 		public List<WardrobeRecipeThumb> wardrobeRecipeThumbs = new List<WardrobeRecipeThumb>();
 
 		public string wardrobeSlot = "None";
 
-		[SerializeField]
+
 		public List<string> Hides = new List<string>();
 
-		[SerializeField]
+
 		public List<string> suppressWardrobeSlots = new List<string>();
 
-		[SerializeField]
+
 		public List<WardrobeSettings> activeWardrobeSet = new List<WardrobeSettings>();//used in the editor to draw 'DynamicCharacterSystem' type recipe assets, in a different way to 'Standard' or 'Wardrobe' assets
 
-        [SerializeField]
+
         public List<MeshHideAsset> MeshHideAssets = new List<MeshHideAsset>();
 
 	#if UNITY_EDITOR
@@ -452,7 +452,7 @@ namespace UMA
 		[System.Serializable]
 		public class DCSUniversalPackRecipe : UMAPackRecipe
 		{
-			[SerializeField]
+
 			public List<WardrobeSettings> wardrobeSet = null;
 
 			public string packedRecipeType = "Standard";

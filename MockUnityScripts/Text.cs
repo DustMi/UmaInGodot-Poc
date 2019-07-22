@@ -8,5 +8,6 @@ namespace UnityEngine.UI
 {
     public class Text
     {
+        public virtual string text { get; set; }
     }
 }

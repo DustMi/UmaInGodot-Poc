@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class TextAsset : Object
+    public class AnimatorOverrideController
     {
-        public string text
-        {
-            get;
-        }
     }
 }

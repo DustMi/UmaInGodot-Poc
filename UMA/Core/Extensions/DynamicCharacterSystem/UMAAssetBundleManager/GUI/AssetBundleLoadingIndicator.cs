@@ -11,13 +11,13 @@ namespace UMA.AssetBundles
 
 		public enum statusOpts { Idle, Downloading, Unpacking, Complete };
 		//[System.NonSerialized]
-		[ReadOnly]
+
 		public statusOpts status = statusOpts.Idle;
 		//[System.NonSerialized]
-		[ReadOnly]
+
 		public float percentDone = 0f;
 		//[System.NonSerialized]
-		[ReadOnly]
+
 		public float currentDownloadMeg = 0f;
 
 		public GameObject indicatorObject;

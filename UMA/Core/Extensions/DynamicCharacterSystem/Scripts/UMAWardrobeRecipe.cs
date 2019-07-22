@@ -8,7 +8,7 @@ namespace UMA.CharacterSystem
 	public partial class UMAWardrobeRecipe : UMATextRecipe
 	{
 		#region FIELDS
-		[SerializeField]
+		//[SerializeField]
 		public string replaces;
 
 		public bool HasReplaces

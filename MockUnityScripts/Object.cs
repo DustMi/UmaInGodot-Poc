@@ -27,5 +27,10 @@ namespace UnityEngine
         {
             return new Object[0];
         }
+
+        public static void Destroy(Object obj)
+        {
+            //doing nothing
+        }
     }
 }

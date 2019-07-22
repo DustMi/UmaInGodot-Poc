@@ -20,5 +20,10 @@ namespace UnityEngine
             Type type = typeof(T);
             return (T) Activator.CreateInstance(type);
         }
+
+        public static Object Load(string path)
+        {
+            return new Object();
+        }
     }
 }

@@ -91,10 +91,10 @@ namespace UMA
 		/// <param name="color2">Color2.</param>
 		public static bool SameColor(Color color1, Color color2)
 		{
-			return (MathfU.Approximately(color1.r, color2.r) &&
-					MathfU.Approximately(color1.g, color2.g) &&
-					MathfU.Approximately(color1.b, color2.b) &&
-					MathfU.Approximately(color1.a, color2.a));
+			return (UnityEngine.Mathf.Approximately(color1.r, color2.r) &&
+                    UnityEngine.Mathf.Approximately(color1.g, color2.g) &&
+                    UnityEngine.Mathf.Approximately(color1.b, color2.b) &&
+                    UnityEngine.Mathf.Approximately(color1.a, color2.a));
 		}
 		/// <summary>
 		/// Are two Unity Colors different?
@@ -104,10 +104,10 @@ namespace UMA
 		/// <param name="color2">Color2.</param>
 		public static bool DifferentColor(Color color1, Color color2)
 		{
-			return (!MathfU.Approximately(color1.r, color2.r) ||
-					!MathfU.Approximately(color1.g, color2.g) ||
-					!MathfU.Approximately(color1.b, color2.b) ||
-			        !MathfU.Approximately(color1.a, color2.a));
+			return (!UnityEngine.Mathf.Approximately(color1.r, color2.r) ||
+					!UnityEngine.Mathf.Approximately(color1.g, color2.g) ||
+					!UnityEngine.Mathf.Approximately(color1.b, color2.b) ||
+			        !UnityEngine.Mathf.Approximately(color1.a, color2.a));
 		}
 
 		public static implicit operator bool(OverlayColorData obj) 

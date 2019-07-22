@@ -16,7 +16,7 @@ namespace UMA.CharacterSystem
 		public UnityEngine.Object tempAsset;
 		public string containingBundle;
 		public List<Delegate> dynamicCallback = new List<Delegate>();
-		[Range(0, 1f)]
+
 		public float _progress = 0;
 		public bool flagForRemoval = false;
 		public bool isBeingRemoved = false;
