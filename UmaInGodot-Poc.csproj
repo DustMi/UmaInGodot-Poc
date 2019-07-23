@@ -49,6 +49,21 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\Scripts\pAssetBundleIndex.cs" />
+    <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\UMAAssetBundleManager\AssetBundleIndex.cs" />
+    <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\UMAAssetBundleManager\AssetBundleLoadOperation.cs" />
+    <Compile Include="UMA\Core\Scripts\BaseCharacterModifier.cs" />
+    <Compile Include="UMA\Core\Scripts\DNAEvaluationGraph.cs" />
+    <Compile Include="UMA\Core\Scripts\DNAEvaluator.cs" />
+    <Compile Include="UMA\Core\Scripts\DynamicDNAPlugin.cs" />
+    <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\TextureMerge.cs" />
+    <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\TextureProcessBaseCoroutine.cs" />
+    <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMABonePose.cs" />
+    <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMAClothProperties.cs" />
+    <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMAExpressionPlayer.cs" />
+    <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMAGeneratorCoroutine.cs" />
+    <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMAMeshCombiner.cs" />
+    <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\WorkerCoroutine.cs" />
     <Compile Include="UnityEngine\AllTheAttributes.cs" />
     <Compile Include="UnityEngine\Animator.cs" />
     <Compile Include="UnityEngine\AnimatorControllerParameter.cs" />

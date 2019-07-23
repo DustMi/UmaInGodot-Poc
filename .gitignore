@@ -9,3 +9,4 @@ export_presets.cfg
 
 #If Using full Visual Studio (i.e. not Code)
 .vs/
+*.ide
