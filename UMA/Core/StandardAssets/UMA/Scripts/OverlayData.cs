@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Godot;
 
 namespace UMA
 {
@@ -36,7 +37,7 @@ namespace UMA
 		public bool isProcedural { get { return asset.material.IsProcedural(); } }
 		public string overlayName { get { return asset.overlayName; } }
 		public OverlayDataAsset.OverlayType overlayType { get { return asset.overlayType; } }
-		public Texture alphaMask
+		public UnityEngine.Texture alphaMask
 		{
 			get
 			{
@@ -60,7 +61,7 @@ namespace UMA
 				return asset.textureList[0];
 			}
 		}
-		public Texture[] textureArray
+		public UnityEngine.Texture[] textureArray
 		{
 			get
 			{
@@ -238,8 +239,8 @@ namespace UMA
 
 				for (int i = oldsize; i > targetMaterial.channels.Length; i++)
 				{
-					colorData.channelMask[i] = Color.white;
-					colorData.channelAdditiveMask[i] = Color.black;
+                    colorData.channelMask[i] = Color.ColorN("white");
+                    colorData.channelAdditiveMask[i] = Color.ColorN("black");
 				}
 
 				if (Debug.isDebugBuild)
@@ -270,12 +271,12 @@ namespace UMA
 				{
 					if (colorComponentAdjusters[i].adjustmentType == ColorComponentAdjuster.AdjustmentType.Adjust || colorComponentAdjusters[i].adjustmentType == ColorComponentAdjuster.AdjustmentType.AdjustAdditive)
 					{
-						resUnsigned += Mathf.Abs((inColor + colorComponentAdjusters[i].adjustment) - inColor);
+						resUnsigned += UnityEngine.Mathf.Abs((inColor + colorComponentAdjusters[i].adjustment) - inColor);
 						resList.Add((inColor + colorComponentAdjusters[i].adjustment) - inColor);
 					}
 					else //Absolute/BlendFactor - the adjustment is the color
 					{
-						resUnsigned += Mathf.Abs(colorComponentAdjusters[i].adjustment - inColor);
+						resUnsigned += UnityEngine.Mathf.Abs(colorComponentAdjusters[i].adjustment - inColor);
 						resList.Add(colorComponentAdjusters[i].adjustment - inColor);
 					}
 				}
@@ -287,7 +288,7 @@ namespace UMA
 			{
 				for (int i = 0; i < resList.Count; i++)
 				{
-					weightedAveRes += resList[i] * (Mathf.Abs(resList[i]) / resUnsigned);
+					weightedAveRes += resList[i] * (UnityEngine.Mathf.Abs(resList[i]) / resUnsigned);
 				}
 			}
 			return weightedAveRes;

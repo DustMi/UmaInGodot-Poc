@@ -20,6 +20,12 @@ namespace UnityEngine
             return new Color32((byte)color.r8, (byte)color.g8, (byte)color.b8, (byte)color.a8);
         }
 
+        public static implicit operator Color(Color32 color)
+        {
+            byte[] colorArray = new byte[] { color.a, color.r, color.g, color.b };
+            return new Color(BitConverter.ToInt32(colorArray, 0));
+        }
+
         public Color32()
         {
             myColor = new Color(0.0f, 0.0f, 0.0f, 1);

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Godot;
 
 namespace UMA
 {
@@ -182,7 +183,7 @@ namespace UMA
 
 		void OnDrawGizmosSelected()
 		{
-			Gizmos.color = Color.white;
+			Gizmos.color = Color.ColorN("white");
 			Gizmos.DrawWireCube(transform.position, new Vector3(0.6f, 0.2f, 0.6f));
 		}
 	}

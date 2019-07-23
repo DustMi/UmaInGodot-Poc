@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Godot;
+using Texture = UnityEngine.Texture;
+using Mathf = UnityEngine.Mathf;
+using Transform = UnityEngine.Transform;
 
 namespace UMA
 {
@@ -309,7 +313,7 @@ namespace UMA
 
 			public Color GetMultiplier(int overlay, int textureType)
 			{
-				var c = Color.white;
+				var c = Color.ColorN("white");
 
 				if (channelMask[overlay] != null && channelMask[overlay].Length > 0)
 				{
@@ -1290,10 +1294,12 @@ namespace UMA
 				var mats = renderer.sharedMaterials;
 				for (int i = 0; i < mats.Length; i++)
 				{
-					if (mats[i])
-					{
-						UMAUtils.DestroySceneObject(mats[i]);
-					}
+                    //Remove by Dustin
+                    
+                    //if (mats[i])
+					//{  
+						//UMAUtils.DestroySceneObject(mats[i]);
+					//}
 				}
 				if (destroyRenderer)
 				{

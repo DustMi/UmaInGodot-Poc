@@ -32,5 +32,10 @@ namespace UnityEngine
         {
             //doing nothing
         }
+
+        public static T FindObjectOfType<T>() where T : Object
+        {
+            throw new NotImplementedException();
+        }
     }
 }

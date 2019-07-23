@@ -22,7 +22,7 @@ namespace UnityEngine
             GD.Print(message);
         }
 
-        public static void LogError(string message)
+        public static void LogError(string message, Object obj = null)
         {
             GD.Print(message);
         }

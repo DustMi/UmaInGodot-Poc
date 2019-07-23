@@ -20,7 +20,7 @@ namespace UMA
         /// The asset we want to apply mesh hiding to if found in the generated UMA.
         /// </summary>
         /// <value>The SlotDataAsset.</value>
-        [SerializeField]
+
         public SlotDataAsset asset
         {
             get{ return _asset; }
@@ -33,7 +33,7 @@ namespace UMA
                     _assetSlotName = "";
             }
         }
-        [SerializeField, HideInInspector]
+
         private SlotDataAsset _asset;
 
         public string AssetSlotName
@@ -45,7 +45,7 @@ namespace UMA
                 _asset = UMAAssetIndexer.Instance.GetAsset<SlotDataAsset>(_assetSlotName);
             }
         }
-        [SerializeField, HideInInspector]
+
         private string _assetSlotName = "";
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace UMA
 				flags = new int[(Count + 31) / 32];
             }
         }
-        [SerializeField]
+
         private serializedFlags[] _serializedFlags;
 
         public int SubmeshCount
@@ -198,7 +198,7 @@ namespace UMA
         /// <summary>
         ///  Initialize this asset by creating a new boolean array that matches the triangle length in the asset triangle list.
         /// </summary>
-        [ExecuteInEditMode]
+
         public void Initialize()
         {
             if (_asset == null)
@@ -223,7 +223,7 @@ namespace UMA
         /// <param name="triangleIndex">The first index for the triangle to set.</param>
         /// <param name="flag">Bool to set the triangle flag to.</param>
         /// <param name="submesh">The submesh index to access. Default = 0.</param>
-        [ExecuteInEditMode]
+
         public void SetTriangleFlag(int triangleIndex, bool flag, int submesh = 0)
         {
             if (_triangleFlags == null)
@@ -244,7 +244,7 @@ namespace UMA
         /// Set the given BitArray to this object's triangleFlag's BitArray.
         /// </summary>
         /// <param name="selection">The BitArray selection.</param>
-        [ExecuteInEditMode]
+
         public void SaveSelection( BitArray selection )
         {
             if (selection.Count != _triangleFlags[0].Count)

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace UnityEngine
 {
@@ -26,6 +23,31 @@ namespace UnityEngine
             var toDouble = System.Convert.ToDouble(f);
             toDouble = Math.Round(toDouble);
             return (float)toDouble;
+        }
+
+        public static float Abs(float f)
+        {
+            var toDouble = Convert.ToDouble(f);
+            toDouble = Math.Abs(toDouble);
+            return (float) toDouble;
+        }
+
+        public static float Clamp(float value, float min, float max)
+        {
+            if(value > max)
+            {
+                return max;
+            }
+            if(value < min)
+            {
+                return min;
+            }
+            return value;
+        }
+
+        public static float Clamp01(float weight)
+        {
+            return Clamp(weight, 0.0f, 1.0f);
         }
     }
 }

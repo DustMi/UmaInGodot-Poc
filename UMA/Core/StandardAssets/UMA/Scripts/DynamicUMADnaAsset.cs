@@ -13,11 +13,11 @@ namespace UMA
 		//because this asset is now responsible for setting the dnaTypeHash (which UMA uses to define the DNA Type) 
 		//we need to ensure this typeHash is unique if we can and that it gets changed to a new one if the user duplicates
 		//a dna asset in the editor
-		[SerializeField]
+
 		protected string lastKnownAssetPath = "";
-		[SerializeField]
+
 		protected string lastKnownDuplicateAssetPath = "";
-		[SerializeField]
+
 		protected int lastKnownInstanceID = 0;
 
         #region INameProvider

@@ -1,12 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Godot;
 
 namespace UMA
 {
 	public class OverlayLibrary : OverlayLibraryBase
 	{
-		[SerializeField]
+
 		protected OverlayDataAsset[] overlayElementList = new OverlayDataAsset[0];
 		[NonSerialized]
 		private Dictionary<int, OverlayDataAsset> overlayDictionary;
