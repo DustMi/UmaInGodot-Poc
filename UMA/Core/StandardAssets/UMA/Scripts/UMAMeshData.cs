@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using Godot;
 using UnityEngine;
-using UnityEngine.Profiling;
+using Mesh = UnityEngine.Mesh;
+using Transform = UnityEngine.Transform;
 
 namespace UMA
 {

@@ -53,4 +53,12 @@ namespace UnityEngine
             //doing nothing
         }
     }
+
+    public class Range : System.Attribute
+    {
+        public Range(float min, float max)
+        {
+            //doing nothing
+        }
+    }
 }
