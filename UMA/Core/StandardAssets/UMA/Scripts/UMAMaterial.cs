@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Godot;
 
 namespace UMA
 {
@@ -15,9 +16,9 @@ namespace UMA
         public UMAClothProperties clothProperties;
         public bool RequireSeperateRenderer;
 
-        [Range(-2.0f, 2.0f)]
+        [UnityEngine.Range(-2.0f, 2.0f)]
         public float MipMapBias = 0.0f;
-        [Range(1, 16)]
+        [UnityEngine.Range(1, 16)]
         public int AnisoLevel = 1;
         public FilterMode MatFilterMode = FilterMode.Bilinear;
         public CompressionSettings Compression = CompressionSettings.None;
@@ -45,7 +46,7 @@ namespace UMA
             public string materialPropertyName;
 			public string sourceTextureName;
             public CompressionSettings Compression;
-            [Range(0,4)]
+            [UnityEngine.Range(0,4)]
             public int DownSample;
             public bool ConvertRenderTexture;
        }
