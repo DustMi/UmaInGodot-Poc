@@ -109,6 +109,7 @@
     <Compile Include="UnityEngine\RenderTexture.cs" />
     <Compile Include="UnityEngine\RenderTextureFormat.cs" />
     <Compile Include="UnityEngine\Rigidbody.cs" />
+    <Compile Include="UnityEngine\RuntimePlatform.cs" />
     <Compile Include="UnityEngine\Shader.cs" />
     <Compile Include="UnityEngine\SkeletonBone.cs" />
     <Compile Include="UnityEngine\Sprite.cs" />
