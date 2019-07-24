@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Godot;
-using Texture = UnityEngine.Texture;
-using Mathf = UnityEngine.Mathf;
-using Transform = UnityEngine.Transform;
 
 namespace UMA
 {

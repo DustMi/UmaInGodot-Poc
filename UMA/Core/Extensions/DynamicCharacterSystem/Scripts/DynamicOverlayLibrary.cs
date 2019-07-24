@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEditor;
 #endif
 using System.Collections.Generic;
-using Godot;
 
 namespace UMA.CharacterSystem
 {

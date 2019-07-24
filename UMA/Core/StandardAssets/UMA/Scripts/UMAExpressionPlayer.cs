@@ -4,7 +4,7 @@
 //	Copyright:	(c) 2013 Eli Curtz
 //	============================================================
 using UnityEngine;
-using Godot;
+
 
 namespace UMA.PoseTools
 {

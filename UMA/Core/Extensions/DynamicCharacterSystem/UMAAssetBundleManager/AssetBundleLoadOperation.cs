@@ -1,6 +1,5 @@
 using UnityEngine;
-using UnityEngine;
-using UnityEngine;
+
 #if ENABLE_IOS_ON_DEMAND_RESOURCES
 using UnityEngine.iOS;
 #endif
@@ -11,6 +10,7 @@ using UnityEditor.SceneManagement;
 #endif
 #endif
 using System.Collections;
+//using System.ComponentModel;
 //added System.IO for loading/saving cached bundleIndexes
 using System.IO;
 

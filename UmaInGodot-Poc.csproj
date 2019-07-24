@@ -77,6 +77,9 @@
     <Compile Include="UnityEngine\AnimatorOverrideController.cs" />
     <Compile Include="UnityEngine\AnimatorStateInfo.cs" />
     <Compile Include="UnityEngine\AssetBundle.cs" />
+    <Compile Include="UnityEngine\AssetBundleCreateRequest.cs" />
+    <Compile Include="UnityEngine\AssetBundleRequest.cs" />
+    <Compile Include="UnityEngine\AsyncOperation.cs" />
     <Compile Include="UnityEngine\Avater.cs" />
     <Compile Include="UnityEngine\Behaviour.cs" />
     <Compile Include="UnityEngine\BoneWeight.cs" />
@@ -84,6 +87,7 @@
     <Compile Include="UnityEngine\Cloth.cs" />
     <Compile Include="UnityEngine\ClothSkinningCoefficient.cs" />
     <Compile Include="UnityEngine\Collider.cs" />
+    <Compile Include="UnityEngine\Color.cs" />
     <Compile Include="UnityEngine\Color32.cs" />
     <Compile Include="UnityEngine\Component.cs" />
     <Compile Include="UnityEngine\FilterMode.cs" />
@@ -118,6 +122,8 @@
     <Compile Include="UnityEngine\Time.cs" />
     <Compile Include="UnityEngine\UI\Slider.cs" />
     <Compile Include="UnityEngine\UMASkeleton.cs" />
+    <Compile Include="UnityEngine\Vector2.cs" />
+    <Compile Include="UnityEngine\Vector3.cs" />
     <Compile Include="UnityEngine\Vector4.cs" />
     <Compile Include="UnityEngine\WaitForSeconds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -209,6 +215,7 @@
     <Compile Include="UnityEngine\UnityAction.cs" />
     <Compile Include="UnityEngine\UnityEvent.cs" />
     <Compile Include="UnityEngine\UnityWebRequest.cs" />
+    <Compile Include="UnityEngine\YieldInstruction.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UMA\Content\UMA_Core\HumanMale\DNA\LegacyDNA\" />

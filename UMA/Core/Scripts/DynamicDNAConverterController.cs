@@ -1,11 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-#if UNITY_EDITOR
-using UnityEditor;
-using System.IO;
-#endif
+
 using UMA.CharacterSystem;
 
 namespace UMA

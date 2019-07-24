@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class UnityWebRequest
+    public class AsyncOperation : YieldInstruction
     {
     }
 }

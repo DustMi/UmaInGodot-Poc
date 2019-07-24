@@ -2,8 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-using Godot;
-
 namespace UMA
 {
 	/// <summary>

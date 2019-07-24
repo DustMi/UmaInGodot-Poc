@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Godot;
 //using UMA.PoseTools;//so we can set the expression set based on the race
 
 namespace UMA.CharacterSystem
@@ -1370,8 +1369,12 @@ namespace UMA.CharacterSystem
         /// <param name="MetallicRGB"></param>
         /// <param name="Gloss"></param>
         /// <param name="UpdateTexture"></param>
-        public void SetColor(string SharedColorName, Color AlbedoColor, Color MetallicRGB = new Color(), float Gloss = 0.0f, bool UpdateTexture = false)
+        public void SetColor(string SharedColorName, Color AlbedoColor, Color MetallicRGB = null, float Gloss = 0.0f, bool UpdateTexture = false)
         {
+            if (MetallicRGB == null)
+            {
+                MetallicRGB = Color.white;
+            }
             OverlayColorData ocd = new OverlayColorData(3);
             MetallicRGB.a = Gloss;
             ocd.channelMask[0] = AlbedoColor;

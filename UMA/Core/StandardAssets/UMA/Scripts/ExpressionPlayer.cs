@@ -9,7 +9,6 @@ using UnityEngine;
 using UnityEditor;
 #endif
 using System.Collections;
-using Godot;
 
 namespace UMA.PoseTools
 {

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System;
-using Godot;
-using Transform = UnityEngine.Transform;
 
 namespace UMA
 {
