@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class RuntimePlatform
+    public enum RuntimePlatform
     {
+        Android,
+        IPhonePlayer,
+        WebGLPlayer,
+        WindowsPlayer,
+        OSXPlayer
     }
 }

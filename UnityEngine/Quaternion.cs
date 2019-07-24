@@ -8,6 +8,6 @@ namespace UnityEngine
 {
     public class Quaternion
     {
-
+        public static object identity;
     }
 }

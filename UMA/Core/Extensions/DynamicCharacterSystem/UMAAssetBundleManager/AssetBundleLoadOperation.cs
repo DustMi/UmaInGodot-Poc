@@ -626,7 +626,9 @@ namespace UMA.AssetBundles
 			}
 		}
 
-		public override bool Update()
+        public object LoadSceneMode { get; private set; }
+
+        public override bool Update()
 		{
 			if (m_Request != null)
 				return false;

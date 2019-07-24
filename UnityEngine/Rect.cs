@@ -26,6 +26,10 @@ namespace UnityEngine
             get {
                 return rect.Size.y;
             }
+            set
+            {
+                throw new NotImplementedException();
+            }
             
         }
 
@@ -35,6 +39,10 @@ namespace UnityEngine
             {
                 return rect.Size.x;
             }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public float x
@@ -42,6 +50,10 @@ namespace UnityEngine
             get
             {
                 return rect.Position.x;
+            }
+            set
+            {
+                throw new NotImplementedException();
             }
         }
 

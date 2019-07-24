@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UMA.AssetBundles;
 using UnityEngine;
 
 //using UMA.PoseTools;//so we can set the expression set based on the race
@@ -387,7 +388,7 @@ namespace UMA.CharacterSystem
             {
                 if (DynamicAssetLoader.Instance.downloadingAssetsContains(requiredAssetsToCheck) == false)
                 {
-                    GD.Print("Update did build");
+                    Debug.Log("Update did build");
                     UpdateAfterDownload();
                     //actually we dont know in this case if we are restoring DNA or not
                     //but a placeholder race should only have been used if defaultLoadOptions.waitForBundles is false
@@ -565,7 +566,7 @@ namespace UMA.CharacterSystem
             if (activeRace.name == "" || activeRace.name == "None Set")
             {
                 activeRace.data = null;
-                GD.Print("No activeRace set. Aborting build");
+                Debug.Log("No activeRace set. Aborting build");
                 return;
             }
             //calling activeRace.data causes RaceLibrary to gather all racedatas from resources an returns all those along with any temporary assetbundle racedatas that are downloading
@@ -590,7 +591,7 @@ namespace UMA.CharacterSystem
             //if we are loading an old UMARecipe from the recipe field and the old race is not in resources the race will be null but the recipe wont be 
             if (umaRecipe == null)
             {
-                GD.Print("[SetActiveRace] could not find baseRaceRecipe for the race " + activeRace.name + ". Have you set one in the raceData?");
+                Debug.Log("[SetActiveRace] could not find baseRaceRecipe for the race " + activeRace.name + ". Have you set one in the raceData?");
             }
             if (DynamicAssetLoader.Instance.downloadingAssetsContains(activeRace.name))
             {
@@ -3422,7 +3423,7 @@ namespace UMA.CharacterSystem
                 var thisContext = UMAContext.FindInstance();
                 if (thisContext == null)
                 {
-                        GD.Print("UMAContext was missing this is required in scenes that use UMA. Please add the UMA_DCS prefab to the scene");
+                        Debug.Log("UMAContext was missing this is required in scenes that use UMA. Please add the UMA_DCS prefab to the scene");
                     return;
                 }
                 var thisDynamicRaceLibrary = (DynamicRaceLibrary)thisContext.raceLibrary as DynamicRaceLibrary;

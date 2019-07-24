@@ -10,6 +10,8 @@ namespace UnityEngine
     public class Transform : Component, IEnumerable
     {
         public Vector3 position;
+        public Vector3 localPosition;
+        public object localRotation;
 
         public GameObject gameObject
         {
@@ -22,6 +24,11 @@ namespace UnityEngine
         }
 
         public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetParent(object p0, bool p1)
         {
             throw new NotImplementedException();
         }

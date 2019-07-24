@@ -6,6 +6,10 @@
 
     public class UnityAction<T0, T1>
     {
+        public void Invoke(string kpKey, float getValue)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     public class UnityAction<T0>

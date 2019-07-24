@@ -8,10 +8,14 @@ namespace UnityEngine
 {
     public class AssetBundle : Object
     {
-
         public Object LoadAsset(string name)
         {
             return new Object();
+        }
+
+        public Object LoadAsset(string name, Type type)
+        {
+            throw new NotImplementedException();
         }
 
         public T LoadAsset<T>(string name)
@@ -20,5 +24,9 @@ namespace UnityEngine
             return (T) Activator.CreateInstance(type);
         }
 
+        internal void Unload(bool v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

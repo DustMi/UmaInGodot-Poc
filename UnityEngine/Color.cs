@@ -10,9 +10,35 @@ namespace UnityEngine
     {
         protected Godot.Color realColor;
 
+        public float a
+        {
+            get => realColor.a;
+            set => realColor.a = value;
+        }
+        public float r
+        {
+            get => realColor.r;
+            set => realColor.r = value;
+        }
+        public float g
+        {
+            get => realColor.g;
+            set => realColor.g = value;
+        }
+        public float b
+        {
+            get => realColor.b;
+            set => realColor.b = value;
+        }
+
         public Color()
         {
             
+        }
+
+        public Color(string webStyle)
+        {
+            realColor = new Godot.Color(webStyle);
         }
 
         public Color(int r, int g, int b)
@@ -30,12 +56,11 @@ namespace UnityEngine
 
         }
 
-        public static Color white
+        public static Color white => new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+        public static Color ColorN(string webStyle)
         {
-            get
-            {
-                return new Color(1.0f, 1.0f, 1.0f, 1.0f);
-            }
+            return new Color(webStyle);
         }
     }
 }

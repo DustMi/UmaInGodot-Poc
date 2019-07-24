@@ -8,5 +8,7 @@ namespace UnityEngine
 {
     public class AsyncOperation : YieldInstruction
     {
+        public bool isDone;
+        public float progress;
     }
 }

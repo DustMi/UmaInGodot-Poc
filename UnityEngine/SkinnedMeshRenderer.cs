@@ -9,6 +9,10 @@ namespace UnityEngine
 {
     public class SkinnedMeshRenderer : Renderer
     {
+        public Bounds bounds;
+        public bool updateWhenOffscreen;
+        public Bounds localBounds;
+
         public bool enabled
         {
             get; set;
