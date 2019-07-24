@@ -26,6 +26,7 @@ namespace UnityEngine
             get {
                 return rect.Size.y;
             }
+            
         }
 
         public float width
@@ -50,6 +51,20 @@ namespace UnityEngine
             {
                 return rect.Position.y;
             }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public float yMax
+        {
+            get; set;
+        }
+
+        public float xMin
+        {
+            get; set;
         }
 
     }

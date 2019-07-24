@@ -76,7 +76,7 @@ namespace UMA
 		private Vector3 _massAdjust = new Vector3(46f, 26f, 26f);
 
 		[SerializeField]
-		private Vector3 _boundsAdjust = Vector3.zero;
+		private Vector3 _boundsAdjust = new Vector3(0.0f, 0.0f, 0.0f);
 
 		#endregion
 
@@ -210,7 +210,7 @@ namespace UMA
 				this._adjustMass = true;
 				this._updateBounds = true;
 				this._tightenBounds = tightenBounds;
-				this._adjustBounds = boundsAdjust != Vector3.zero ? true : false;
+				this._adjustBounds = boundsAdjust != new Vector3(0.0f, 0.0f, 0.0f) ? true : false;
 			}
 			this._scale = overallScale;
 			this._bone = overallScaleBone;
@@ -317,7 +317,7 @@ namespace UMA
 				//Move UMA into the root, we do this because it might be inside a scaled object
 				umaTransform.SetParent(null, false);
 				umaTransform.localRotation = Quaternion.identity;
-				umaTransform.localPosition = Vector3.zero;
+				umaTransform.localPosition = new Vector3(0.0f, 0.0f, 0.0f); ;
 
 				//Get the new bounds from the renderer set to always update (updateWhenOffScreen)		
 				targetRenderer.updateWhenOffscreen = true;
@@ -439,9 +439,9 @@ namespace UMA
 
 					umaTransform.SetParent(null, false);
 					umaTransform.localRotation = Quaternion.identity;
-					umaTransform.localPosition = Vector3.zero;
+					umaTransform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
 
-					if (_adjustHeight)
+                    if (_adjustHeight)
 					{
 						//Classically a human is apprx 7.5 heads tall, but we only know the height to the base of the head bone
 						//usually head bone is actually usually in line with the lips, making the base of the chin, 1/3rd down the neck

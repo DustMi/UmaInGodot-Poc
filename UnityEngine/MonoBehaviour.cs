@@ -7,7 +7,7 @@ using Godot;
 
 namespace UnityEngine
 {
-    public class MonoBehaviour : Component
+    public class MonoBehaviour : Behaviour
     {
         public Transform transform;
         public GameObject gameObject

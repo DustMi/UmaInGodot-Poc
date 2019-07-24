@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Godot;
+using Mathf = UnityEngine.Mathf;
+using Texture = UnityEngine.Texture;
+using Shader = UnityEngine.Shader;
+using Material = UnityEngine.Material;
 
 namespace UMA
 {
@@ -33,7 +38,8 @@ namespace UMA
 
 		void OnRenderObject()
 		{
-			if (Camera.current != myCamera) return;
+            //Removed by Dustin - hopefully an non-needed check
+			//if (Camera.current != myCamera) return;
 
 			if (textureMergeRects != null)
 			{
@@ -113,7 +119,8 @@ namespace UMA
 			textureMergeRect.mat.SetTexture("_ExtraTex", source.baseOverlay.alphaTexture);
 			textureMergeRect.mat.SetColor("_Color", source.GetMultiplier(0, textureType));
 			textureMergeRect.mat.SetColor("_AdditiveColor", source.GetAdditive(0, textureType));
-		}
+
+        }
 
 		public void SetupModule(UMAData.MaterialFragment source, int textureType)
 		{

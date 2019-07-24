@@ -37,5 +37,10 @@ namespace UnityEngine
         {
             throw new NotImplementedException();
         }
+
+       public static Object Instantiate(Object material)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

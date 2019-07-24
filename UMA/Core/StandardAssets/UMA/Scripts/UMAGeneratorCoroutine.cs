@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Godot;
+using Mathf = UnityEngine.Mathf;
 
 namespace UMA
 {
@@ -383,7 +385,7 @@ namespace UMA
 				//Headless mode ends up with zero usedArea
 				if(Mathf.Approximately( usedArea.x, 0f ) || Mathf.Approximately( usedArea.y, 0f ))
 				{
-					material.cropResolution = Vector2.zero;
+                    material.cropResolution = new Vector2(0.0f, 0.0f);
 					return;
 				}
 

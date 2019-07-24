@@ -27,7 +27,7 @@ namespace UnityEngine
             GD.Print(message);
         }
 
-        public static void LogWarning(string message)
+        public static void LogWarning(string message, Object obj = null)
         {
             GD.Print(message);
         }

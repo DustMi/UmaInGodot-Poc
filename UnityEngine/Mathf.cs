@@ -49,5 +49,10 @@ namespace UnityEngine
         {
             return Clamp(weight, 0.0f, 1.0f);
         }
+
+        public static int FloorToInt(float f)
+        {
+            return (int)Math.Floor(f);
+        }
     }
 }

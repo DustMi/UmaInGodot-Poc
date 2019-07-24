@@ -46,6 +46,15 @@ namespace UnityEngine
         }
     }
 
+
+    public class ExecuteInEditMode : System.Attribute
+    {
+        public ExecuteInEditMode()
+        {
+            //doing nothing
+        }
+    }
+
     public class HideInInspector : System.Attribute
     {
         public HideInInspector()
