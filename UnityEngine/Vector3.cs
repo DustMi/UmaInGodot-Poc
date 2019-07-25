@@ -10,6 +10,11 @@ namespace UnityEngine
     {
         private Godot.Vector3 gVector3;
 
+        public Vector3()
+        {
+            gVector3 = new Godot.Vector3();
+        }
+        
         public Vector3(float x, float y, float z)
         {
             gVector3 = new Godot.Vector3(x, y, z);

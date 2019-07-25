@@ -18,5 +18,7 @@ namespace UnityEngine
         {
             throw new NotImplementedException();
         }
+
+        public static void Blit(Texture source, RenderTexture dest) { throw new NotImplementedException(); }
     }
 }

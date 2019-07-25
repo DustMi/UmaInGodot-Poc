@@ -13,7 +13,7 @@ namespace UnityEngine
             Type type = typeof(T);
             return (T)Activator.CreateInstance(type);
         }
-
+        public Transform transform { get; }
 
     }
 }

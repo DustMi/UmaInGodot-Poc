@@ -83,5 +83,39 @@ namespace UnityEngine
         {
             get; set;
         }
+
+        public Transform GetBoneTransform(HumanBodyBones humanBoneId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetBool(string name, bool value)
+        {
+            throw new NotImplementedException();
+        }
+ 
+        public void SetBool(int id, bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetInteger(int id, int value) { throw new NotImplementedException(); }
+
+        public void SetInteger(string name, int value) { throw new NotImplementedException(); }
+        public void SetLookAtPosition(Vector3 lookAtPosition) { throw new NotImplementedException(); }
+        public void SetLookAtWeight(float weight) { throw new NotImplementedException(); }
+        public void SetLookAtWeight(float weight, float bodyWeight) { throw new NotImplementedException(); }
+        public void SetLookAtWeight(float weight, float bodyWeight, float headWeight) { throw new NotImplementedException(); }
+        public void SetLookAtWeight(float weight, float bodyWeight, float headWeight, float eyesWeight) { throw new NotImplementedException(); }
+        public static int StringToHash(string name) { throw new NotImplementedException(); }
+        public void Update(float deltaTime) { throw new NotImplementedException();  }
+
+        public void SetFloat(int id, float value) { throw new NotImplementedException(); }
+
+        public void SetFloat(string name, float value, float dampTime, float deltaTime) { throw new NotImplementedException(); }
+
+        public void SetFloat(string name, float value) { throw new NotImplementedException(); }
+
+        public void SetFloat(int id, float value, float dampTime, float deltaTime) { throw new NotImplementedException(); }
     }
 }
