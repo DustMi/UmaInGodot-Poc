@@ -8,6 +8,12 @@ namespace UnityEngine
 {
     public class SystemInfo
     {
-
+        public static string graphicsDeviceVersion
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

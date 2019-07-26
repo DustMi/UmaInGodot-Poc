@@ -6,11 +6,23 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class Material : Godot.ShaderMaterial
+    public class Material : Object
     {
+        public Color color;
+        public int renderQueue;
+        protected Godot.Shader realShader;
         public Shader shader
         {
             set; get;
+        }
+
+        public bool HasProperty(int nameID)
+        {
+            throw new NotImplementedException();
+        }
+        public bool HasProperty(string name)
+        {
+            throw new NotImplementedException();
         }
         public Material(Shader shad)
         {

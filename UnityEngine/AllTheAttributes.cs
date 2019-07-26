@@ -21,6 +21,14 @@ namespace UnityEngine
             //doing nothing
         }
     }
+    public class NativeName : System.Attribute
+    {
+        public NativeName(string blah)
+        {
+            //doing nothing
+        }
+    }
+    
 
     public class PreferBinarySerialization : System.Attribute
     {

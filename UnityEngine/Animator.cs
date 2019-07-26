@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -55,15 +56,12 @@ namespace UnityEngine
             throw new NotImplementedException();
         }
 
-        public int layerCount()
+        public int layerCount
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        public int parameterCount()
-        {
-            throw new NotImplementedException();
-        }
+        public int parameterCount { get; }
 
         public AnimatorControllerParameter[] parameters
         {
@@ -117,5 +115,12 @@ namespace UnityEngine
         public void SetFloat(string name, float value) { throw new NotImplementedException(); }
 
         public void SetFloat(int id, float value, float dampTime, float deltaTime) { throw new NotImplementedException(); }
+        public AnimatorStateInfo GetCurrentAnimatorStateInfo(int layerIndex)
+        {
+            AnimatorStateInfo info;
+            throw new NotImplementedException();
+            //this.GetAnimatorStateInfo(layerIndex, StateInfoIndex.CurrentState, out info);
+            return info;
+        }
     }
 }

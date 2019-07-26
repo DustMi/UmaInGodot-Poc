@@ -18,6 +18,8 @@ namespace UnityEngine
             get; set;
         }
 
+        public Transform[] bones;
+
         public Transform rootBone { get; set; }
 
         public void SetBlendShapeWeight(int index, float value)

@@ -24,7 +24,7 @@ namespace UnityEngine
             this.active = a;
         }
 
-        public List<Transform> transform
+        public Transform transform
         {
             get;
         }

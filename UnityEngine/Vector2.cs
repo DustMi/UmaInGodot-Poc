@@ -9,6 +9,11 @@ namespace UnityEngine
     public class Vector2
     {
         protected Godot.Vector2 gVector2;
+        public void Set(float newX, float newY)
+        {
+            gVector2.x = newX;
+            gVector2.y = newY;
+        }
         public Vector2(float x, float y)
         {
             gVector2 = new Godot.Vector2(x, y);

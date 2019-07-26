@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class UnityWebRequest
+    public class UnityWebRequest : DownloadHandler
     {
         public string url;
         internal string error;
         internal float downloadProgress;
         internal bool isDone;
 
+        public void Send()
+        {
+            throw new NotImplementedException();
+        }
         public void Dispose()
         {
             throw new NotImplementedException();

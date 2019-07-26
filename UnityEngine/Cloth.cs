@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class Cloth
+    public class Cloth : Component
     {
         public float stretchingStiffness;
         public float sleepThreshold;

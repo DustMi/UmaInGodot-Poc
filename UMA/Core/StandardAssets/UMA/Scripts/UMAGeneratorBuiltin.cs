@@ -68,7 +68,7 @@ namespace UMA
 
 			if (!textureMerge)
 			{
-				Transform tempTextureMerger = Instantiate(textureMergePrefab, Vector3.zero, Quaternion.identity) as Transform;
+				Transform tempTextureMerger = Instantiate(textureMergePrefab, new Vector3(), Quaternion.identity) as Transform;
 				textureMerge = tempTextureMerger.GetComponent("TextureMerge") as TextureMerge;
 				textureMerge.transform.parent = transform;
 				textureMerge.gameObject.SetActive(false);

@@ -8,5 +8,6 @@ namespace UnityEngine
 {
     public class QualitySettings : Object
     {
+        public static ColorSpace desiredColorSpace;
     }
 }

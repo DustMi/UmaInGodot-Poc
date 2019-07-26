@@ -11,7 +11,8 @@ namespace UnityEngine
     {
         public Vector3 position;
         public Vector3 localPosition;
-        public object localRotation;
+        private Transform internalParent;
+        public Quaternion localRotation { get; set; }
 
         public GameObject gameObject
         {
@@ -32,5 +33,46 @@ namespace UnityEngine
         {
             throw new NotImplementedException();
         }
+
+        public Transform parent
+        {
+            get
+            {
+                return this.internalParent;
+            }
+            set { this.internalParent = value; }
+        }
+
+        public Matrix4x4 worldToLocalMatrix
+        {
+            get
+            {
+                Matrix4x4 ret;
+                this.get_worldToLocalMatrix_Injected(out ret);
+                return ret;
+            }
+        }
+
+        /// <summary>
+        ///   <para>Matrix that transforms a point from local space into world space (Read Only).</para>
+        /// </summary>
+        public Matrix4x4 localToWorldMatrix
+        {
+            get
+            {
+                Matrix4x4 ret;
+                this.get_localToWorldMatrix_Injected(out ret);
+                return ret;
+            }
+        }
+
+        private extern void get_worldToLocalMatrix_Injected(out Matrix4x4 ret);
+        private extern void get_localToWorldMatrix_Injected(out Matrix4x4 ret);
+
+        public Quaternion rotation;
+        public Vector3 localScale;
+        public int childCount;
+
+        public extern Transform GetChild(int index);
     }
 }

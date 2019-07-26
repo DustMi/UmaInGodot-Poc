@@ -8,6 +8,7 @@ namespace UnityEngine
 {
     public class HumanTrait
     {
-
+        public static int BoneCount;
+        public static string[] BoneName;
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\Scripts\pAssetBundleIndex.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\UMAAssetBundleManager\AssetBundleIndex.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\UMAAssetBundleManager\AssetBundleLoadOperation.cs" />
+    <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\UMAAssetBundleManager\EncryptionUtility.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\UMAAssetBundleManager\IConnectionChecker.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\UMAAssetBundleManager\UMAEncryptedBundle.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\UMAAssetBundleManager\Utility.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="UMA\Core\Scripts\DynamicDNAPlugin.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\ExpressionPlayer.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\MaxRectsBinPack.cs" />
+    <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\SkinnedMeshCombiner.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\TextureMerge.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\TextureProcessBaseCoroutine.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\TextureProcessPROCoroutine.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="UnityEngine\AssetBundleCreateRequest.cs" />
     <Compile Include="UnityEngine\AssetBundleRequest.cs" />
     <Compile Include="UnityEngine\AsyncOperation.cs" />
+    <Compile Include="UnityEngine\AvatarBuilder.cs" />
     <Compile Include="UnityEngine\Avater.cs" />
     <Compile Include="UnityEngine\Behaviour.cs" />
     <Compile Include="UnityEngine\BoneWeight.cs" />
@@ -95,6 +98,8 @@
     <Compile Include="UnityEngine\Color32.cs" />
     <Compile Include="UnityEngine\ColorSpace.cs" />
     <Compile Include="UnityEngine\Component.cs" />
+    <Compile Include="UnityEngine\DownloadHandler.cs" />
+    <Compile Include="UnityEngine\DownloadHandlerAssetBundle.cs" />
     <Compile Include="UnityEngine\FilterMode.cs" />
     <Compile Include="UnityEngine\Gizmos.cs" />
     <Compile Include="UnityEngine\Graphics.cs" />
@@ -106,6 +111,7 @@
     <Compile Include="UnityEngine\HumanTrait.cs" />
     <Compile Include="UnityEngine\ISerializationCallbackReceiver.cs" />
     <Compile Include="UnityEngine\Keyframe.cs" />
+    <Compile Include="UnityEngine\LoadSceneMode.cs" />
     <Compile Include="UnityEngine\Material.cs" />
     <Compile Include="UnityEngine\MaterialExtension.cs" />
     <Compile Include="UnityEngine\Matrix4x4.cs" />
@@ -124,6 +130,7 @@
     <Compile Include="UnityEngine\RenderTextureReadWrite.cs" />
     <Compile Include="UnityEngine\Rigidbody.cs" />
     <Compile Include="UnityEngine\RuntimePlatform.cs" />
+    <Compile Include="UnityEngine\SceneManager.cs" />
     <Compile Include="UnityEngine\Shader.cs" />
     <Compile Include="UnityEngine\SkeletonBone.cs" />
     <Compile Include="UnityEngine\Sprite.cs" />
@@ -136,6 +143,7 @@
     <Compile Include="UnityEngine\UI\Slider.cs" />
     <Compile Include="UnityEngine\UMASkeleton.cs" />
     <Compile Include="UnityEngine\TextureWrapMode.cs" />
+    <Compile Include="UnityEngine\UnityEventBase.cs" />
     <Compile Include="UnityEngine\Vector2.cs" />
     <Compile Include="UnityEngine\Vector3.cs" />
     <Compile Include="UnityEngine\Vector4.cs" />

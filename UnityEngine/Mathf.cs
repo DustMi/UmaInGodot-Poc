@@ -78,5 +78,40 @@ namespace UnityEngine
 
             return n2;
         }
+
+        public static float Max(float a, float b)
+        {
+            return (double)a <= (double)b ? b : a;
+        }
+
+        public static float Sqrt(float f)
+        {
+            return (float)Math.Sqrt((double)f);
+        }
+        public static float Sin(float f)
+        {
+            return (float)Math.Sin((double)f);
+        }
+        public static int RoundToInt(float f)
+        {
+            return (int)Math.Round((double)f);
+        }
+        public static float Pow(float f, float p)
+        {
+            return (float)Math.Pow((double)f, (double)p);
+        }
+        public const float PI = 3.14159f;
+        public static float Log(float f)
+        {
+            return (float)Math.Log((double)f);
+        }
+        public static float Log(float f, float p)
+        {
+            return (float)Math.Log((double)f, (double)p);
+        }
+        public static float Lerp(float a, float b, float t)
+        {
+            return a + (b - a) * Mathf.Clamp01(t);
+        }
     }
 }

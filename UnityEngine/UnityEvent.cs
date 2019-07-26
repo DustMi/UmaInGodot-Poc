@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace UnityEngine
 {
-    public class UnityEvent<T, U, V, W>
+    public class UnityEvent<T, U, V, W> : UnityEventBase
         {
             public UnityEvent()
             {
@@ -36,7 +36,8 @@ namespace UnityEngine
             }
         }
 
-    public class UnityEvent<T,U> {
+    public class UnityEvent<T,U> : UnityEventBase
+    {
         public UnityEvent() {
 
         }
@@ -63,7 +64,7 @@ namespace UnityEngine
         }
     }
 
-    public class UnityEvent<T>
+    public class UnityEvent<T> : UnityEventBase
     {
         public UnityEvent()
         {

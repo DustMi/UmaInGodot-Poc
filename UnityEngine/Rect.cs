@@ -10,7 +10,7 @@ namespace UnityEngine
     public class Rect
     {
         private Rect2 rect;
-
+        public float xMin, xMax, yMin, yMax;
         public Rect()
         {
             rect = new Rect2(0,0,0,0);
@@ -68,16 +68,5 @@ namespace UnityEngine
                 throw new NotImplementedException();
             }
         }
-
-        public float yMax
-        {
-            get; set;
-        }
-
-        public float xMin
-        {
-            get; set;
-        }
-
     }
 }
