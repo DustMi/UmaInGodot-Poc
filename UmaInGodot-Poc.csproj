@@ -93,6 +93,7 @@
     <Compile Include="UnityEngine\Collider.cs" />
     <Compile Include="UnityEngine\Color.cs" />
     <Compile Include="UnityEngine\Color32.cs" />
+    <Compile Include="UnityEngine\ColorSpace.cs" />
     <Compile Include="UnityEngine\Component.cs" />
     <Compile Include="UnityEngine\FilterMode.cs" />
     <Compile Include="UnityEngine\Gizmos.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="UnityEngine\Mesh.cs" />
     <Compile Include="UnityEngine\Object.cs" />
     <Compile Include="UnityEngine\Profiler.cs" />
+    <Compile Include="UnityEngine\QualitySettings.cs" />
     <Compile Include="UnityEngine\Quaternion.cs" />
     <Compile Include="UnityEngine\Random.cs" />
     <Compile Include="UnityEngine\Ray.cs" />
@@ -119,17 +121,21 @@
     <Compile Include="UnityEngine\Renderer.cs" />
     <Compile Include="UnityEngine\RenderTexture.cs" />
     <Compile Include="UnityEngine\RenderTextureFormat.cs" />
+    <Compile Include="UnityEngine\RenderTextureReadWrite.cs" />
     <Compile Include="UnityEngine\Rigidbody.cs" />
     <Compile Include="UnityEngine\RuntimePlatform.cs" />
     <Compile Include="UnityEngine\Shader.cs" />
     <Compile Include="UnityEngine\SkeletonBone.cs" />
     <Compile Include="UnityEngine\Sprite.cs" />
+    <Compile Include="UnityEngine\SystemInfo.cs" />
     <Compile Include="UnityEngine\Text.cs" />
     <Compile Include="UnityEngine\Texture.cs" />
     <Compile Include="UnityEngine\Texture2D.cs" />
+    <Compile Include="UnityEngine\TextureFormat.cs" />
     <Compile Include="UnityEngine\Time.cs" />
     <Compile Include="UnityEngine\UI\Slider.cs" />
     <Compile Include="UnityEngine\UMASkeleton.cs" />
+    <Compile Include="UnityEngine\TextureWrapMode.cs" />
     <Compile Include="UnityEngine\Vector2.cs" />
     <Compile Include="UnityEngine\Vector3.cs" />
     <Compile Include="UnityEngine\Vector4.cs" />

@@ -8,6 +8,7 @@ namespace UnityEngine
 {
     public class Component : Object
     {
+        public GameObject gameObject { get; }
         public T GetComponent<T>()
         {
             Type type = typeof(T);

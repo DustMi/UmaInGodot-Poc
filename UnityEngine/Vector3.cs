@@ -8,7 +8,7 @@ namespace UnityEngine
 {
     public class Vector3
     {
-        private Godot.Vector3 gVector3;
+        protected Godot.Vector3 gVector3;
 
         public Vector3()
         {
@@ -19,6 +19,13 @@ namespace UnityEngine
         {
             gVector3 = new Godot.Vector3(x, y, z);
         }
+
+        public static Vector3 operator -(Vector3 v1, Vector3 v2)
+        {
+            return new Vector3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+        }
+
+        public float sqrMagnitude { get; }
 
         public float x
         {

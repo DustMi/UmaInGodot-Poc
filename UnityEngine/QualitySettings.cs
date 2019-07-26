@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class AssetBundleRequest : AsyncOperation
+    public class QualitySettings : Object
     {
-        public Object asset { get; }
     }
 }

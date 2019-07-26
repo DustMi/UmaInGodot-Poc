@@ -20,5 +20,6 @@ namespace UnityEngine
         public Vector3 randomAcceleration;
         public float worldAccelerationScale;
         public float worldVelocityScale;
+        public ClothSkinningCoefficient[] coefficients { get; set; }
     }
 }

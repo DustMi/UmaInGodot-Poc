@@ -24,6 +24,16 @@ namespace UnityEngine
             return (T) Activator.CreateInstance(type);
         }
 
+        public AssetBundleRequest LoadAssetAsync<T>(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static AssetBundleCreateRequest LoadFromMemoryAsync(byte[] binary)
+        {
+            throw new NotImplementedException();
+        }
+
         internal void Unload(bool v)
         {
             throw new NotImplementedException();

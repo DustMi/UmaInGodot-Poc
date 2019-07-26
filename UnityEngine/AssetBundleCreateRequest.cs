@@ -8,8 +8,8 @@ namespace UnityEngine
 {
     public class AssetBundleCreateRequest : AsyncOperation
     {
-        internal float progress;
+        //internal float progress;
         internal AssetBundle assetBundle;
-        public bool isDone;
+        //public bool isDone;
     }
 }

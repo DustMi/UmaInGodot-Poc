@@ -8,10 +8,22 @@ namespace UnityEngine
 {
     public class Vector2
     {
-        private Godot.Vector2 gVector2;
+        protected Godot.Vector2 gVector2;
         public Vector2(float x, float y)
         {
             gVector2 = new Godot.Vector2(x, y);
+        }
+
+        protected Vector2(Godot.Vector2 v)
+        {
+            gVector2 = v;
+        }
+
+        public static Vector2 operator *(Vector2 v, float scaler)
+        {
+            v.x *= scaler;
+            v.y *= scaler;
+            return v;
         }
 
         public float x

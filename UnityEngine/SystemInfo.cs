@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class AssetBundleRequest : AsyncOperation
+    public class SystemInfo
     {
-        public Object asset { get; }
+
     }
 }

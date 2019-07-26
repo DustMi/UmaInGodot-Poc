@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class AssetBundleRequest : AsyncOperation
+
+    public enum TextureWrapMode
     {
-        public Object asset { get; }
+        
+        Repeat = 0,
+        
+        Clamp = 1,
+        
+        Mirror = 2,
+
+        MirrorOnce = 3
     }
 }

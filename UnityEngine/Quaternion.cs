@@ -6,8 +6,27 @@ using System.Threading.Tasks;
 
 namespace UnityEngine
 {
-    public class Quaternion
+    public struct Quaternion : IEquatable<Quaternion>
     {
-        public static object identity;
+        public static Quaternion identity { get; }
+
+        public bool Equals(Quaternion other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool operator ==(Quaternion lhs, Quaternion rhs)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool operator !=(Quaternion lhs, Quaternion rhs)
+        {
+            throw new NotImplementedException();
+        }
+        public bool Equals(Object other)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
