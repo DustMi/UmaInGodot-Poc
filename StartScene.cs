@@ -11,7 +11,7 @@ public class StartScene : Spatial
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        DynamicCharacterSystem characterSystem = new DynamicCharacterSystem();
+        DynamicCharacterAvatar characterSystem = new DynamicCharacterAvatar();
         var randomString = characterSystem.ToString();
     }
 
