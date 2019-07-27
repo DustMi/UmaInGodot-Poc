@@ -14,10 +14,10 @@ namespace UnityEngine
         private Transform internalParent;
         public Quaternion localRotation { get; set; }
 
-        public GameObject gameObject
-        {
-            get; set;
-        }
+        //public GameObject gameObject
+        //{
+        //    get; set;
+        //}
 
         public Transform Find(string n)
         {
@@ -66,13 +66,22 @@ namespace UnityEngine
             }
         }
 
-        private extern void get_worldToLocalMatrix_Injected(out Matrix4x4 ret);
-        private extern void get_localToWorldMatrix_Injected(out Matrix4x4 ret);
+        private void get_worldToLocalMatrix_Injected(out Matrix4x4 ret)
+        {
+            throw new NotImplementedException();
+        }
+        private void get_localToWorldMatrix_Injected(out Matrix4x4 ret)
+        {
+            throw new NotImplementedException();
+        }
 
         public Quaternion rotation;
         public Vector3 localScale;
         public int childCount;
 
-        public extern Transform GetChild(int index);
+        public  Transform GetChild(int index)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

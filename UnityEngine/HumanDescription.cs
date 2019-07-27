@@ -8,6 +8,7 @@ namespace UnityEngine
 {
     public class HumanDescription
     {
+        public HumanBone[] human;
         public float upperArmTwist;
         public float lowerArmTwist;
         public float upperLegTwist;

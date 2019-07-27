@@ -8,5 +8,7 @@ namespace UnityEngine
 {
     public class ClothSkinningCoefficient
     {
+        public float maxDistance;
+        public float collisionSphereDistance;
     }
 }

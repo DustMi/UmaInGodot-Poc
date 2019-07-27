@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UMA.AssetBundles;
 using UnityEngine;
 
 //using UMA.PoseTools;//so we can set the expression set based on the race

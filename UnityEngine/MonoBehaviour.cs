@@ -9,12 +9,6 @@ namespace UnityEngine
 {
     public class MonoBehaviour : Behaviour
     {
-        public Transform transform;
-        public GameObject gameObject
-        {
-            get; set;
-        }
-
         public Task StartCoroutine(string methodName)
         {
             return null;

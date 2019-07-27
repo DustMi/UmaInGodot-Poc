@@ -19,6 +19,11 @@ namespace UnityEngine
             return !object.ReferenceEquals(exists, null);
         }
 
+        public static void DestroyImmediate(Object obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public static void DontDestroyOnLoad(Object target)
         {
             //doing nothing

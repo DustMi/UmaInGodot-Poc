@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnityEngine
 {
@@ -40,7 +36,9 @@ namespace UnityEngine
             return this.LoadAssetAsync_Internal(name, type);
         }
 
-        private extern AssetBundleRequest LoadAssetAsync_Internal(string name, System.Type type);
+        private  AssetBundleRequest LoadAssetAsync_Internal(string name, System.Type type) {
+            throw new NotImplementedException();
+        }
 
         public static AssetBundleCreateRequest LoadFromMemoryAsync(byte[] binary)
         {

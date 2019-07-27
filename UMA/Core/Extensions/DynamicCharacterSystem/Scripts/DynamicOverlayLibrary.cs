@@ -1,7 +1,4 @@
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using System.Collections.Generic;
 
 namespace UMA.CharacterSystem
@@ -20,9 +17,8 @@ namespace UMA.CharacterSystem
         //CharacterAvatar can query this this to find out what asset bundles were required to create itself 
         //or other scripts can use it to find out which asset bundles are being used by the Libraries at any given point.
         public Dictionary<string, List<string>> assetBundlesUsedDict = new Dictionary<string, List<string>>();
-    #if UNITY_EDITOR
+
         List<OverlayDataAsset> editorAddedAssets = new List<OverlayDataAsset>();
-    #endif
         [System.NonSerialized]
 
         public bool downloadAssetsEnabled = true;
@@ -215,72 +211,25 @@ namespace UMA.CharacterSystem
                 }
                 if (res == null)
                 {
-    #if UNITY_EDITOR
-                    if (!Application.isPlaying)
-                    {
-                        res = GetEditorAddedAsset(nameHash);
-                        if (res != null)
-                        {
-                            return res;
-                        }
-                    }
-    #endif
+    //#if UNITY_EDITOR
+                    //if (!Application.isPlaying)
+                    //{
+                    //    res = GetEditorAddedAsset(nameHash);
+                    //    if (res != null)
+                    //    {
+                    //        return res;
+                    //    }
+                    //}
+    //#endif
                     throw new UMAResourceNotFoundException("dOverlayLibrary: Unable to find: " + nameHash);
                 }
             }
             return res;
         }
-        public OverlayData InstantiateOverlay(string name, Color color)
-        {
-            OverlayData res;
-            try
-            {
-                res = base.InstantiateOverlay(name);
-            }
-            catch
-            {
-                res = null;
-            }
-    #if UNITY_EDITOR
-            if (!Application.isPlaying && res == null)
-            {
-                res = GetEditorAddedAsset(null, name);
-            }
-    #endif
-            if (res == null)
-            {
-                //we do something
-                UpdateDynamicOverlayLibrary(name);
-                try {
-                    res = base.InstantiateOverlay(name);
-                }
-                catch
-                {
-                    res = null;
-                }
-                if (res == null)
-                {
-    #if UNITY_EDITOR
-                    if (!Application.isPlaying)
-                    {
-                        res = GetEditorAddedAsset(null, name);
-                        if (res != null)
-                        {
-                            res.colorData.color = color;
-                            return res;
-                        }
-                    }
-    #endif
-                    throw new UMAResourceNotFoundException("dOverlayLibrary: Unable to find: " + name);
-                }
-            }
-            res.colorData.color = color;
-            return res;
-        }
+
         //we dont seem to be able to use nameHash for some reason so in this case we are screwed- DOES THIS EVER HAPPEN?
-        public OverlayData InstantiateOverlay(int nameHash, Color color)
+        public override OverlayData InstantiateOverlay(int nameHash, Color color)
         {
-            if (Debug.isDebugBuild)
                 Debug.Log("OverlayLibrary tried to InstantiateOverlay using Hash");
             OverlayData res;
             try

@@ -8,7 +8,7 @@ size = Vector3( 10, 0.2, 10 )
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="Floor" type="MeshInstance" parent="."]
 transform = Transform( 1.97569, 0, 0, 0, 1, 0, 0, 0, 2.38865, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = null

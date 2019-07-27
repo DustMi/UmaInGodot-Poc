@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnityEngine
 {
@@ -117,10 +112,10 @@ namespace UnityEngine
         public void SetFloat(int id, float value, float dampTime, float deltaTime) { throw new NotImplementedException(); }
         public AnimatorStateInfo GetCurrentAnimatorStateInfo(int layerIndex)
         {
-            AnimatorStateInfo info;
+            //AnimatorStateInfo info;
             throw new NotImplementedException();
             //this.GetAnimatorStateInfo(layerIndex, StateInfoIndex.CurrentState, out info);
-            return info;
+            //return info;
         }
     }
 }

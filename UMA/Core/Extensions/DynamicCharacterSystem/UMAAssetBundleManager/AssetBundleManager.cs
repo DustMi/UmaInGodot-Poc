@@ -1,8 +1,4 @@
 using UnityEngine;
-using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using System;
 //we need System.IO now aswell to load cached bundleIndexes
 using System.IO;

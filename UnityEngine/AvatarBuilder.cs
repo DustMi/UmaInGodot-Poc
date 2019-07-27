@@ -29,6 +29,11 @@ namespace UnityEngine
             return AvatarBuilder.BuildHumanAvatarInternal_Injected(go, ref humanDescription);
         }
 
+        public static Avatar BuildGenericAvatar( GameObject go, string rootMotionTransformName)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         ///   <para>Create a new generic avatar.</para>
         /// </summary>
