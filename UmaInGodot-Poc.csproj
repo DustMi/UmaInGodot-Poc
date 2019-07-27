@@ -45,6 +45,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StartScene.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\Scripts\pAssetBundleIndex.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\UMAAssetBundleManager\AssetBundleIndex.cs" />
     <Compile Include="UMA\Core\Extensions\DynamicCharacterSystem\UMAAssetBundleManager\AssetBundleLoadOperation.cs" />
