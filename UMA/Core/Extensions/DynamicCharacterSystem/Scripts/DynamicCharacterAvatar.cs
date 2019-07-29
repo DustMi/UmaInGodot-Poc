@@ -593,11 +593,12 @@ namespace UMA.CharacterSystem
             {
                 Debug.Log("[SetActiveRace] could not find baseRaceRecipe for the race " + activeRace.name + ". Have you set one in the raceData?");
             }
-            if (DynamicAssetLoader.Instance.downloadingAssetsContains(activeRace.name))
-            {
-                if (!requiredAssetsToCheck.Contains(activeRace.name))
-                    requiredAssetsToCheck.Add(activeRace.name);
-            }
+            //Dustin - No networking!!!!
+            //if (DynamicAssetLoader.Instance.downloadingAssetsContains(activeRace.name))
+            //{
+                //if (!requiredAssetsToCheck.Contains(activeRace.name))
+                    //requiredAssetsToCheck.Add(activeRace.name);
+            //}
         }
         /// <summary>
         /// Change the race of the Avatar, optionally overriding the 'onChangeRace' settings in the avatar component itself

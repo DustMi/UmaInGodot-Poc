@@ -20,11 +20,7 @@ namespace UMA.CharacterSystem
 		//CharacterAvatar can query this this to find out what asset bundles were required to create itself 
 		//or other scripts can use it to find out which asset bundles are being used by the Libraries at any given point.
 		public Dictionary<string, List<string>> assetBundlesUsedDict = new Dictionary<string, List<string>>();
-	#if UNITY_EDITOR
-		//if we have already added everything in the editor dont do it again
-		bool allAssetsAddedInEditor = false;
-		List<RaceData> editorAddedAssets = new List<RaceData>();
-	#endif
+
 		[System.NonSerialized]
 		bool allStartingAssetsAdded = false;
 
@@ -32,86 +28,11 @@ namespace UMA.CharacterSystem
 
 		public bool downloadAssetsEnabled = true;
 
-	#if UNITY_EDITOR
-		void Reset()
-		{
-			allStartingAssetsAdded = false;//make this false to that loading new scenes makes the library update
-			allAssetsAddedInEditor = false;
-		}
-	#endif
-
-		public void Awake()
-		{
-	#if UNITY_EDITOR
-			allStartingAssetsAdded = false;//make this false to that loading new scenes makes the library update
-			allAssetsAddedInEditor = false;
-	#endif
-		}
-
 		public void Start()
 		{
-			if (Application.isPlaying)
-			{
-				assetBundlesUsedDict.Clear();
-			}
-	#if UNITY_EDITOR
-			if (Application.isPlaying)
-			{
-				ClearEditorAddedAssets();
-			}
-			allStartingAssetsAdded = false;//make this false to that loading new scenes makes the library update
-			allAssetsAddedInEditor = false;
-	#endif
+			assetBundlesUsedDict.Clear();
 		}
 
-		/// <summary>
-		/// Clears any editor added assets when the Scene is closed
-		/// </summary>
-		void OnDestroy()
-		{
-	#if UNITY_EDITOR
-			ClearEditorAddedAssets();
-	#endif
-		}
-
-		public void ClearEditorAddedAssets()
-		{
-	#if UNITY_EDITOR
-			if (editorAddedAssets.Count > 0)
-			{
-				editorAddedAssets.Clear();
-			}
-			allAssetsAddedInEditor = false;
-#endif
-		}
-
-	#if UNITY_EDITOR
-		RaceData GetEditorAddedAsset(int? raceHash = null, string raceName = "")
-		{
-			RaceData foundRaceData = null;
-			if (editorAddedAssets.Count > 0)
-			{
-				foreach (RaceData edRace in editorAddedAssets)
-				{
-					if (edRace != null)
-					{
-						if (raceHash != null)
-						{
-							if (UMAUtils.StringToHash(edRace.raceName) == raceHash)
-								foundRaceData = edRace;
-						}
-						else if (raceName != null)
-						{
-							if (raceName != "")
-								if (edRace.raceName == raceName)
-									foundRaceData = edRace;
-						}
-					}
-				}
-			}
-			return foundRaceData;
-		}
-	#endif
 		public void UpdateDynamicRaceLibrary(bool downloadAssets, int? raceHash = null)
 		{
 			if (allStartingAssetsAdded && raceHash == null)
@@ -121,19 +42,9 @@ namespace UMA.CharacterSystem
 			if (raceHash == null && Application.isPlaying && allStartingAssetsAdded == false)
 					allStartingAssetsAdded = true;
 
-	#if UNITY_EDITOR
-			if (allAssetsAddedInEditor && raceHash == null)
-				return;
-
-	#endif
 			if (DynamicAssetLoader.Instance != null)
 				DynamicAssetLoader.Instance.AddAssets<RaceData>(ref assetBundlesUsedDict, dynamicallyAddFromResources, dynamicallyAddFromAssetBundles, downloadAssets, assetBundleNamesToSearch, resourcesFolderPath, raceHash, "", AddRaces);
 
-	#if UNITY_EDITOR
-			if (raceHash == null && !Application.isPlaying)
-				allAssetsAddedInEditor = true;
-
-	#endif
 		}
 
 		public void UpdateDynamicRaceLibrary(string raceName)
@@ -147,35 +58,6 @@ namespace UMA.CharacterSystem
 			int currentNumRaces = raceElementList.Length;
 			foreach (RaceData race in races)
 			{
-	#if UNITY_EDITOR
-				if (!Application.isPlaying)
-				{
-					bool alreadyExisted = false;
-
-					foreach(RaceData addedRace in raceElementList)
-					{
-						if (addedRace == race)
-						{
-							alreadyExisted = true;
-							break;
-						}
-					}
-					if (alreadyExisted)
-						continue;
-					if (!editorAddedAssets.Contains(race))
-					{
-						editorAddedAssets.Add(race);
-						if (UMAContext.Instance == null)
-							UMAContext.FindInstance();
-						if (UMAContext.Instance != null)
-							if (UMAContext.Instance.dynamicCharacterSystem != null)
-							{
-								(UMAContext.Instance.dynamicCharacterSystem as DynamicCharacterSystem).Refresh(false);
-							}
-					}
-				}
-				else
-	#endif
 					AddRace(race);
 			}
 			//Ensure the new races have keys in the DCS dictionary
@@ -188,16 +70,8 @@ namespace UMA.CharacterSystem
 					(UMAContext.Instance.dynamicCharacterSystem as DynamicCharacterSystem).RefreshRaceKeys();
 				}
 			}
-			//This doesn't actually seem to do anything apart from slow things down
-			//StartCoroutine(CleanRacesFromResourcesAndBundles());
 		}
 	#pragma warning restore 618
-		/*IEnumerator CleanRacesFromResourcesAndBundles()
-		{
-			yield return null;
-			Resources.UnloadUnusedAssets();
-			yield break;
-		}*/
 
 	#pragma warning disable 618
 		//We need to override AddRace Too because if the element is not in the list anymore it causes an error...
@@ -239,12 +113,7 @@ namespace UMA.CharacterSystem
 
 			RaceData res;
 			res = base.GetRace(raceName);
-	#if UNITY_EDITOR
-			if (!Application.isPlaying && res == null)
-			{
-				res = GetEditorAddedAsset(null, raceName);
-			}
-	#endif
+
 			if (res == null && allowUpdate)
 			{
 				//we try to load the race dynamically
@@ -252,16 +121,6 @@ namespace UMA.CharacterSystem
 				res = base.GetRace(raceName);
 				if (res == null)
 				{
-	#if UNITY_EDITOR
-					if (!Application.isPlaying)
-					{
-						res = GetEditorAddedAsset(null, raceName);
-						if (res != null)
-						{
-							return res;
-						}
-					}
-	#endif
 					return null;
 				}
 			}
@@ -278,28 +137,13 @@ namespace UMA.CharacterSystem
 
 			RaceData res;
 			res = base.GetRace(nameHash);
-	#if UNITY_EDITOR
-			if (!Application.isPlaying && res == null)
-			{
-				res = GetEditorAddedAsset(nameHash);
-			}
-	#endif
+
 			if (res == null && allowUpdate)
 			{
 				UpdateDynamicRaceLibrary(true, nameHash);
 				res = base.GetRace(nameHash);
 				if (res == null)
 				{
-	#if UNITY_EDITOR
-					if (!Application.isPlaying)
-					{
-						res = GetEditorAddedAsset(nameHash);
-						if (res != null)
-						{
-							return res;
-						}
-					}
-	#endif
 					return null;
 				}
 			}
@@ -320,19 +164,6 @@ namespace UMA.CharacterSystem
 		public override RaceData[] GetAllRaces()
 		{
 			UpdateDynamicRaceLibrary(false);
-	#if UNITY_EDITOR
-			if (!Application.isPlaying)
-			{
-				//we need a combined array of the editor added assets and the baseGetAllRaces Array
-				List<RaceData> combinedRaceDatas = new List<RaceData>(base.GetAllRaces());
-				if (editorAddedAssets.Count > 0)
-				{
-					combinedRaceDatas.AddRange(editorAddedAssets);
-				}
-				return combinedRaceDatas.ToArray();
-			}
-			else
-	#endif
 				return base.GetAllRaces();
 		}
 
