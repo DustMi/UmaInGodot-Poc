@@ -30,7 +30,10 @@ namespace UMA.CharacterSystem
 
 		public void Start()
 		{
-			assetBundlesUsedDict.Clear();
+			if (Application.isPlaying)
+			{
+				assetBundlesUsedDict.Clear();
+			}
 		}
 
 		public void UpdateDynamicRaceLibrary(bool downloadAssets, int? raceHash = null)
@@ -137,7 +140,6 @@ namespace UMA.CharacterSystem
 
 			RaceData res;
 			res = base.GetRace(nameHash);
-
 			if (res == null && allowUpdate)
 			{
 				UpdateDynamicRaceLibrary(true, nameHash);

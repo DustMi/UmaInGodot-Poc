@@ -45,6 +45,10 @@
       <HintPath>$(ProjectDir)\.mono\assemblies\GodotSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>$(ProjectDir)\.mono\assemblies\YamlDotNet.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System"/>
   </ItemGroup>
   <ItemGroup>
