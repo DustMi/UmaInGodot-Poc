@@ -6,6 +6,8 @@ using UMA;
 using System.IO;
 using YamlDotNet;
 using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
+using RawYaml;
 
 
 public class StartScene : Spatial
@@ -17,15 +19,36 @@ public class StartScene : Spatial
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        StreamReader textReader = new StreamReader(@"C:\Godot\Projects\UmaInGodot-Poc\UMA\Content\UMA_Core\HumanMale\Slots\Body\UMA_Human_Male_Legs_Slot.asset");
+        StreamReader textReader = new StreamReader(@"./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Legs_Slot.asset");
+        textReader.ReadLine();
+        textReader.ReadLine();
+        textReader.ReadLine();
         var deserializer = new DeserializerBuilder()
-            .IgnoreUnmatchedProperties()
-            .Build();
+                .WithNamingConvention(new CamelCaseNamingConvention())
+                .Build();
         
-        var dict = deserializer.Deserialize<Dictionary<string, string>>(textReader);
-        foreach(var key in dict.Keys) {
-            GD.Print(key);
-        }
+        var slotData = deserializer.Deserialize<SlotYaml>(textReader);
+        
+        GD.Print(slotData.MonoBehaviour.MName);
+        ArrayMesh legMesh = new ArrayMesh();
+        
+        var surfaceArray = new Godot.Collections.Array();
+        surfaceArray.Resize(9);
+        surfaceArray[0] = slotData.MonoBehaviour.MeshData.Vertices;
+        //foreach(var vertex in slotData.MonoBehaviour.MeshData.Vertices) {
+        //    vertices.Add(vertex);
+        //}
+        //slotData.MonoBehaviour.MeshData.Vertices
+        legMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
+        var legMaterial = (SpatialMaterial)GD.Load("res://skin.material");
+        GD.Print("Surface Count" + legMesh.GetSurfaceCount());
+        var node = (MeshInstance)FindNode("UmaMeshNode");
+        
+        GD.Print(node.GetType());
+        GD.Print(node.Mesh.ToString());
+        node.SetMesh(legMesh);
+        node.SetSurfaceMaterial(0,legMaterial);
+        GD.Print(node.Mesh.ToString());
         
         /*
         DynamicCharacterAvatar characterAvatar= new DynamicCharacterAvatar();
