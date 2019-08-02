@@ -15,6 +15,7 @@ public class StartScene : Spatial
     const int NUMBER_OF_HEX_CHARACTERS_PER_VALUE = 8;
     const int ARRAY_VERTEX = 0;
     const int ARRAY_NORMAL = 1;
+    const int ARRAY_TANGENTS = 2;
     const int ARRAY_MAX = 9;
     const int ARRAY_FORMAT_VERTEX = 1;
     
@@ -38,7 +39,10 @@ public class StartScene : Spatial
         var surfaceArray = new Godot.Collections.Array();
         surfaceArray.Resize(ARRAY_MAX);
         surfaceArray[ARRAY_VERTEX] = PutVectorsIntoCorrectOrder(slotData.MonoBehaviour.MeshData.Vertices, verticeOrder);
-        //surfaceArray[ARRAY_NORMAL] = slotData.MonoBehaviour.MeshData.Normals;
+        surfaceArray[ARRAY_NORMAL] = PutVectorsIntoCorrectOrder(slotData.MonoBehaviour.MeshData.Normals, verticeOrder);
+        surfaceArray[ARRAY_TANGENTS] = CreateTangents(slotData.MonoBehaviour.MeshData.Tangents, verticeOrder);
+
+
 
         ArrayMesh legMesh = new ArrayMesh();
         legMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
@@ -73,6 +77,19 @@ public class StartScene : Spatial
         characterAvatar.Start();
         GD.Print("It actually made it to the end of the Start routine!");
          */
+    }
+
+    public float[][] CreateTangents(Tangents[] library, int[]correctOrder) {
+        var returnValue = new float[correctOrder.Length][];
+        for(int i = 0; i < correctOrder.Length; i++) {
+            returnValue[i] = new float[] {
+                library[correctOrder[i]].X,
+                library[correctOrder[i]].Y,
+                library[correctOrder[i]].Z,
+                library[correctOrder[i]].W
+                };
+        }
+        return returnValue;
     }
 
     public Vector3[] PutVectorsIntoCorrectOrder(Vector3[] library, int[] correctOrder) {

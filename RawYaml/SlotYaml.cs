@@ -207,16 +207,16 @@ namespace RawYaml
     public class Tangents
     {
         [YamlMember(Alias = "x", ApplyNamingConventions = false)]
-        public double X { get; set; }
+        public float X { get; set; }
 
         [YamlMember(Alias = "y", ApplyNamingConventions = false)]
-        public double Y { get; set; }
+        public float Y { get; set; }
 
         [YamlMember(Alias = "z", ApplyNamingConventions = false)]
-        public double Z { get; set; }
+        public float Z { get; set; }
 
         [YamlMember(Alias = "w", ApplyNamingConventions = false)]
-        public double? W { get; set; }
+        public float W { get; set; }
     }
 
     public class Submesh
