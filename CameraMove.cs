@@ -43,12 +43,12 @@ public class CameraMove : Camera
                 yVelocity = eventKey.Pressed ? -MOVE_SPEED : 0f;
             }
         } else if(@event is InputEventMouseMotion inputEventMouseMotion) {
-            GD.Print("Relative x: " + inputEventMouseMotion.Relative.x +
+            /*GD.Print("Relative x: " + inputEventMouseMotion.Relative.x +
                     " Relative y: " + inputEventMouseMotion.Relative.y +
                     " Speed x: " + inputEventMouseMotion.Speed.x +
                     " Speed y: " + inputEventMouseMotion.Speed.y +
                     " Position x: " + inputEventMouseMotion.Position.x +
-                    " Position y: " + inputEventMouseMotion.Position.y);
+                    " Position y: " + inputEventMouseMotion.Position.y);*/
             this.RotateY(-inputEventMouseMotion.Speed.x/36000.0f);
             this.RotateX(-inputEventMouseMotion.Speed.y/36000.0f);
         }

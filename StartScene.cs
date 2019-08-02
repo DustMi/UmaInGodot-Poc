@@ -12,10 +12,11 @@ using RawYaml;
 
 public class StartScene : Spatial
 {
-    int ARRAY_VERTEX = 0;
-    int ARRAY_NORMAL = 1;
-    int ARRAY_MAX = 9;
-    int ARRAY_FORMAT_VERTEX = 1;
+    const int NUMBER_OF_HEX_CHARACTERS_PER_VALUE = 8;
+    const int ARRAY_VERTEX = 0;
+    const int ARRAY_NORMAL = 1;
+    const int ARRAY_MAX = 9;
+    const int ARRAY_FORMAT_VERTEX = 1;
     
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -31,26 +32,25 @@ public class StartScene : Spatial
         var slotData = deserializer.Deserialize<SlotYaml>(textReader);
         
         GD.Print(slotData.MonoBehaviour.MName);
-        ArrayMesh legMesh = new ArrayMesh();
         
+        
+        var verticeOrder = decodeUnitysFuckedUpCompressionSubMesh(slotData.MonoBehaviour.MeshData.Submeshes[0].Triangles);
         var surfaceArray = new Godot.Collections.Array();
         surfaceArray.Resize(ARRAY_MAX);
-        surfaceArray[ARRAY_VERTEX] = slotData.MonoBehaviour.MeshData.Vertices;
-        surfaceArray[ARRAY_NORMAL] = slotData.MonoBehaviour.MeshData.Normals;
-        //surfaceArray[ARRAY_NORMAL] 
-        //foreach(var vertex in slotData.MonoBehaviour.MeshData.Vertices) {
-        //    vertices.Add(vertex);
-        //}
-        //slotData.MonoBehaviour.MeshData.Vertices
+        surfaceArray[ARRAY_VERTEX] = PutVectorsIntoCorrectOrder(slotData.MonoBehaviour.MeshData.Vertices, verticeOrder);
+        //surfaceArray[ARRAY_NORMAL] = slotData.MonoBehaviour.MeshData.Normals;
+
+        ArrayMesh legMesh = new ArrayMesh();
         legMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
         var legMaterial = (SpatialMaterial)GD.Load("res://skin.material");
         GD.Print("Surface Count" + legMesh.GetSurfaceCount());
         var node = (MeshInstance)FindNode("UmaMeshNode");
         
+
         GD.Print(node.GetType());
         GD.Print(node.Mesh.ToString());
         node.SetMesh(legMesh);
-        node.SetSurfaceMaterial(1,legMaterial);
+        node.SetSurfaceMaterial(0,legMaterial);
         GD.Print(node.Mesh.ToString());
         
         /*
@@ -75,23 +75,35 @@ public class StartScene : Spatial
          */
     }
 
+    public Vector3[] PutVectorsIntoCorrectOrder(Vector3[] library, int[] correctOrder) {
+        Vector3[] returnValue = new Vector3[correctOrder.Length];
+        for(int i = 0; i < correctOrder.Length; i++) {
+            returnValue[i] = library[correctOrder[i]];
+        }
+        return returnValue;
+    }
+
+    //In the real version, this will need to be optimized to bitshifting
     public int[] decodeUnitysFuckedUpCompressionSubMesh(string hexArray) {
-        if(hexArray.Length % 8 > 0) {
+        if(hexArray.Length % NUMBER_OF_HEX_CHARACTERS_PER_VALUE > 0) {
             throw new ArgumentOutOfRangeException(hexArray, "Length must be a multiple of 8");
         }
-        for(int i = 0; i < hexArray.Length; i += 8) {
-            char[] hexChar = new char[8];
+        var verticeOrder = new int[hexArray.Length/NUMBER_OF_HEX_CHARACTERS_PER_VALUE];
+        for(int i = 0; i < hexArray.Length; i += NUMBER_OF_HEX_CHARACTERS_PER_VALUE) {
+            char[] hexChar = new char[NUMBER_OF_HEX_CHARACTERS_PER_VALUE];
             hexChar[0] = hexArray[i + 6];
-            hexChar[0] = hexArray[i + 7];
-            hexChar[0] = hexArray[i + 4];
-            hexChar[0] = hexArray[i + 5];
-            hexChar[0] = hexArray[i + 2];
-            hexChar[0] = hexArray[i + 3];
-            hexChar[0] = hexArray[i + 1];
-            hexChar[0] = hexArray[i + 0];
-            hexChar.ToString();
-            //string singleHexString = String.Join(string.Empty, new String[] {hexArray[i+6]});
+            hexChar[1] = hexArray[i + 7];
+            hexChar[2] = hexArray[i + 4];
+            hexChar[3] = hexArray[i + 5];
+            hexChar[4] = hexArray[i + 2];
+            hexChar[5] = hexArray[i + 3];
+            hexChar[6] = hexArray[i + 0];
+            hexChar[7] = hexArray[i + 1];
+            string hexstring = new String(hexChar);
+            int verticeNumber = int.Parse(hexstring, System.Globalization.NumberStyles.HexNumber);
+            verticeOrder[i/NUMBER_OF_HEX_CHARACTERS_PER_VALUE] = verticeNumber;
         }
+        return verticeOrder;
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
