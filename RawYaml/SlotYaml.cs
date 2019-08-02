@@ -132,10 +132,10 @@ namespace RawYaml
         public Vector3[] Vertices { get; set; }
 
         [YamlMember(Alias = "normals", ApplyNamingConventions = false)]
-        public Normal[] Normals { get; set; }
+        public Vector3[] Normals { get; set; }
 
         [YamlMember(Alias = "tangents", ApplyNamingConventions = false)]
-        public Normal[] Tangents { get; set; }
+        public Tangents[] Tangents { get; set; }
 
         [YamlMember(Alias = "colors32", ApplyNamingConventions = false)]
         public object[] Colors32 { get; set; }
@@ -204,7 +204,7 @@ namespace RawYaml
         public double Weight3 { get; set; }
     }
 
-    public class Normal
+    public class Tangents
     {
         [YamlMember(Alias = "x", ApplyNamingConventions = false)]
         public double X { get; set; }
@@ -228,13 +228,13 @@ namespace RawYaml
     public class UmaBone
     {
         [YamlMember(Alias = "position", ApplyNamingConventions = false)]
-        public Normal Position { get; set; }
+        public Tangents Position { get; set; }
 
         [YamlMember(Alias = "rotation", ApplyNamingConventions = false)]
-        public Normal Rotation { get; set; }
+        public Tangents Rotation { get; set; }
 
         [YamlMember(Alias = "scale", ApplyNamingConventions = false)]
-        public Normal Scale { get; set; }
+        public Tangents Scale { get; set; }
 
         [YamlMember(Alias = "name", ApplyNamingConventions = false)]
         public string Name { get; set; }

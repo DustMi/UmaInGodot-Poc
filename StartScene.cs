@@ -12,10 +12,11 @@ using RawYaml;
 
 public class StartScene : Spatial
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
-
+    int ARRAY_VERTEX = 0;
+    int ARRAY_NORMAL = 1;
+    int ARRAY_MAX = 9;
+    int ARRAY_FORMAT_VERTEX = 1;
+    
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -33,8 +34,10 @@ public class StartScene : Spatial
         ArrayMesh legMesh = new ArrayMesh();
         
         var surfaceArray = new Godot.Collections.Array();
-        surfaceArray.Resize(9);
-        surfaceArray[0] = slotData.MonoBehaviour.MeshData.Vertices;
+        surfaceArray.Resize(ARRAY_MAX);
+        surfaceArray[ARRAY_VERTEX] = slotData.MonoBehaviour.MeshData.Vertices;
+        surfaceArray[ARRAY_NORMAL] = slotData.MonoBehaviour.MeshData.Normals;
+        //surfaceArray[ARRAY_NORMAL] 
         //foreach(var vertex in slotData.MonoBehaviour.MeshData.Vertices) {
         //    vertices.Add(vertex);
         //}
@@ -47,7 +50,7 @@ public class StartScene : Spatial
         GD.Print(node.GetType());
         GD.Print(node.Mesh.ToString());
         node.SetMesh(legMesh);
-        node.SetSurfaceMaterial(0,legMaterial);
+        node.SetSurfaceMaterial(1,legMaterial);
         GD.Print(node.Mesh.ToString());
         
         /*
@@ -70,6 +73,25 @@ public class StartScene : Spatial
         characterAvatar.Start();
         GD.Print("It actually made it to the end of the Start routine!");
          */
+    }
+
+    public int[] decodeUnitysFuckedUpCompressionSubMesh(string hexArray) {
+        if(hexArray.Length % 8 > 0) {
+            throw new ArgumentOutOfRangeException(hexArray, "Length must be a multiple of 8");
+        }
+        for(int i = 0; i < hexArray.Length; i += 8) {
+            char[] hexChar = new char[8];
+            hexChar[0] = hexArray[i + 6];
+            hexChar[0] = hexArray[i + 7];
+            hexChar[0] = hexArray[i + 4];
+            hexChar[0] = hexArray[i + 5];
+            hexChar[0] = hexArray[i + 2];
+            hexChar[0] = hexArray[i + 3];
+            hexChar[0] = hexArray[i + 1];
+            hexChar[0] = hexArray[i + 0];
+            hexChar.ToString();
+            //string singleHexString = String.Join(string.Empty, new String[] {hexArray[i+6]});
+        }
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
