@@ -16,8 +16,22 @@ public class StartScene : Spatial
     const int ARRAY_VERTEX = 0;
     const int ARRAY_NORMAL = 1;
     const int ARRAY_TANGENTS = 2;
+    const int ARRAY_COLOR = 3;
+    const int ARRAY_TEX_UV= 4;
+    const int ARRAY_TEX_UV2 = 5;
+    const int ARRAY_BONES = 6;
+    const int ARRAY_WEIGHTS = 7;
+    const int ARRAY_INDEX = 8;
     const int ARRAY_MAX = 9;
     const int ARRAY_FORMAT_VERTEX = 1;
+    const int ARRAY_FORMAT_NORMAL = 2;
+    const int ARRAY_FORMAT_TANGENT = 4;
+    const int ARRAY_FORMAT_COLOR = 8;
+    const int ARRAY_FORMAT_TEX_UV = 16;
+    const int ARRAY_FORMAT_TEX_UV2 = 32;
+    const int ARRAY_FORMAT_BONES = 64;
+    const int ARRAY_FORMAT_WEIGHTS = 128;
+    const int ARRAY_FORMAT_INDEX = 256;
     
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -38,14 +52,19 @@ public class StartScene : Spatial
         var verticeOrder = decodeUnitysFuckedUpCompressionSubMesh(slotData.MonoBehaviour.MeshData.Submeshes[0].Triangles);
         var surfaceArray = new Godot.Collections.Array();
         surfaceArray.Resize(ARRAY_MAX);
-        surfaceArray[ARRAY_VERTEX] = PutVectorsIntoCorrectOrder(slotData.MonoBehaviour.MeshData.Vertices, verticeOrder);
-        surfaceArray[ARRAY_NORMAL] = PutVectorsIntoCorrectOrder(slotData.MonoBehaviour.MeshData.Normals, verticeOrder);
-        surfaceArray[ARRAY_TANGENTS] = CreateTangents(slotData.MonoBehaviour.MeshData.Tangents, verticeOrder);
+        surfaceArray[ARRAY_VERTEX] = slotData.MonoBehaviour.MeshData.Vertices;
+        surfaceArray[ARRAY_NORMAL] = slotData.MonoBehaviour.MeshData.Normals;
+        surfaceArray[ARRAY_TANGENTS] = CreateTangents(slotData.MonoBehaviour.MeshData.Tangents);
+        surfaceArray[ARRAY_TEX_UV] = slotData.MonoBehaviour.MeshData.Uv;
+        surfaceArray[ARRAY_INDEX] = verticeOrder;
+        //surfaceArray[ARRAY_VERTEX] = PutVectorsIntoCorrectOrder(slotData.MonoBehaviour.MeshData.Vertices, verticeOrder);
+        //surfaceArray[ARRAY_NORMAL] = PutVectorsIntoCorrectOrder(slotData.MonoBehaviour.MeshData.Normals, verticeOrder);
+        //surfaceArray[ARRAY_TANGENTS] = CreateTangents(slotData.MonoBehaviour.MeshData.Tangents, verticeOrder);
 
 
 
         ArrayMesh legMesh = new ArrayMesh();
-        legMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
+        legMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray, null, ARRAY_FORMAT_VERTEX + ARRAY_FORMAT_NORMAL + ARRAY_FORMAT_TANGENT + ARRAY_FORMAT_TANGENT);
         var legMaterial = (SpatialMaterial)GD.Load("res://skin.material");
         GD.Print("Surface Count" + legMesh.GetSurfaceCount());
         var node = (MeshInstance)FindNode("UmaMeshNode");
@@ -76,7 +95,45 @@ public class StartScene : Spatial
 
         characterAvatar.Start();
         GD.Print("It actually made it to the end of the Start routine!");
+
+
+        public IList<float[]> CreateTangents(Tangents[] raw) {
+        var returnValue = new List<float[]>();
+        for(int i = 0; i < raw.Length; i++) {
+            returnValue.Add(new float[] {
+                raw[i].X,
+                raw[i].Y,
+                raw[i].Z,
+                raw[i].W
+                });
+        }
+        return returnValue;
+    }
+
+    public float[][] CreateTangents(Tangents[] raw) {
+        var returnValue = new float[raw.Length][];
+        for(int i = 0; i < raw.Length; i++) {
+            returnValue[i] = new float[] {
+                raw[i].X,
+                raw[i].Y,
+                raw[i].Z,
+                raw[i].W
+                };
+        }
+        return returnValue;
+    }
          */
+    }
+
+    public float[] CreateTangents(Tangents[] raw) {
+        var returnValue = new float[raw.Length * 4];
+        for(int i = 0; i < raw.Length; i += 4) {
+            returnValue[i+0] = raw[i/4].X;
+            returnValue[i+1] = raw[i/4].Y;
+            returnValue[i+2] = raw[i/4].Z;
+            returnValue[i+3] = raw[i/4].W;
+        }
+        return returnValue;
     }
 
     public float[][] CreateTangents(Tangents[] library, int[]correctOrder) {

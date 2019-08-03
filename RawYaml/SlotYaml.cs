@@ -141,16 +141,16 @@ namespace RawYaml
         public object[] Colors32 { get; set; }
 
         [YamlMember(Alias = "uv", ApplyNamingConventions = false)]
-        public Uv[] Uv { get; set; }
+        public Vector2[] Uv { get; set; }
 
         [YamlMember(Alias = "uv2", ApplyNamingConventions = false)]
-        public object[] Uv2 { get; set; }
+        public Vector2[] Uv2 { get; set; }
 
         [YamlMember(Alias = "uv3", ApplyNamingConventions = false)]
-        public object[] Uv3 { get; set; }
+        public Vector2[] Uv3 { get; set; }
 
         [YamlMember(Alias = "uv4", ApplyNamingConventions = false)]
-        public object[] Uv4 { get; set; }
+        public Vector2[] Uv4 { get; set; }
 
         [YamlMember(Alias = "submeshes", ApplyNamingConventions = false)]
         public Submesh[] Submeshes { get; set; }

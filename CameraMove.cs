@@ -49,8 +49,10 @@ public class CameraMove : Camera
                     " Speed y: " + inputEventMouseMotion.Speed.y +
                     " Position x: " + inputEventMouseMotion.Position.x +
                     " Position y: " + inputEventMouseMotion.Position.y);*/
-            this.RotateY(-inputEventMouseMotion.Speed.x/36000.0f);
-            this.RotateX(-inputEventMouseMotion.Speed.y/36000.0f);
+            this.Rotate(new Vector3(0,1,0), -inputEventMouseMotion.Speed.x/20000.0f);
+            //this.RotateY(-inputEventMouseMotion.Speed.x/36000.0f);
+            this.Rotate(new Vector3(1,0,0), -inputEventMouseMotion.Speed.y/20000.0f);
+            //this.RotateX(-inputEventMouseMotion.Speed.y/36000.0f);
         }
     }
 
