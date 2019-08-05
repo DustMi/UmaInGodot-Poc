@@ -13,8 +13,23 @@ public class CameraMove : Camera
     float yVelocity = 0.0f;
 
     float yCamera_angle = 0.0f;
-    float mouse_sensitibity = .4f;
+    float mouse_sensitibity = .2f;
+
+    Vector2 _mouse_position = new Vector2(0.0f, 0.0f);
+    float _yaw = 0.0f;
+    float _pitch = 0.0f;
+    float _total_yaw = 0.0f;
+    const float PITCH_LIMIT = 80.0f;
+    float _total_pitch = 0.0f;
+    private float _smoothness = 0.5f;
+    float smoothness {
+        get {return _smoothness;}
+        set {
+            _smoothness = Mathf.Clamp(value, 0.001f, 0.999f);
+        }
+    }
     Spatial RotateHelper;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -25,6 +40,27 @@ public class CameraMove : Camera
 
     public override void _PhysicsProcess(float delta) {
         this.TranslateObjectLocal(new Vector3(xVelocity * delta, yVelocity * delta, zVelocity * delta));
+    }
+
+    public override void _Process(float delta) {
+        UpdateMouselook();
+    }
+
+    private void UpdateMouselook() {
+        _mouse_position *= mouse_sensitibity;
+        _yaw = _yaw * smoothness + _mouse_position.x * (1.0f - smoothness);
+        _pitch = _pitch * smoothness + _mouse_position.y * (1.0f - smoothness);
+        _mouse_position = Vector2.Zero;
+
+        
+        _pitch = Mathf.Clamp(_pitch, -PITCH_LIMIT - _total_pitch, PITCH_LIMIT - _total_pitch);
+        _total_yaw += _yaw;
+        _total_pitch += _pitch;
+
+
+        this.RotateY(-_yaw * .01745f);
+        this.RotateObjectLocal(Vector3.Left, _pitch * .01745f);
+
     }
 
     public override void _UnhandledInput(InputEvent @event) {
@@ -51,6 +87,7 @@ public class CameraMove : Camera
                 yVelocity = eventKey.Pressed ? -MOVE_SPEED : 0f;
             }
         } else if(@event is InputEventMouseMotion inputEventMouseMotion) {
+            _mouse_position = inputEventMouseMotion.Relative;
             /*GD.Print("Relative x: " + inputEventMouseMotion.Relative.x +
                     " Relative y: " + inputEventMouseMotion.Relative.y +
                     " Speed x: " + inputEventMouseMotion.Speed.x +
@@ -58,14 +95,15 @@ public class CameraMove : Camera
                     " Position x: " + inputEventMouseMotion.Position.x +
                     " Position y: " + inputEventMouseMotion.Position.y);*/
             //this.Rotate(new Vector3(0,1,0), -inputEventMouseMotion.Speed.x/20000.0f);
+            
+            /*
             RotateHelper.RotateX(inputEventMouseMotion.Relative.y * mouse_sensitibity * .01745f);
-            this.RotateY(-inputEventMouseMotion.Relative.x * mouse_sensitibity * .1745f);
+            this.RotateY(-inputEventMouseMotion.Relative.x * mouse_sensitibity * .01745f);
             var camera_rot = RotateHelper.RotationDegrees;
             camera_rot.x = Mathf.Clamp(camera_rot.x, -80, 80);
             RotateHelper.RotationDegrees = camera_rot;
 
-
-            /*this.RotateY(-inputEventMouseMotion.Relative.x * mouse_sensitibity * .01745f);
+            this.RotateY(-inputEventMouseMotion.Relative.x * mouse_sensitibity * .01745f);
             var yChange = -inputEventMouseMotion.Relative.y * mouse_sensitibity;
             if(yChange + yCamera_angle < 90 && yChange + yCamera_angle > -90) {
                 this.GetParent<Spatial>().RotateX(yChange * .01745f);
