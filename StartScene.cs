@@ -131,7 +131,7 @@ public class StartScene : Spatial
             returnValue[i+0] = raw[i/4].X;
             returnValue[i+1] = raw[i/4].Y;
             returnValue[i+2] = raw[i/4].Z;
-            returnValue[i+3] = raw[i/4].W;
+            returnValue[i+3] = -raw[i/4].W;
         }
         return returnValue;
     }

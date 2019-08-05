@@ -12,10 +12,15 @@ public class CameraMove : Camera
     float zVelocity = 0.0f;
     float yVelocity = 0.0f;
 
+    float yCamera_angle = 0.0f;
+    float mouse_sensitibity = .4f;
+    Spatial RotateHelper;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        
+        RotateHelper = this.GetParentSpatial();
+        Input.SetMouseMode(Input.MouseMode.Captured);
+        GD.Print(yCamera_angle);
     }
 
     public override void _PhysicsProcess(float delta) {
@@ -24,6 +29,9 @@ public class CameraMove : Camera
 
     public override void _UnhandledInput(InputEvent @event) {
         if(@event is InputEventKey eventKey) {
+            if(eventKey.Scancode == (int)KeyList.Escape) {
+                GetTree().Quit();
+            }
             if(eventKey.Scancode == (int)KeyList.W) {
                 zVelocity = eventKey.Pressed ? -MOVE_SPEED : 0f;
             }
@@ -49,9 +57,21 @@ public class CameraMove : Camera
                     " Speed y: " + inputEventMouseMotion.Speed.y +
                     " Position x: " + inputEventMouseMotion.Position.x +
                     " Position y: " + inputEventMouseMotion.Position.y);*/
-            this.Rotate(new Vector3(0,1,0), -inputEventMouseMotion.Speed.x/20000.0f);
-            //this.RotateY(-inputEventMouseMotion.Speed.x/36000.0f);
-            this.Rotate(new Vector3(1,0,0), -inputEventMouseMotion.Speed.y/20000.0f);
+            //this.Rotate(new Vector3(0,1,0), -inputEventMouseMotion.Speed.x/20000.0f);
+            RotateHelper.RotateX(inputEventMouseMotion.Relative.y * mouse_sensitibity * .01745f);
+            this.RotateY(-inputEventMouseMotion.Relative.x * mouse_sensitibity * .1745f);
+            var camera_rot = RotateHelper.RotationDegrees;
+            camera_rot.x = Mathf.Clamp(camera_rot.x, -80, 80);
+            RotateHelper.RotationDegrees = camera_rot;
+
+
+            /*this.RotateY(-inputEventMouseMotion.Relative.x * mouse_sensitibity * .01745f);
+            var yChange = -inputEventMouseMotion.Relative.y * mouse_sensitibity;
+            if(yChange + yCamera_angle < 90 && yChange + yCamera_angle > -90) {
+                this.GetParent<Spatial>().RotateX(yChange * .01745f);
+                yCamera_angle += yChange;
+                GD.Print(yCamera_angle);
+            }*/
             //this.RotateX(-inputEventMouseMotion.Speed.y/36000.0f);
         }
     }
