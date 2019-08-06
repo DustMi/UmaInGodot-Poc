@@ -73,7 +73,8 @@ public class StartScene : Spatial
         GD.Print(node.GetType());
         GD.Print(node.Mesh.ToString());
         node.SetMesh(legMesh);
-        node.SetSurfaceMaterial(0,legMaterial);
+        //node.SetSurfaceMaterial(0,legMaterial);
+        legMesh.SurfaceSetMaterial(0, legMaterial);
         GD.Print(node.Mesh.ToString());
         
         /*
@@ -175,7 +176,8 @@ public class StartScene : Spatial
             hexChar[7] = hexArray[i + 1];
             string hexstring = new String(hexChar);
             int verticeNumber = int.Parse(hexstring, System.Globalization.NumberStyles.HexNumber);
-            verticeOrder[i/NUMBER_OF_HEX_CHARACTERS_PER_VALUE] = verticeNumber;
+            verticeOrder[(verticeOrder.Length - 1) - i/NUMBER_OF_HEX_CHARACTERS_PER_VALUE] = verticeNumber;
+            //verticeOrder[i/NUMBER_OF_HEX_CHARACTERS_PER_VALUE] = verticeNumber;
         }
         return verticeOrder;
     }
