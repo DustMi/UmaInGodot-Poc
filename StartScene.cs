@@ -48,8 +48,7 @@ public class StartScene : Spatial
         
         GD.Print(slotData.MonoBehaviour.MName);
         
-        
-        var verticeOrder = decodeUnitysFuckedUpCompressionSubMesh(slotData.MonoBehaviour.MeshData.Submeshes[0].Triangles);
+        var verticeOrder = decodeUnitysCompressionSubMesh(slotData.MonoBehaviour.MeshData.Submeshes[0].Triangles);
         var surfaceArray = new Godot.Collections.Array();
         surfaceArray.Resize(ARRAY_MAX);
         surfaceArray[ARRAY_VERTEX] = slotData.MonoBehaviour.MeshData.Vertices;
@@ -57,11 +56,6 @@ public class StartScene : Spatial
         surfaceArray[ARRAY_TANGENTS] = CreateTangents(slotData.MonoBehaviour.MeshData.Tangents);
         surfaceArray[ARRAY_TEX_UV] = slotData.MonoBehaviour.MeshData.Uv;
         surfaceArray[ARRAY_INDEX] = verticeOrder;
-        //surfaceArray[ARRAY_VERTEX] = PutVectorsIntoCorrectOrder(slotData.MonoBehaviour.MeshData.Vertices, verticeOrder);
-        //surfaceArray[ARRAY_NORMAL] = PutVectorsIntoCorrectOrder(slotData.MonoBehaviour.MeshData.Normals, verticeOrder);
-        //surfaceArray[ARRAY_TANGENTS] = CreateTangents(slotData.MonoBehaviour.MeshData.Tangents, verticeOrder);
-
-
 
         ArrayMesh legMesh = new ArrayMesh();
         legMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray, null, ARRAY_FORMAT_VERTEX + ARRAY_FORMAT_NORMAL + ARRAY_FORMAT_TANGENT + ARRAY_FORMAT_TANGENT);
@@ -72,9 +66,8 @@ public class StartScene : Spatial
 
         GD.Print(node.GetType());
         GD.Print(node.Mesh.ToString());
-        node.SetMesh(legMesh);
-        //node.SetSurfaceMaterial(0,legMaterial);
         legMesh.SurfaceSetMaterial(0, legMaterial);
+        node.SetMesh(legMesh);
         GD.Print(node.Mesh.ToString());
         
         /*
@@ -95,35 +88,8 @@ public class StartScene : Spatial
         characterAvatar.umaGenerator = generator;
 
         characterAvatar.Start();
-        GD.Print("It actually made it to the end of the Start routine!");
-
-
-        public IList<float[]> CreateTangents(Tangents[] raw) {
-        var returnValue = new List<float[]>();
-        for(int i = 0; i < raw.Length; i++) {
-            returnValue.Add(new float[] {
-                raw[i].X,
-                raw[i].Y,
-                raw[i].Z,
-                raw[i].W
-                });
-        }
-        return returnValue;
-    }
-
-    public float[][] CreateTangents(Tangents[] raw) {
-        var returnValue = new float[raw.Length][];
-        for(int i = 0; i < raw.Length; i++) {
-            returnValue[i] = new float[] {
-                raw[i].X,
-                raw[i].Y,
-                raw[i].Z,
-                raw[i].W
-                };
-        }
-        return returnValue;
-    }
-         */
+        GD.Print("It actually made it to the end of the Start routine!");*/
+    
     }
 
     public float[] CreateTangents(Tangents[] raw) {
@@ -159,7 +125,7 @@ public class StartScene : Spatial
     }
 
     //In the real version, this will need to be optimized to bitshifting
-    public int[] decodeUnitysFuckedUpCompressionSubMesh(string hexArray) {
+    public int[] decodeUnitysCompressionSubMesh(string hexArray) {
         if(hexArray.Length % NUMBER_OF_HEX_CHARACTERS_PER_VALUE > 0) {
             throw new ArgumentOutOfRangeException(hexArray, "Length must be a multiple of 8");
         }
@@ -177,14 +143,7 @@ public class StartScene : Spatial
             string hexstring = new String(hexChar);
             int verticeNumber = int.Parse(hexstring, System.Globalization.NumberStyles.HexNumber);
             verticeOrder[(verticeOrder.Length - 1) - i/NUMBER_OF_HEX_CHARACTERS_PER_VALUE] = verticeNumber;
-            //verticeOrder[i/NUMBER_OF_HEX_CHARACTERS_PER_VALUE] = verticeNumber;
         }
         return verticeOrder;
     }
-
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
 }
