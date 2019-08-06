@@ -340,6 +340,7 @@ namespace UMA.CharacterSystem
             AddCharacterStateCache("NULL");
             base.Start();
 
+            Godot.GD.Print("Made it to the end of base.start");
             umaData.blendShapeSettings.ignoreBlendShapes = !loadBlendShapes;
 
             //if the animator has been set the 'old' way respect that...
@@ -355,7 +356,7 @@ namespace UMA.CharacterSystem
                 if (BuildUsingComponentSettings)
                 {
                     _isFirstSettingsBuild = false;
-                    //StartCoroutine(BuildFromComponentSettingsCO()); Commented  oyDstin
+                    //StartCoroutine(BuildFromComponentSettingsCO()); Commented  out by Dustin
                 }
                 else //we have an umaRecipe set or a text string set or a file defined to load
                 {
@@ -592,11 +593,12 @@ namespace UMA.CharacterSystem
             {
                 Debug.Log("[SetActiveRace] could not find baseRaceRecipe for the race " + activeRace.name + ". Have you set one in the raceData?");
             }
-            if (DynamicAssetLoader.Instance.downloadingAssetsContains(activeRace.name))
-            {
-                if (!requiredAssetsToCheck.Contains(activeRace.name))
-                    requiredAssetsToCheck.Add(activeRace.name);
-            }
+            //Dustin - No networking!!!!
+            //if (DynamicAssetLoader.Instance.downloadingAssetsContains(activeRace.name))
+            //{
+                //if (!requiredAssetsToCheck.Contains(activeRace.name))
+                    //requiredAssetsToCheck.Add(activeRace.name);
+            //}
         }
         /// <summary>
         /// Change the race of the Avatar, optionally overriding the 'onChangeRace' settings in the avatar component itself
@@ -714,7 +716,9 @@ namespace UMA.CharacterSystem
                     _wardrobeRecipes.Clear();
                 }
                 //by setting 'ForceDCSLoad' to true the loaded race will always be loaded like a new uma rather than the old uma way
-                StartCoroutine(ImportSettingsCO(UMATextRecipe.PackedLoadDCS(context, (race.baseRaceRecipe as UMATextRecipe).recipeString), thisLoadFlags, true));
+               // Changed by Dustin
+               // StartCoroutine(ImportSettingsCO(UMATextRecipe.PackedLoadDCS(context, (race.baseRaceRecipe as UMATextRecipe).recipeString), thisLoadFlags, true));
+               ImportSettingsCO(UMATextRecipe.PackedLoadDCS(context, (race.baseRaceRecipe as UMATextRecipe).recipeString), thisLoadFlags, true);
             }
         }
 
@@ -2169,11 +2173,15 @@ namespace UMA.CharacterSystem
         }
         public void ImportSettings(UMATextRecipe.DCSUniversalPackRecipe settingsToLoad, LoadOptions customLoadOptions = LoadOptions.useDefaults)
         {
-            StartCoroutine(ImportSettingsCO(settingsToLoad, customLoadOptions));
+            //undoing StartCoroutine, and instead calling function directly
+            //StartCoroutine(ImportSettingsCO(settingsToLoad, customLoadOptions));
+            ImportSettingsCO(settingsToLoad, customLoadOptions);
+            Godot.GD.Print("Finished ImportSettings");
         }
 
-        IEnumerator ImportSettingsCO(UMATextRecipe.DCSUniversalPackRecipe settingsToLoad, LoadOptions customLoadOptions = LoadOptions.useDefaults, bool forceDCSLoad = false)
+        void ImportSettingsCO(UMATextRecipe.DCSUniversalPackRecipe settingsToLoad, LoadOptions customLoadOptions = LoadOptions.useDefaults, bool forceDCSLoad = false)
         {
+            Godot.GD.Print("started ImportSettingsCO");
             var thisLoadOptions = customLoadOptions == LoadOptions.useDefaults ? defaultLoadOptions : customLoadOptions;
             //When ChangeRace calls this, it calls it with forceDCSLoad to be true so we need settingsToLoad.wardrobeSet fixed if its null
             if (forceDCSLoad)
@@ -2186,10 +2194,12 @@ namespace UMA.CharacterSystem
             _isFirstSettingsBuild = false;
             var prevDna = new UMADnaBase[0];
             bool needsUpdate = false;//gets set to true if anything caused downloads that we actually waited for
-            while (!DynamicAssetLoader.Instance.isInitialized)
-            {
-                yield return null;
-            }
+            //Dustin: Let's assume nothing needs to be downloaded 
+            //while (!DynamicAssetLoader.Instance.isInitialized)
+            //{
+                //yield return null;
+              //  return;
+            //}
             if (umaGenerator == null)
             {
                 umaGenerator = UMAGenerator.FindInstance();
@@ -2208,14 +2218,14 @@ namespace UMA.CharacterSystem
                 {
                     if (Debug.isDebugBuild)
                         Debug.LogError("The sent recipe did not have an assigned Race. Avatar could not be created from the recipe");
-                    yield break;
+                    return;
                 }
                 activeRace.name = settingsToLoad.race;
                 SetActiveRace();
                 //If the UmaRecipe is still after that null, bail - we cant go any further (and SetStartingRace will have shown an error)
                 if (umaRecipe == null)
                 {
-                    yield break;
+                    return;
                 }
             }
             //this will be null for old UMA recipes without any wardrobe
@@ -2231,7 +2241,7 @@ namespace UMA.CharacterSystem
                 while (DynamicAssetLoader.Instance.downloadingAssetsContains(activeRace.name))
                 {
                     needsUpdate = true;
-                    yield return null;
+                    return;
                 }
                 if (needsUpdate)
                 {
@@ -2268,7 +2278,7 @@ namespace UMA.CharacterSystem
                     SetExpressionSet();
                 }
                 //loading new wardrobe items and animation controllers may have also caused downloads so wait for those- if we are not waiting we will have already created the placeholder avatar above
-                yield return StartCoroutine(UpdateAfterDownloads());
+                UpdateAfterDownloads(); //coroutine
                 //update any wardrobe collections so if they are no longer active they dont show as active
                 //UpdateWardrobeCollections();
                 //Sort out colors

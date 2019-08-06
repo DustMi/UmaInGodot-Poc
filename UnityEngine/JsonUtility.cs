@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UMA.AssetBundles;
+using UMA;
+using Newtonsoft.Json;
 
 namespace UnityEngine
 {
@@ -17,7 +19,9 @@ namespace UnityEngine
         public static T FromJson<T>(string strObj)
         {
             Type type = typeof(T);
-            return (T)Activator.CreateInstance(type);
+            Godot.GD.Print("Creating " + type.Name + " from JSON String");
+            var theObject = JsonConvert.DeserializeObject<T>(strObj);
+            return theObject;
         }
 
         public static void FromJsonOverwrite(string readAllText, AssetBundleIndex assetBundleIndexObject)
