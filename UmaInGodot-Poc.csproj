@@ -81,6 +81,7 @@
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMAPostProcess.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\UMATime.cs" />
     <Compile Include="UMA\Core\StandardAssets\UMA\Scripts\WorkerCoroutine.cs" />
+    <Compile Include="UMA_ArrayMesh.cs" />
     <Compile Include="UnityEngine\AllTheAttributes.cs" />
     <Compile Include="UnityEngine\AnimationCurve.cs" />
     <Compile Include="UnityEngine\Animator.cs" />
