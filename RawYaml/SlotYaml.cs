@@ -180,28 +180,28 @@ namespace RawYaml
     public class BoneWeight
     {
         [YamlMember(Alias = "boneIndex0", ApplyNamingConventions = false)]
-        public long BoneIndex0 { get; set; }
+        public int BoneIndex0 { get; set; }
 
         [YamlMember(Alias = "boneIndex1", ApplyNamingConventions = false)]
-        public long BoneIndex1 { get; set; }
+        public int BoneIndex1 { get; set; }
 
         [YamlMember(Alias = "boneIndex2", ApplyNamingConventions = false)]
-        public long BoneIndex2 { get; set; }
+        public int BoneIndex2 { get; set; }
 
         [YamlMember(Alias = "boneIndex3", ApplyNamingConventions = false)]
-        public long BoneIndex3 { get; set; }
+        public int BoneIndex3 { get; set; }
 
         [YamlMember(Alias = "weight0", ApplyNamingConventions = false)]
-        public double Weight0 { get; set; }
+        public float Weight0 { get; set; }
 
         [YamlMember(Alias = "weight1", ApplyNamingConventions = false)]
-        public double Weight1 { get; set; }
+        public float Weight1 { get; set; }
 
         [YamlMember(Alias = "weight2", ApplyNamingConventions = false)]
-        public double Weight2 { get; set; }
+        public float Weight2 { get; set; }
 
         [YamlMember(Alias = "weight3", ApplyNamingConventions = false)]
-        public double Weight3 { get; set; }
+        public float Weight3 { get; set; }
     }
 
     public class Tangents

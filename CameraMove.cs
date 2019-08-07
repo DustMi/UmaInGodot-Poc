@@ -3,9 +3,6 @@ using System;
 
 public class CameraMove : Camera
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
     float MOVE_SPEED = 1.0f;
 
     float xVelocity = 0.0f;
@@ -88,35 +85,7 @@ public class CameraMove : Camera
             }
         } else if(@event is InputEventMouseMotion inputEventMouseMotion) {
             _mouse_position = inputEventMouseMotion.Relative;
-            /*GD.Print("Relative x: " + inputEventMouseMotion.Relative.x +
-                    " Relative y: " + inputEventMouseMotion.Relative.y +
-                    " Speed x: " + inputEventMouseMotion.Speed.x +
-                    " Speed y: " + inputEventMouseMotion.Speed.y +
-                    " Position x: " + inputEventMouseMotion.Position.x +
-                    " Position y: " + inputEventMouseMotion.Position.y);*/
-            //this.Rotate(new Vector3(0,1,0), -inputEventMouseMotion.Speed.x/20000.0f);
-            
-            /*
-            RotateHelper.RotateX(inputEventMouseMotion.Relative.y * mouse_sensitibity * .01745f);
-            this.RotateY(-inputEventMouseMotion.Relative.x * mouse_sensitibity * .01745f);
-            var camera_rot = RotateHelper.RotationDegrees;
-            camera_rot.x = Mathf.Clamp(camera_rot.x, -80, 80);
-            RotateHelper.RotationDegrees = camera_rot;
-
-            this.RotateY(-inputEventMouseMotion.Relative.x * mouse_sensitibity * .01745f);
-            var yChange = -inputEventMouseMotion.Relative.y * mouse_sensitibity;
-            if(yChange + yCamera_angle < 90 && yChange + yCamera_angle > -90) {
-                this.GetParent<Spatial>().RotateX(yChange * .01745f);
-                yCamera_angle += yChange;
-                GD.Print(yCamera_angle);
-            }*/
-            //this.RotateX(-inputEventMouseMotion.Speed.y/36000.0f);
         }
     }
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
 }

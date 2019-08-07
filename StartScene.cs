@@ -32,11 +32,17 @@ public class StartScene : Spatial
     const int ARRAY_FORMAT_BONES = 64;
     const int ARRAY_FORMAT_WEIGHTS = 128;
     const int ARRAY_FORMAT_INDEX = 256;
+    const int ARRAY_WEIGHTS_SIZE = 4;
+
+    ArrayMesh myMesh = new ArrayMesh();
     
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        StreamReader textReader = new StreamReader(@"./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Legs_Slot.asset");
+        RenderSlot(@"./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Legs_Slot.asset");
+        RenderSlot(@"./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Feet_Slot.asset");
+        //StreamReader textReader = new StreamReader(@"./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Legs_Slot.asset");
+        /*
         textReader.ReadLine();
         textReader.ReadLine();
         textReader.ReadLine();
@@ -55,6 +61,11 @@ public class StartScene : Spatial
         surfaceArray[ARRAY_NORMAL] = slotData.MonoBehaviour.MeshData.Normals;
         surfaceArray[ARRAY_TANGENTS] = CreateTangents(slotData.MonoBehaviour.MeshData.Tangents);
         surfaceArray[ARRAY_TEX_UV] = slotData.MonoBehaviour.MeshData.Uv;
+        IList<int> boneIndexes=new List<int>();
+        IList<float> boneWeights=new List<float>();
+        FillBoneAndWeightArray(slotData.MonoBehaviour.MeshData.BoneWeights, boneIndexes, boneWeights);
+        surfaceArray[ARRAY_BONES] = boneIndexes;
+        surfaceArray[ARRAY_WEIGHTS] = boneWeights;
         surfaceArray[ARRAY_INDEX] = verticeOrder;
 
         ArrayMesh legMesh = new ArrayMesh();
@@ -69,7 +80,7 @@ public class StartScene : Spatial
         legMesh.SurfaceSetMaterial(0, legMaterial);
         node.SetMesh(legMesh);
         GD.Print(node.Mesh.ToString());
-        
+        */
         /*
         DynamicCharacterAvatar characterAvatar= new DynamicCharacterAvatar();
 
@@ -92,6 +103,59 @@ public class StartScene : Spatial
     
     }
 
+    public void RenderSlot(string fileName) {
+        StreamReader textReader = new StreamReader(fileName);
+        textReader.ReadLine();
+        textReader.ReadLine();
+        textReader.ReadLine();
+        var deserializer = new DeserializerBuilder()
+                .WithNamingConvention(new CamelCaseNamingConvention())
+                .Build();
+        
+        var slotData = deserializer.Deserialize<SlotYaml>(textReader);
+        
+        GD.Print(slotData.MonoBehaviour.MName);
+        
+        var verticeOrder = decodeUnitysCompressionSubMesh(slotData.MonoBehaviour.MeshData.Submeshes[0].Triangles);
+        var surfaceArray = new Godot.Collections.Array();
+        surfaceArray.Resize(ARRAY_MAX);
+        surfaceArray[ARRAY_VERTEX] = slotData.MonoBehaviour.MeshData.Vertices;
+        surfaceArray[ARRAY_NORMAL] = slotData.MonoBehaviour.MeshData.Normals;
+        surfaceArray[ARRAY_TANGENTS] = CreateTangents(slotData.MonoBehaviour.MeshData.Tangents);
+        surfaceArray[ARRAY_TEX_UV] = slotData.MonoBehaviour.MeshData.Uv;
+        IList<int> boneIndexes=new List<int>();
+        IList<float> boneWeights=new List<float>();
+        FillBoneAndWeightArray(slotData.MonoBehaviour.MeshData.BoneWeights, boneIndexes, boneWeights);
+        surfaceArray[ARRAY_BONES] = boneIndexes;
+        surfaceArray[ARRAY_WEIGHTS] = boneWeights;
+        surfaceArray[ARRAY_INDEX] = verticeOrder;
+
+        myMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray, null, ARRAY_FORMAT_VERTEX + ARRAY_FORMAT_NORMAL + ARRAY_FORMAT_TANGENT + ARRAY_FORMAT_TANGENT);
+        var material = (SpatialMaterial)GD.Load("res://skin.material");
+        GD.Print("Surface Count" + myMesh.GetSurfaceCount());
+        var node = (MeshInstance)FindNode("UmaMeshNode");
+        
+
+        GD.Print(node.GetType());
+        GD.Print(node.Mesh.ToString());
+        myMesh.SurfaceSetMaterial(myMesh.GetSurfaceCount()-1, material);
+        node.SetMesh(myMesh);
+        GD.Print(node.Mesh.ToString());
+    }
+
+    public void FillBoneAndWeightArray(BoneWeight[] boneWeights, IList<int> boneIndexes, IList<float> weights){
+        for(int i = 0; i < boneWeights.Length; i++) {
+            boneIndexes.Add(boneWeights[i].BoneIndex0);
+            boneIndexes.Add(boneWeights[i].BoneIndex1);
+            boneIndexes.Add(boneWeights[i].BoneIndex2);
+            boneIndexes.Add(boneWeights[i].BoneIndex3);
+            weights.Add(boneWeights[i].Weight0);
+            weights.Add(boneWeights[i].Weight1);
+            weights.Add(boneWeights[i].Weight2);
+            weights.Add(boneWeights[i].Weight3);
+        }
+    }
+
     public float[] CreateTangents(Tangents[] raw) {
         var returnValue = new float[raw.Length * 4];
         for(int i = 0; i < raw.Length; i += 4) {
@@ -99,19 +163,6 @@ public class StartScene : Spatial
             returnValue[i+1] = raw[i/4].Y;
             returnValue[i+2] = raw[i/4].Z;
             returnValue[i+3] = -raw[i/4].W;
-        }
-        return returnValue;
-    }
-
-    public float[][] CreateTangents(Tangents[] library, int[]correctOrder) {
-        var returnValue = new float[correctOrder.Length][];
-        for(int i = 0; i < correctOrder.Length; i++) {
-            returnValue[i] = new float[] {
-                library[correctOrder[i]].X,
-                library[correctOrder[i]].Y,
-                library[correctOrder[i]].Z,
-                library[correctOrder[i]].W
-                };
         }
         return returnValue;
     }
