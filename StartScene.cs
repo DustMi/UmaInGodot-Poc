@@ -56,7 +56,8 @@ public class StartScene : Spatial
             if(!string.IsNullOrWhiteSpace(slot.id)) {
                 var fileName = slotFileLookup[slot.id];
                 RenderableSlot rs = new RenderableSlot(fileName);
-                uma.AddSlot(slot.copyIdx == -1 ? slot.id : slot.copyIdx.ToString(), rs);
+                string LayerName = slot.copyIdx == -1 ? slot.id : packRecipe.slotsV3[slot.copyIdx].id;
+                uma.AddSlot(LayerName, rs);
             }
         }
         uma.Render();

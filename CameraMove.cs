@@ -31,7 +31,7 @@ public class CameraMove : Camera
     public override void _Ready()
     {
         RotateHelper = this.GetParentSpatial();
-        Input.SetMouseMode(Input.MouseMode.Captured);
+        Input.SetMouseMode(Input.MouseMode.Visible);
         GD.Print(yCamera_angle);
     }
 
