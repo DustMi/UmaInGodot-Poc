@@ -48,6 +48,23 @@ public class UMA_ArrayMesh : Node
             arrayMeshSurfaces.Add(surfaceName, slot.MeshInfo);
         }
     }
+
+    public void Render() {
+        foreach(var surfaceName in arrayMeshSurfaces.Keys) {
+            GodotArrayMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, arrayMeshSurfaces[surfaceName]);
+            GodotArrayMesh.SurfaceSetName(GodotArrayMesh.GetSurfaceCount() -1  ,surfaceName);
+        }
+        var material = (SpatialMaterial)GD.Load("res://skin.material");
+        
+        var node = (MeshInstance)FindNode("UmaMeshNode");
+        
+
+        //GD.Print(node.GetType());
+        //GD.Print(node.Mesh.ToString());
+        //myMesh.SurfaceSetMaterial(myMesh.GetSurfaceCount()-1, material);
+        node.SetMesh(GodotArrayMesh);
+        //GD.Print(node.Mesh.ToString());
+    }
     protected void CombineSlotsToSurface(string surfaceName, Godot.Collections.Array newMesh) {
         var surface = arrayMeshSurfaces[surfaceName];
         surface[ARRAY_VERTEX]   = CombineArrays<Vector3>((Vector3[])surface[ARRAY_VERTEX],   (Vector3[])newMesh[ARRAY_VERTEX]);

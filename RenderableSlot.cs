@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using UMA;
 using System.IO;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -32,6 +31,7 @@ public class RenderableSlot : Node
     const int ARRAY_WEIGHTS_SIZE = 4;
 
     public Godot.Collections.Array MeshInfo;
+    public string SlotName;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -49,8 +49,8 @@ public class RenderableSlot : Node
                 .Build();
         
         var slotData = deserializer.Deserialize<SlotYaml>(textReader);
-        
-        GD.Print(slotData.MonoBehaviour.MName);
+        SlotName = slotData.MonoBehaviour.MName.ReplaceN(" ", string.Empty);
+        GD.Print(SlotName);
         
         var verticeOrder = decodeUnitysCompressionSubMesh(slotData.MonoBehaviour.MeshData.Submeshes[0].Triangles);
         var surfaceArray = new Godot.Collections.Array();
