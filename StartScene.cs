@@ -1,10 +1,8 @@
 using Godot;
 using System;
-using UMA.CharacterSystem;
 using System.Collections.Generic;
 using UMA;
 using System.IO;
-using YamlDotNet;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using RawYaml;
@@ -34,17 +32,17 @@ public class StartScene : Spatial
     const int ARRAY_FORMAT_INDEX = 256;
     const int ARRAY_WEIGHTS_SIZE = 4;
 
-    ArrayMesh myMesh = new ArrayMesh();
+    
     
     Dictionary<string, string> slotFileLookup = new Dictionary<string, string>() {
         {"MaleEyes"       , "./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Eyes_Slot.asset"},
         {"MaleInnerMouth" , "./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_InnerMouth_Slot.asset"},
         {"MaleTorso"      , "./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Torso_Slot.asset"},
         {"MaleFeet"       , "./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Feet_Slot.asset"},
-        {"MaleHands"      , "./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Eyes_Slot.asset"},
+        {"MaleHands"      , "./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Hands_Slot.asset"},
         {"MaleLegs"       , "./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Legs_Slot.asset"},
-        {"M_Highpoly Head", "./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Eyes_Slot.asset"},
-        {"Mist", "should%cause$an\\error#"}
+        {"M_Highpoly Head", "./UMA/Content/UMA_Core/HumanMale/Slots/Body/MidPoly/UMA_Human_Male_Head_Mid_Slot.asset"},
+        //{"Mist", "should%cause$an\\error#"}
     };
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -53,6 +51,19 @@ public class StartScene : Spatial
         textRecipe.recipeString = @"{""version"":3,""packedSlotDataList"":[],""slotsV2"":[],""slotsV3"":[{""id"":""MaleEyes"",""scale"":100,""copyIdx"":-1,""overlays"":[{""id"":""EyeOverlay"",""colorIdx"":3,""rect"":[0,0,0,0]},{""id"":""Default Eye Adjust"",""colorIdx"":2,""rect"":[0,0,0,0]}]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":""MaleInnerMouth"",""scale"":100,""copyIdx"":-1,""overlays"":[{""id"":""InnerMouth"",""colorIdx"":4,""rect"":[0,0,0,0]}]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":""MaleTorso"",""scale"":100,""copyIdx"":-1,""overlays"":[{""id"":""M_BodOverlay 1"",""colorIdx"":0,""rect"":[0,0,0,0]}]},{""id"":""MaleFeet"",""scale"":100,""copyIdx"":16,""overlays"":[]},{""id"":""MaleHands"",""scale"":100,""copyIdx"":16,""overlays"":[]},{""id"":""MaleLegs"",""scale"":100,""copyIdx"":16,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":"""",""scale"":1,""copyIdx"":-1,""overlays"":[]},{""id"":""M_Highpoly Head"",""scale"":100,""copyIdx"":-1,""overlays"":[{""id"":""M_Face"",""colorIdx"":0,""rect"":[0,0,0,0]}]}],""colors"":[],""fColors"":[{""name"":""Skin"",""colors"":[255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0]},{""name"":""Hair"",""colors"":[255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0]},{""name"":""Eyes"",""colors"":[255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0]},{""name"":""-"",""colors"":[255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0]},{""name"":""-"",""colors"":[234,234,234,255,0,0,0,0,255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0]}],""sharedColorCount"":3,""race"":""HumanMale"",""packedDna"":[{""dnaType"":""DynamicUMADna"",""dnaTypeHash"":815443803,""packedDna"":""{\""bDnaAsset\"":{\""instanceID\"":12024},\""bDnaAssetName\"":\""HumanMaleDynamicDnaAsset\"",\""bDnaSettings\"":[{\""name\"":\""skinGreenness\"",\""value\"":128},{\""name\"":\""skinBlueness\"",\""value\"":128},{\""name\"":\""skinRedness\"",\""value\"":128},{\""name\"":\""height\"",\""value\"":128},{\""name\"":\""headSize\"",\""value\"":128},{\""name\"":\""headWidth\"",\""value\"":128},{\""name\"":\""neckThickness\"",\""value\"":128},{\""name\"":\""armLength\"",\""value\"":128},{\""name\"":\""forearmLength\"",\""value\"":128},{\""name\"":\""armWidth\"",\""value\"":128},{\""name\"":\""forearmWidth\"",\""value\"":128},{\""name\"":\""handsSize\"",\""value\"":128},{\""name\"":\""feetSize\"",\""value\"":128},{\""name\"":\""legSeparation\"",\""value\"":128},{\""name\"":\""upperMuscle\"",\""value\"":128},{\""name\"":\""lowerMuscle\"",\""value\"":128},{\""name\"":\""upperWeight\"",\""value\"":128},{\""name\"":\""lowerWeight\"",\""value\"":128},{\""name\"":\""legsSize\"",\""value\"":128},{\""name\"":\""belly\"",\""value\"":128},{\""name\"":\""waist\"",\""value\"":128},{\""name\"":\""gluteusSize\"",\""value\"":128},{\""name\"":\""earsSize\"",\""value\"":128},{\""name\"":\""earsPosition\"",\""value\"":128},{\""name\"":\""earsRotation\"",\""value\"":128},{\""name\"":\""noseSize\"",\""value\"":128},{\""name\"":\""noseCurve\"",\""value\"":128},{\""name\"":\""noseWidth\"",\""value\"":128},{\""name\"":\""noseInclination\"",\""value\"":128},{\""name\"":\""nosePosition\"",\""value\"":128},{\""name\"":\""nosePronounced\"",\""value\"":128},{\""name\"":\""noseFlatten\"",\""value\"":128},{\""name\"":\""chinSize\"",\""value\"":128},{\""name\"":\""chinPronounced\"",\""value\"":128},{\""name\"":\""chinPosition\"",\""value\"":128},{\""name\"":\""mandibleSize\"",\""value\"":128},{\""name\"":\""jawsSize\"",\""value\"":128},{\""name\"":\""jawsPosition\"",\""value\"":128},{\""name\"":\""cheekSize\"",\""value\"":128},{\""name\"":\""cheekPosition\"",\""value\"":128},{\""name\"":\""lowCheekPronounced\"",\""value\"":128},{\""name\"":\""lowCheekPosition\"",\""value\"":128},{\""name\"":\""foreheadSize\"",\""value\"":128},{\""name\"":\""foreheadPosition\"",\""value\"":128},{\""name\"":\""lipsSize\"",\""value\"":128},{\""name\"":\""mouthSize\"",\""value\"":128},{\""name\"":\""eyeRotation\"",\""value\"":128},{\""name\"":\""eyeSize\"",\""value\"":128},{\""name\"":\""breastSize\"",\""value\"":128},{\""name\"":\""eyeSpacing\"",\""value\"":128}]}""}],""wardrobeSet"":[],""packedRecipeType"":""Standard""}";
         UMAPackedRecipeBase.UMAPackRecipe packRecipe = textRecipe.PackedLoad();
         GD.Print(packRecipe.slotsV3.Length);
+        foreach(var slot in packRecipe.slotsV3) {
+            if(!string.IsNullOrWhiteSpace(slot.id) {
+                var fileName = slotFileLookup[slot.id];
+                RenderableSlot rs = new RenderableSlot(fileName);
+
+            }
+        }
+        UMA_ArrayMesh uma = new UMA_ArrayMesh();
+        foreach(string fileName in slotFileLookup.Values){
+            RenderableSlot rs = new RenderableSlot(fileName);
+            
+            //RenderSlot(fileName);
+        }
 
         //RenderSlot(@"./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Legs_Slot.asset");
         //RenderSlot(@"./UMA/Content/UMA_Core/HumanMale/Slots/Body/UMA_Human_Male_Feet_Slot.asset");
@@ -117,7 +128,7 @@ public class StartScene : Spatial
         GD.Print("It actually made it to the end of the Start routine!");*/
     
     }
-
+/*
     public void RenderSlot(string fileName) {
         StreamReader textReader = new StreamReader(fileName);
         textReader.ReadLine();
@@ -138,11 +149,11 @@ public class StartScene : Spatial
         surfaceArray[ARRAY_NORMAL] = slotData.MonoBehaviour.MeshData.Normals;
         surfaceArray[ARRAY_TANGENTS] = CreateTangents(slotData.MonoBehaviour.MeshData.Tangents);
         surfaceArray[ARRAY_TEX_UV] = slotData.MonoBehaviour.MeshData.Uv;
-        IList<int> boneIndexes=new List<int>();
-        IList<float> boneWeights=new List<float>();
+        List<int> boneIndexes=new List<int>();
+        List<float> boneWeights=new List<float>();
         FillBoneAndWeightArray(slotData.MonoBehaviour.MeshData.BoneWeights, boneIndexes, boneWeights);
-        surfaceArray[ARRAY_BONES] = boneIndexes;
-        surfaceArray[ARRAY_WEIGHTS] = boneWeights;
+        surfaceArray[ARRAY_BONES] = boneIndexes.ToArray();
+        surfaceArray[ARRAY_WEIGHTS] = boneWeights.ToArray();
         surfaceArray[ARRAY_INDEX] = verticeOrder;
 
         myMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray, null, ARRAY_FORMAT_VERTEX + ARRAY_FORMAT_NORMAL + ARRAY_FORMAT_TANGENT + ARRAY_FORMAT_TANGENT);
@@ -156,60 +167,5 @@ public class StartScene : Spatial
         myMesh.SurfaceSetMaterial(myMesh.GetSurfaceCount()-1, material);
         node.SetMesh(myMesh);
         GD.Print(node.Mesh.ToString());
-    }
-
-    public void FillBoneAndWeightArray(BoneWeight[] boneWeights, IList<int> boneIndexes, IList<float> weights){
-        for(int i = 0; i < boneWeights.Length; i++) {
-            boneIndexes.Add(boneWeights[i].BoneIndex0);
-            boneIndexes.Add(boneWeights[i].BoneIndex1);
-            boneIndexes.Add(boneWeights[i].BoneIndex2);
-            boneIndexes.Add(boneWeights[i].BoneIndex3);
-            weights.Add(boneWeights[i].Weight0);
-            weights.Add(boneWeights[i].Weight1);
-            weights.Add(boneWeights[i].Weight2);
-            weights.Add(boneWeights[i].Weight3);
-        }
-    }
-
-    public float[] CreateTangents(Tangents[] raw) {
-        var returnValue = new float[raw.Length * 4];
-        for(int i = 0; i < raw.Length; i += 4) {
-            returnValue[i+0] = raw[i/4].X;
-            returnValue[i+1] = raw[i/4].Y;
-            returnValue[i+2] = raw[i/4].Z;
-            returnValue[i+3] = -raw[i/4].W;
-        }
-        return returnValue;
-    }
-
-    public Vector3[] PutVectorsIntoCorrectOrder(Vector3[] library, int[] correctOrder) {
-        Vector3[] returnValue = new Vector3[correctOrder.Length];
-        for(int i = 0; i < correctOrder.Length; i++) {
-            returnValue[i] = library[correctOrder[i]];
-        }
-        return returnValue;
-    }
-
-    //In the real version, this will need to be optimized to bitshifting
-    public int[] decodeUnitysCompressionSubMesh(string hexArray) {
-        if(hexArray.Length % NUMBER_OF_HEX_CHARACTERS_PER_VALUE > 0) {
-            throw new ArgumentOutOfRangeException(hexArray, "Length must be a multiple of 8");
-        }
-        var verticeOrder = new int[hexArray.Length/NUMBER_OF_HEX_CHARACTERS_PER_VALUE];
-        for(int i = 0; i < hexArray.Length; i += NUMBER_OF_HEX_CHARACTERS_PER_VALUE) {
-            char[] hexChar = new char[NUMBER_OF_HEX_CHARACTERS_PER_VALUE];
-            hexChar[0] = hexArray[i + 6];
-            hexChar[1] = hexArray[i + 7];
-            hexChar[2] = hexArray[i + 4];
-            hexChar[3] = hexArray[i + 5];
-            hexChar[4] = hexArray[i + 2];
-            hexChar[5] = hexArray[i + 3];
-            hexChar[6] = hexArray[i + 0];
-            hexChar[7] = hexArray[i + 1];
-            string hexstring = new String(hexChar);
-            int verticeNumber = int.Parse(hexstring, System.Globalization.NumberStyles.HexNumber);
-            verticeOrder[(verticeOrder.Length - 1) - i/NUMBER_OF_HEX_CHARACTERS_PER_VALUE] = verticeNumber;
-        }
-        return verticeOrder;
-    }
+    }*/
 }
