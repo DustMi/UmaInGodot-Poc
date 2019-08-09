@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://StartScene.cs" type="Script" id=1]
 [ext_resource path="res://CameraMove.cs" type="Script" id=2]
@@ -6,7 +6,10 @@
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 10, 0.2, 10 )
 
+[sub_resource type="SpatialMaterial" id=3]
+
 [sub_resource type="CubeMesh" id=2]
+material = SubResource( 3 )
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
