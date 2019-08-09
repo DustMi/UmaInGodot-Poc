@@ -53,18 +53,18 @@ public class RenderableSlot : Node
         GD.Print(SlotName);
         
         var verticeOrder = decodeUnitysCompressionSubMesh(slotData.MonoBehaviour.MeshData.Submeshes[0].Triangles);
-        var surfaceArray = new Godot.Collections.Array();
-        surfaceArray.Resize(ARRAY_MAX);
-        surfaceArray[ARRAY_VERTEX] = slotData.MonoBehaviour.MeshData.Vertices;
-        surfaceArray[ARRAY_NORMAL] = slotData.MonoBehaviour.MeshData.Normals;
-        surfaceArray[ARRAY_TANGENTS] = CreateTangents(slotData.MonoBehaviour.MeshData.Tangents);
-        surfaceArray[ARRAY_TEX_UV] = slotData.MonoBehaviour.MeshData.Uv;
+        MeshInfo = new Godot.Collections.Array();
+        MeshInfo.Resize(ARRAY_MAX);
+        MeshInfo[ARRAY_VERTEX] = slotData.MonoBehaviour.MeshData.Vertices;
+        MeshInfo[ARRAY_NORMAL] = slotData.MonoBehaviour.MeshData.Normals;
+        MeshInfo[ARRAY_TANGENTS] = CreateTangents(slotData.MonoBehaviour.MeshData.Tangents);
+        MeshInfo[ARRAY_TEX_UV] = slotData.MonoBehaviour.MeshData.Uv;
         List<int> boneIndexes=new List<int>();
         List<float> boneWeights=new List<float>();
         FillBoneAndWeightArray(slotData.MonoBehaviour.MeshData.BoneWeights, boneIndexes, boneWeights);
-        surfaceArray[ARRAY_BONES] = boneIndexes.ToArray();
-        surfaceArray[ARRAY_WEIGHTS] = boneWeights.ToArray();
-        surfaceArray[ARRAY_INDEX] = verticeOrder;
+        MeshInfo[ARRAY_BONES] = boneIndexes.ToArray();
+        MeshInfo[ARRAY_WEIGHTS] = boneWeights.ToArray();
+        MeshInfo[ARRAY_INDEX] = verticeOrder;
     }
 
     public int[] decodeUnitysCompressionSubMesh(string hexArray) {
