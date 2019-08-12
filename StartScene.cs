@@ -48,7 +48,7 @@ public class StartScene : Spatial
     public override void _Ready()
     {
         var fileAsBinary = new ReadBinaryFile();
-        var textFileContents = fileAsBinary.FileText(@"C:\Local\gitRepositories\UMA-Experiment\Assets\UMA\Content\UMA_Core\HumanMale\RaceData\Human Male.asset");
+        var textFileContents = fileAsBinary.FileText(@"./UMA/Content/UMA_Core/HumanMale/RaceData/Human Male.asset");
         GD.Print(textFileContents);
         /*
         UMATextRecipe textRecipe = new UMATextRecipe();

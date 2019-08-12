@@ -70,8 +70,7 @@ public class UMA_ArrayMesh : Node
         var albedoTexture = new Texture3D();
         albedoTexture.SetPath("./UMA/Content/UMA_Core/HumanMale/Textures/Body/M_H_body1_Albedo.png");
 
-        newMaterial.AlbedoTexture = null;
-        GodotArrayMesh.SurfaceSetMaterial(surfaceIndex, material);
+        //GodotArrayMesh.SurfaceSetMaterial(newMaterial, material);
 
         _meshNode.SetMesh(GodotArrayMesh);
         //GD.Print(node.Mesh.ToString());

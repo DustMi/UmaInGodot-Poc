@@ -33,30 +33,49 @@ public class ReadBinaryFile : Node
     int metadataSize;
     uint fileSize;
     int generation;
-    public static bool IsSerializedFileHeader(EndianReader reader)
+	uint DataOffset;
+	bool SwapEndianess;
+	FileGeneration binaryType;
+    public bool IsSerializedFileHeader(EndianReader reader)
 		{
 			if (reader.BaseStream.Position + HeaderMinSize > reader.BaseStream.Length)
 			{
 				return false;
 			}
-			int metadataSize = reader.ReadInt32();
+			metadataSize = reader.ReadInt32();
 			if (metadataSize < MetadataMinSize)
 			{
 				return false;
 			}
-			uint fileSize = reader.ReadUInt32();
+			fileSize = reader.ReadUInt32();
 			if (fileSize < HeaderMinSize + MetadataMinSize)
 			{
 				return false;
 			}
-			int generation = reader.ReadInt32();
+			generation = reader.ReadInt32();
 			if (!Enum.IsDefined(typeof(FileGeneration), generation))
 			{
 				return false;
 			}
+			generation = reader.ReadInt32();
+			binaryType = (FileGeneration)generation;
+			DataOffset = reader.ReadUInt32();
+			if (IsReadEndian(binaryType))
+			{
+				SwapEndianess = reader.ReadBoolean();
+				reader.AlignStream(AlignType.Align4);
+			}
+			GD.Print("metadataSize: " + metadataSize);
+			GD.Print("fileSize: " + fileSize);
+			GD.Print("generation: " + generation);
 			return true;
 		}
+		public static bool IsReadEndian(FileGeneration generation)
+		{
+			return generation >= FileGeneration.FG_350_47x;
+		}
 }
+		
 public enum FileGeneration
 	{
 		FG_120_200		= 5,
