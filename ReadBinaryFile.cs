@@ -23,7 +23,50 @@ public class ReadBinaryFile : Node
         offset = 0;
         var reader = new EndianReader(stream, EndianType.BigEndian);
         bool isSerializedFile = IsSerializedFileHeader(reader);
-        GD.Print(isSerializedFile);
+		//metaReader.Close();
+		GD.Print(isSerializedFile);
+		//var fullReader = new EndianReader(stream, SwapEndianess ? EndianType.LittleEndian : EndianType.BigEndian);
+		//GD.Print("sizeCalc: " + (int)(fileSize - stream.Position));
+		string unityVersion = reader.ReadStringZeroTerm();
+		var MetaRearder = new EndianReader(stream, EndianType.LittleEndian);
+		GD.Print(unityVersion);//unity version
+		uint platform = MetaRearder.ReadUInt32();
+		GD.Print("platform: " + platform.ToString());//platform/ 4294967294
+		GD.Print("SerializeTypeTrees:" + MetaRearder.ReadBoolean());//SerializeTypeTrees
+		int RTTIBaseClassDescriptorArrayCount = MetaRearder.ReadInt32();  //should be 1
+		GD.Print(RTTIBaseClassDescriptorArrayCount);
+		var ClassID = MetaRearder.ReadInt32(); //classID type 114
+		GD.Print(ClassID);
+		var IsStrippedType = MetaRearder.ReadBoolean(); //false
+		GD.Print(IsStrippedType);
+		var ScriptID = MetaRearder.ReadInt16(); //0
+		GD.Print(ScriptID);
+		//scriptHash
+		var Data0 = MetaRearder.ReadUInt32(); //1730628693
+		GD.Print(Data0);
+		var Data1 = MetaRearder.ReadUInt32(); //4260848438
+		GD.Print(Data1);
+		var Data2 = MetaRearder.ReadUInt32(); //1175725339
+		GD.Print(Data2);
+		var Data3 = MetaRearder.ReadUInt32(); //646866029
+		GD.Print(Data3);
+		GD.Print($"{Data0:x8}{Data1:x8}{Data2:x8}{Data3:x8}");
+		//TypeHash
+		var tData0 = MetaRearder.ReadUInt32(); //1730628693
+		GD.Print(tData0);
+		var tData1 = MetaRearder.ReadUInt32(); //4260848438
+		GD.Print(tData1);
+		var tData2 = MetaRearder.ReadUInt32(); //1175725339
+		GD.Print(tData2);
+		var tData3 = MetaRearder.ReadUInt32(); //646866029
+		GD.Print(tData3);
+		GD.Print($"{tData0:x8}{tData1:x8}{tData2:x8}{tData3:x8}");
+
+		/*while(metaReader.BaseStream.Position < 30000) {
+			var output = metaReader.ReadStringZeroTerm();
+			GD.Print(output);
+		}*/
+        
         //confirm it is a serialized file
         //Read File
         return "";
@@ -52,22 +95,22 @@ public class ReadBinaryFile : Node
 			{
 				return false;
 			}
-			generation = reader.ReadInt32();
+			generation = reader.ReadInt32();//17
 			if (!Enum.IsDefined(typeof(FileGeneration), generation))
 			{
 				return false;
 			}
-			generation = reader.ReadInt32();
 			binaryType = (FileGeneration)generation;
-			DataOffset = reader.ReadUInt32();
+			DataOffset = reader.ReadUInt32();//4096
 			if (IsReadEndian(binaryType))
 			{
-				SwapEndianess = reader.ReadBoolean();
+				SwapEndianess = reader.ReadBoolean();//false = little endian, true = big endian
 				reader.AlignStream(AlignType.Align4);
 			}
-			GD.Print("metadataSize: " + metadataSize);
-			GD.Print("fileSize: " + fileSize);
-			GD.Print("generation: " + generation);
+			GD.Print("metadataSize: " + metadataSize); //3997
+			GD.Print("fileSize: " + fileSize); //4832
+			GD.Print("binaryType: " + binaryType);//FG_550_2018
+
 			return true;
 		}
 		public static bool IsReadEndian(FileGeneration generation)
