@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 public class ReadBinaryFile : Node
 {
@@ -18,7 +19,8 @@ public class ReadBinaryFile : Node
     string filepath;
     public string FileText(string path) {
         //GetFileScheme
-        FileStream stream = new FileStream(path, FileMode.Open);
+        //FileStream stream = new FileStream(path, FileMode.Open);
+		FileStream stream = System.IO.File.OpenRead(path);
         size = stream.Length;
         offset = 0;
         var reader = new EndianReader(stream, EndianType.BigEndian);
@@ -28,39 +30,65 @@ public class ReadBinaryFile : Node
 		//var fullReader = new EndianReader(stream, SwapEndianess ? EndianType.LittleEndian : EndianType.BigEndian);
 		//GD.Print("sizeCalc: " + (int)(fileSize - stream.Position));
 		string unityVersion = reader.ReadStringZeroTerm();
-		var MetaRearder = new EndianReader(stream, EndianType.LittleEndian);
+		var MetaReader = new EndianReader(stream, EndianType.LittleEndian);
 		GD.Print(unityVersion);//unity version
-		uint platform = MetaRearder.ReadUInt32();
+		uint platform = MetaReader.ReadUInt32();
 		GD.Print("platform: " + platform.ToString());//platform/ 4294967294
-		GD.Print("SerializeTypeTrees:" + MetaRearder.ReadBoolean());//SerializeTypeTrees
-		int RTTIBaseClassDescriptorArrayCount = MetaRearder.ReadInt32();  //should be 1
+		GD.Print("SerializeTypeTrees:" + MetaReader.ReadBoolean());//SerializeTypeTrees
+		int RTTIBaseClassDescriptorArrayCount = MetaReader.ReadInt32();  //should be 1
 		GD.Print(RTTIBaseClassDescriptorArrayCount);
-		var ClassID = MetaRearder.ReadInt32(); //classID type 114
+		var ClassID = MetaReader.ReadInt32(); //classID type 114
 		GD.Print(ClassID);
-		var IsStrippedType = MetaRearder.ReadBoolean(); //false
+		var IsStrippedType = MetaReader.ReadBoolean(); //false
 		GD.Print(IsStrippedType);
-		var ScriptID = MetaRearder.ReadInt16(); //0
+		var ScriptID = MetaReader.ReadInt16(); //0
 		GD.Print(ScriptID);
 		//scriptHash
-		var Data0 = MetaRearder.ReadUInt32(); //1730628693
+		var Data0 = MetaReader.ReadUInt32(); //1730628693
 		GD.Print(Data0);
-		var Data1 = MetaRearder.ReadUInt32(); //4260848438
+		var Data1 = MetaReader.ReadUInt32(); //4260848438
 		GD.Print(Data1);
-		var Data2 = MetaRearder.ReadUInt32(); //1175725339
+		var Data2 = MetaReader.ReadUInt32(); //1175725339
 		GD.Print(Data2);
-		var Data3 = MetaRearder.ReadUInt32(); //646866029
+		var Data3 = MetaReader.ReadUInt32(); //646866029
 		GD.Print(Data3);
 		GD.Print($"{Data0:x8}{Data1:x8}{Data2:x8}{Data3:x8}");
 		//TypeHash
-		var tData0 = MetaRearder.ReadUInt32(); //1730628693
+		var tData0 = MetaReader.ReadUInt32(); //1730628693
 		GD.Print(tData0);
-		var tData1 = MetaRearder.ReadUInt32(); //4260848438
+		var tData1 = MetaReader.ReadUInt32(); //4260848438
 		GD.Print(tData1);
-		var tData2 = MetaRearder.ReadUInt32(); //1175725339
+		var tData2 = MetaReader.ReadUInt32(); //1175725339
 		GD.Print(tData2);
-		var tData3 = MetaRearder.ReadUInt32(); //646866029
+		var tData3 = MetaReader.ReadUInt32(); //646866029
 		GD.Print(tData3);
 		GD.Print($"{tData0:x8}{tData1:x8}{tData2:x8}{tData3:x8}");
+		var nodeCount = MetaReader.ReadInt32(); //118
+		GD.Print("Node Count: " + nodeCount);
+		var stringSize = MetaReader.ReadInt32(); //700
+		GD.Print("string size: " + stringSize);
+		long stringPosition = MetaReader.BaseStream.Position + nodeCount * 24; //24 could be 32. See: GetNodSize
+		List<string> variableNames = new List<string>();
+		for (int i = 0; i < nodeCount; i++)
+		{
+			var Version = MetaReader.ReadUInt16();
+			var Depth = MetaReader.ReadByte();
+			var IsArray = MetaReader.ReadBoolean();
+			uint type = MetaReader.ReadUInt32();
+			uint name = MetaReader.ReadUInt32();
+			var ByteSize = MetaReader.ReadInt32();
+			var Index = MetaReader.ReadInt32();
+			var MetaFlag = MetaReader.ReadUInt32();
+			/*might need this if "unknown"
+			if (IsReadUnknown(reader.Generation))
+			{ 
+				Unknown1 = reader.ReadUInt32();
+				Unknown2 = reader.ReadUInt32();
+			}*/
+			var Type = readString(MetaReader, stringPosition, type);
+			var Name = readString(MetaReader, stringPosition, name);
+			GD.Print(Name + " of type: " + Type);
+		}
 
 		/*while(metaReader.BaseStream.Position < 30000) {
 			var output = metaReader.ReadStringZeroTerm();
@@ -71,6 +99,14 @@ public class ReadBinaryFile : Node
         //Read File
         return "";
     }
+
+	private static string readString(EndianReader reader, long stringPosition, uint value) {
+		long position = reader.BaseStream.Position;
+		reader.BaseStream.Position = stringPosition + value;
+		string stringValue = reader.ReadStringZeroTerm();
+		reader.BaseStream.Position = position;
+		return stringValue;
+	}
     const int MetadataMinSize = 16;
     public const int HeaderMinSize = 16;
     int metadataSize;
