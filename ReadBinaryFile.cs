@@ -101,11 +101,25 @@ public class ReadBinaryFile : Node
     }
 
 	private static string readString(EndianReader reader, long stringPosition, uint value) {
-		long position = reader.BaseStream.Position;
-		reader.BaseStream.Position = stringPosition + value;
-		string stringValue = reader.ReadStringZeroTerm();
-		reader.BaseStream.Position = position;
-		return stringValue;
+		bool isCustomType = (value & 0x80000000) == 0;
+		if (isCustomType)
+		{
+			long position = reader.BaseStream.Position;
+			reader.BaseStream.Position = stringPosition + value;
+			string stringValue = reader.ReadStringZeroTerm();
+			reader.BaseStream.Position = position;
+			return stringValue;
+		}
+		else
+		{
+			uint type = value & 0x7FFFFFFF;
+			TreeNodeType nodeType = (TreeNodeType)type;
+			if (!Enum.IsDefined(typeof(TreeNodeType), nodeType))
+			{
+				throw new Exception($"Unsupported asset class type name '{nodeType}''");
+			}
+			return nodeType.ToTypeString();
+		}
 	}
     const int MetadataMinSize = 16;
     public const int HeaderMinSize = 16;
